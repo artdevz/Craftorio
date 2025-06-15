@@ -8,10 +8,12 @@ Player::Player() {
 
 void Player::Update() {
     float deltaTime = GetFrameTime();
-    if (Input::IsMovingUp()) position.y -= moveSpeed * deltaTime;
-    if (Input::IsMovingLeft()) position.x -= moveSpeed * deltaTime;
-    if (Input::IsMovingDown()) position.y += moveSpeed * deltaTime;
-    if (Input::IsMovingRight()) position.x += moveSpeed * deltaTime;
+    float sprint = 1;
+    if (Input::IsRunning()) sprint *= 2.5;
+    if (Input::IsMovingUp()) position.y -= moveSpeed * deltaTime * sprint;
+    if (Input::IsMovingLeft()) position.x -= moveSpeed * deltaTime * sprint;
+    if (Input::IsMovingDown()) position.y += moveSpeed * deltaTime * sprint;
+    if (Input::IsMovingRight()) position.x += moveSpeed * deltaTime * sprint;
     
 }
 

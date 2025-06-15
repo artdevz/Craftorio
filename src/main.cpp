@@ -4,7 +4,7 @@
 #include "core/Window.hpp"
 
 int main() {
-    auto window = std::make_unique<Window>(1280, 720, 120, "Unnamed Game");
+    auto window = std::make_unique<Window>(1280, 720, 999999, "Unnamed Game");
     Game game;
     game.Init();
 

@@ -6,5 +6,7 @@ namespace Input {
     bool IsMovingLeft();
     bool IsMovingDown();
     bool IsMovingRight();
+    bool IsRunning();
     bool IsOpeningInventory();
+    bool IsOpeningMenu();
 }
