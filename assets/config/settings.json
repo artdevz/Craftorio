@@ -1,0 +1,31 @@
+{
+
+    "audio": {
+        "effects": 100,
+        "master": 100,
+        "music": 100,
+        "mute": false
+    },
+
+    "controls": {
+        "keyBindings": {
+            "inventory": "E",
+            "moveDown": "S",
+            "moveLeft": "A",
+            "moveRight": "D",
+            "moveUp": "W"
+        },
+        "mouseSensitivity": 1.0
+    },
+
+    "language": "en",
+
+    "video": {
+        "display": 0,
+        "fpsLimit": 144,
+        "fpsUnlimited": false,
+        "height": 720,
+        "width": 1280
+    }
+
+}
