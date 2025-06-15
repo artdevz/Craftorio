@@ -1,12 +1,24 @@
 #pragma once
 
 namespace Input {
+
     void Update();
-    bool IsMovingUp();
-    bool IsMovingLeft();
-    bool IsMovingDown();
-    bool IsMovingRight();
-    bool IsRunning();
-    bool IsOpeningInventory();
-    bool IsOpeningMenu();
+
+    // Movement
+    bool IsMoveUpPressed();
+    bool IsMoveLeftPressed();
+    bool IsMoveDownPressed();
+    bool IsMoveRightPressed();
+    bool IsRunHeld();
+    
+    // Interacts
+    bool IsInteractPressed();
+    bool IsUseLeftHandPressed();
+    bool IsUseRightHandPressed();
+    
+    // Interface
+    bool IsInventoryTogglePressed();
+    bool IsPauseMenuPressed();
+    bool IsMapTogglePressed();
+
 }

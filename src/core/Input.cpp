@@ -4,12 +4,22 @@
 namespace Input {
     
     void Update() {}
-    bool IsMovingUp() { return IsKeyDown(KEY_W); }
-    bool IsMovingLeft() { return IsKeyDown(KEY_A); }
-    bool IsMovingDown() { return IsKeyDown(KEY_S); }
-    bool IsMovingRight() { return IsKeyDown(KEY_D); }
-    bool IsRunning() { return IsKeyDown(KEY_LEFT_SHIFT); }
-    bool IsOpeningInventory() { return IsKeyPressed(KEY_E); }
-    bool IsOpeningMenu() { return IsKeyPressed(KEY_ESCAPE); }
+
+    // Movement
+    bool IsMoveUpPressed() { return IsKeyDown(KEY_W); }
+    bool IsMoveLeftPressed() { return IsKeyDown(KEY_A); }
+    bool IsMoveDownPressed() { return IsKeyDown(KEY_S); }
+    bool IsMoveRightPressed() { return IsKeyDown(KEY_D); }
+    bool IsRunHeld() { return IsKeyDown(KEY_LEFT_SHIFT); }
+    
+    // Interacts
+    bool IsInteractPressed() { return IsKeyPressed(KEY_E); }
+    bool IsUseLeftHandPressed() { return IsMouseButtonPressed(MOUSE_BUTTON_LEFT); }
+    bool IsUseRightHandPressed() { return IsMouseButtonPressed(MOUSE_BUTTON_RIGHT); }
+    
+    // Interface
+    bool IsInventoryTogglePressed() { return IsKeyPressed(KEY_I); }
+    bool IsPauseMenuPressed() { return IsKeyPressed(KEY_ESCAPE); }
+    bool IsMapTogglePressed() { return IsKeyPressed(KEY_M); }
 
 }

@@ -6,9 +6,7 @@ bool Inventory::inventoryState = false;
 
 Inventory::Inventory() {}
 
-void Inventory::Update() {
-    if (Input::IsOpeningInventory()) inventoryState = !inventoryState;
-}
+void Inventory::Update() { if (Input::IsInventoryTogglePressed()) inventoryState = !inventoryState; }
 
 void Inventory::Draw() {
     if (inventoryState) {
