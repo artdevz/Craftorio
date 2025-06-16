@@ -2,6 +2,7 @@
 #include <memory>
 #include <string>
 #include "screens/Game.hpp"
+#include "core/Input.hpp"
 #include "world/tiles/Aggregator.hpp"
 
 Game::Game() : 
@@ -39,6 +40,18 @@ void Game::Update() {
         camera.Update(player->GetPosition());
         hotbar.Update();
         inventory.Update();
+
+        if (Input::IsUseLeftHandPressed()) {
+            Vector2 worldMouse = GetScreenToWorld2D(GetMousePosition(), camera.GetCamera2D());
+
+            for (const auto& tile : tileManager.GetTiles()) {
+                if (CheckCollisionPointRec(worldMouse, tile->GetBounds())) {
+                    Item dummy;
+                    tile->Interact(dummy);
+                    break;
+                }
+            }
+        }
     }
     Draw();
 }

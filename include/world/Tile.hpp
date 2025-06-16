@@ -21,6 +21,7 @@ public:
     Vector2 GetPosition() const;
     Rectangle GetBounds() const;
     Texture2D GetTexture() const;
+    void SetTexture(const Texture2D& newTexture);
 
     Structure* GetStructure() const;
     bool HasStructure() const;

@@ -8,5 +8,9 @@ bool GrassTile::IsWalkable() const { return !structure || structure->IsWalkable(
 
 void GrassTile::Interact(const Item& tool) {
     // if tool == Shovel: GrassTile -> PathTile
+    if (true) {
+        SetTexture(LoadTexture("assets/images/tiles/Path.png"));
+    }
+
     // if tool == Hoe: GrassTile -> FarmTile
 }
