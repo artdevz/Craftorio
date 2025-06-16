@@ -2,14 +2,14 @@
 #include <string>
 #include <raylib.h>
 
-class Window {
+class WindowManager {
 
 public:
     static Vector2 resolution;
 
-    Window();
-    Window(int width, int height, int fpsLimit, std::string title);
-    ~Window();
+    WindowManager();
+    WindowManager(int width, int height, int fpsLimit, std::string title);
+    ~WindowManager();
 
     void SetResolution(int width, int height);
     // void SetDisplay(Display display);

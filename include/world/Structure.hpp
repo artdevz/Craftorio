@@ -1,7 +1,24 @@
 #pragma once
+#include <raylib.h>
 
 class Structure {
 
 public:
+    Structure();
+    Structure(Vector2 position, const Texture2D& texture, bool isWalkable);
+    virtual ~Structure() = default;
+
+    virtual void Update();
+    virtual void Draw() const;
+    virtual void Interact();
+
+    Vector2 GetPosition() const;
+    bool IsWalkable() const;
+    Rectangle GetBounds() const;
+
+protected:
+    Vector2 position;
+    Texture2D texture;
+    bool isWalkable;
 
 };

@@ -1,10 +1,11 @@
 #include <memory>
 #include <raylib.h>
 #include "screens/Game.hpp"
-#include "core/Window.hpp"
+#include "core/WindowManager.hpp"
 
 int main() {
-    auto window = std::make_unique<Window>(1280, 720, 999999, "Unnamed Game");
+    SetTraceLogLevel(LOG_DEBUG);
+    auto window = std::make_unique<WindowManager>(1280, 720, 999999, "Unnamed Game");
     Game game;
     game.Init();
 

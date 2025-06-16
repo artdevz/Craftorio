@@ -1,11 +1,11 @@
 #pragma once
 #include <vector>
-#include "core/Cam.hpp"
+#include "core/CameraManager.hpp"
+#include "core/StructureManager.hpp"
+#include "core/TileManager.hpp"
 #include "entities/Player.hpp"
 #include "ui/Hotbar.hpp"
 #include "ui/Inventory.hpp"
-#include "world/Tile.hpp"
-#include "world/Structure.hpp"
 
 class Game {
 
@@ -20,11 +20,11 @@ public:
     void SetPlayer(Player* player);
 
 private:
-    Cam camera;
+    CameraManager camera;
     Player* player;
     Hotbar hotbar;
     Inventory inventory;
-    std::vector<Tile> tiles;
-    std::vector<Structure> structures;
+    TileManager tileManager;
+    StructureManager structureManager;
 
 };

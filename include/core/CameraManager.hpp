@@ -1,10 +1,10 @@
 #pragma once
 #include <raylib.h>
 
-class Cam {
+class CameraManager {
 
 public:
-    Cam(Vector2 target, Vector2 offset);
+    CameraManager(Vector2 target, Vector2 offset);
     
     void Update(Vector2 target);
     Camera2D GetCamera2D() const;
