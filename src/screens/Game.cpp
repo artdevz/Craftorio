@@ -20,17 +20,20 @@ Game::~Game() {
 void Game::Init() {
     TraceLog(LOG_INFO, "Game iniciado");
     player = new Player();
-    Texture2D grassTexture = LoadTexture("assets/images/tiles/Grass.png");
+    Texture2D grassTileTexture = LoadTexture("assets/images/tiles/GrassTile.png");
     Texture2D stoneTexture = LoadTexture("assets/images/structures/Stone.png");
-    Texture2D wallTexture = LoadTexture("assets/images/tiles/Wall.png");
+    Texture2D wallTileTexture = LoadTexture("assets/images/tiles/WallTile.png");
+    Texture2D grassTexture = LoadTexture("assets/images/structures/Grass.png");
     for (int y = -1024; y < 1024; y += 32) for (int x = -1024; x < 1024; x += 32) {
-        auto grassTile = std::make_shared<GrassTile>(Vector2{ (float)x, (float)y }, grassTexture);
+        auto grassTile = std::make_shared<GrassTile>(Vector2{ (float)x, (float)y }, grassTileTexture);
         tileManager.AddTile(grassTile);
     }
-    auto wallTile = std::make_shared<WallTile>(Vector2{ (float)1200, (float)0 }, wallTexture );
+    auto wallTile = std::make_shared<WallTile>(Vector2{ (float)1200, (float)0 }, wallTileTexture );
     tileManager.AddTile(wallTile);
     auto rock = std::make_shared<Structure>(Vector2{ (float)256, (float)256 }, stoneTexture, false );
     structureManager.AddStructure(rock);
+    auto grass = std::make_shared<Structure>(Vector2{ (float)256, (float)128 }, grassTexture, true);
+    structureManager.AddStructure(grass);
 }
 
 void Game::Update() {
@@ -46,8 +49,8 @@ void Game::Update() {
 
             for (const auto& tile : tileManager.GetTiles()) {
                 if (CheckCollisionPointRec(worldMouse, tile->GetBounds())) {
-                    Item dummy;
-                    tile->Interact(dummy);
+                    // Item dummy;
+                    // tile->Interact(dummy);
                     break;
                 }
             }

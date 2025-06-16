@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <memory>
 #include "items/Item.hpp"
 
 class Hotbar {
@@ -11,6 +12,6 @@ public:
     void Draw();
 
 private:
-    std::array<Item, 8> slots;
+    std::array<std::shared_ptr<Item>, 8> slots;
 
 };
