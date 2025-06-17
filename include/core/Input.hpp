@@ -10,6 +10,9 @@ namespace Input {
     bool IsMoveDownPressed();
     bool IsMoveRightPressed();
     bool IsRunHeld();
+
+    // Hotbar
+    int IsHotbarKeyPressed();
     
     // Interacts
     bool IsInteractPressed();

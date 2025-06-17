@@ -11,6 +11,14 @@ namespace Input {
     bool IsMoveDownPressed() { return IsKeyDown(KEY_S); }
     bool IsMoveRightPressed() { return IsKeyDown(KEY_D); }
     bool IsRunHeld() { return IsKeyDown(KEY_LEFT_SHIFT); }
+
+    // Hotbar
+    int IsHotbarKeyPressed() { 
+        for (int i = 0; i < 4; i++) {
+            if (IsKeyDown(KEY_ONE + i)) return i;
+        }
+        return -1;
+    }
     
     // Interacts
     bool IsInteractPressed() { return IsKeyPressed(KEY_E); }

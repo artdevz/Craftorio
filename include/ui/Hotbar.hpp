@@ -13,5 +13,6 @@ public:
 
 private:
     std::array<std::shared_ptr<Item>, 8> slots;
+    int selectedSlot = 0;
 
 };
