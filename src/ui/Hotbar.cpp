@@ -9,7 +9,6 @@ Hotbar::Hotbar() {}
 void Hotbar::Update() {
     int hotbarKey = Input::IsHotbarKeyPressed();
     if (hotbarKey != -1) selectedSlot = hotbarKey;
-    Draw();
 }
 
 void Hotbar::Draw() {

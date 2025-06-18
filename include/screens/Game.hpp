@@ -4,6 +4,7 @@
 #include "core/StructureManager.hpp"
 #include "core/TileManager.hpp"
 #include "entities/Player.hpp"
+#include "ui/HUD.hpp"
 #include "ui/Hotbar.hpp"
 #include "ui/Inventory.hpp"
 
@@ -22,6 +23,7 @@ public:
 private:
     CameraManager camera;
     Player* player;
+    HUD hud;
     Hotbar hotbar;
     Inventory inventory;
     TileManager tileManager;

@@ -3,17 +3,13 @@
 
 Vector2 WindowManager::resolution = { 0, 0 };
 
-WindowManager::WindowManager() {
-    this->resolution = { (float)1280, (float)720 };
-    InitWindow(1280, 720, "Unnamed Game");
-    SetTargetFPS(60);
-    SetExitKey(KEY_Q);
-}
+WindowManager::WindowManager() : 
+    WindowManager(1280, 720, 60, "Unnamed Game") {}
 
 WindowManager::WindowManager(int width, int height, int fpsLimit, std::string title) {
     this->resolution = { (float)width, (float)height };
     InitWindow(width, height, title.c_str());
-    SetTargetFPS(fpsLimit);
+    SetTargetFPS(fpsLimit <= FPS_UNLIMITED ? 2147483647 : fpsLimit); // 2147483647 = Maior Int32
     SetExitKey(KEY_Q);
 }
 

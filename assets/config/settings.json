@@ -1,15 +1,13 @@
 {
-
     "audio": {
         "effects": 100,
         "master": 100,
         "music": 100,
         "mute": false
     },
-
     "controls": {
         "keyBindings": {
-            "inventory": "E",
+            "inventory": "I",
             "moveDown": "S",
             "moveLeft": "A",
             "moveRight": "D",
@@ -17,15 +15,11 @@
         },
         "mouseSensitivity": 1.0
     },
-
     "language": "en",
-
     "video": {
         "display": 0,
-        "fpsLimit": 144,
-        "fpsUnlimited": false,
+        "fpsLimit": 0,
         "height": 720,
         "width": 1280
     }
-
 }

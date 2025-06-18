@@ -2,10 +2,15 @@
 #include <raylib.h>
 #include "screens/Game.hpp"
 #include "core/WindowManager.hpp"
+#include "core/Settings.hpp"
 
 int main() {
     SetTraceLogLevel(LOG_DEBUG);
-    auto window = std::make_unique<WindowManager>(1280, 720, 999999, "Unnamed Game");
+
+    Settings::Load();
+    SettingsData& config = Settings::Get();    
+    auto window = std::make_unique<WindowManager>(config.video.width, config.video.height, config.video.fpsLimit, "Unnamed Game");
+    
     Game game;
     game.Init();
 
@@ -14,6 +19,8 @@ int main() {
         game.Draw();
     }
 
+    Settings::Save();
+    TraceLog(LOG_INFO, "Saindo...");
     CloseWindow();
     return 0;
 }

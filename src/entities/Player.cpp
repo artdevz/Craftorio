@@ -5,8 +5,7 @@
 #include "utils/Collision.hpp"
 
 Player::Player() : 
-    position({0, 0}),
-    moveSpeed(170.0f) {}
+    position({0, 0}), moveSpeed(170.0f) {}
 
 void Player::Update(const StructureList& nearbyStructures, const TileList& nearbyTiles) {
     Vector2 nextPos = position;

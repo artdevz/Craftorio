@@ -5,6 +5,7 @@
 class WindowManager {
 
 public:
+    static constexpr int FPS_UNLIMITED = 0;
     static Vector2 resolution;
 
     WindowManager();
