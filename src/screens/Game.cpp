@@ -24,6 +24,8 @@ void Game::Init() {
     Texture2D stoneTexture = LoadTexture("assets/images/structures/Stone.png");
     Texture2D wallTileTexture = LoadTexture("assets/images/tiles/WallTile.png");
     Texture2D grassTexture = LoadTexture("assets/images/structures/Grass.png");
+    Texture2D smallTreeTexture = LoadTexture("assets/images/structures/SmallTree.png");
+    Texture2D bigTreeTexture = LoadTexture("assets/images/structures/BigTree.png");
 
     for (int y = -1024; y < 1024; y += Tile::SIZE) for (int x = -1024; x < 1024; x += Tile::SIZE) {
         auto grassTile = std::make_shared<GrassTile>(Vector2{ (float)x, (float)y }, grassTileTexture);
@@ -32,10 +34,40 @@ void Game::Init() {
 
     auto wallTile = std::make_shared<WallTile>(Vector2{ (float)1200, (float)0 }, wallTileTexture );
     tileManager.AddTile(wallTile);
-    auto rock = std::make_shared<Structure>(Vector2{ (float)256, (float)256 }, stoneTexture, false );
+    
+    auto rock = std::make_shared<Structure>(
+        Vector2{ (float)256, (float)256 },
+        stoneTexture,
+        (Rectangle){ 0, 0, 32, 32},
+        false
+     );
+
+    auto grass = std::make_shared<Structure>(
+        Vector2{ (float)256, (float)128 },
+        grassTexture,
+        (Rectangle){ 0, 0, 32, 32},
+        true
+    );
+    
+    auto smallTree = std::make_shared<Structure>(
+        Vector2{ (float)-256, (float)-256},
+        smallTreeTexture,
+        (Rectangle){ 0, 0, 32, 32},
+        false
+    );
+    
+    auto bigTree = std::make_shared<Structure>(
+        Vector2{ (float)-512, (float)-256},
+        bigTreeTexture,
+        (Rectangle){ 0, 0, 32, 32},
+        false
+    );
+    
     structureManager.AddStructure(rock);
-    auto grass = std::make_shared<Structure>(Vector2{ (float)256, (float)128 }, grassTexture, true);
     structureManager.AddStructure(grass);
+    structureManager.AddStructure(smallTree);
+    structureManager.AddStructure(bigTree);
+    
     TraceLog(LOG_INFO, "Game Iniciado");
 }
 
@@ -75,8 +107,8 @@ void Game::Draw() {
             )) tile->Draw();
         }
 
-        structureManager.Draw();
         player->Draw();
+        structureManager.Draw();
         DrawText("Pressione W A S D para movimentar", 50, 50, 16, BLACK);
         EndMode2D();
         DrawText(("Coords: x" + std::to_string((int)player->GetPosition().x) +", y" + std::to_string((int)player->GetPosition().y)).c_str(), 10, 30, 20, BLACK);

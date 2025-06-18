@@ -18,7 +18,7 @@ void Player::Update(const StructureList& nearbyStructures, const TileList& nearb
     if (Input::IsMoveRightPressed()) nextPos.x += moveSpeed * deltaTime * sprint;
 
     bool blockedByStructure = CheckCollision<Structure>(nearbyStructures, [&](const Structure& structure) {
-        return !structure.IsWalkable() && CheckCollisionCircleRec(nextPos, 16, structure.GetBounds());
+        return !structure.IsWalkable() && CheckCollisionCircleRec(nextPos, 16, structure.GetHitBox());
     });
 
     bool blockedByTile = CheckCollision<Tile>(nearbyTiles, [&](const Tile& tile) {

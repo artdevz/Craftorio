@@ -4,7 +4,7 @@
 class Grass : public Structure {
 
 public:
-    Grass(Vector2 position, Texture2D);
+    Grass(Vector2 position, Texture2D texture);
 
     void Interact() override;
 

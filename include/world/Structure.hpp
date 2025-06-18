@@ -5,7 +5,7 @@ class Structure {
 
 public:
     Structure();
-    Structure(Vector2 position, const Texture2D& texture, bool isWalkable);
+    Structure(Vector2 position, const Texture2D& texture, Rectangle hitbox, bool isWalkable);
     virtual ~Structure() = default;
 
     virtual void Update();
@@ -13,12 +13,14 @@ public:
     virtual void Interact();
 
     Vector2 GetPosition() const;
-    bool IsWalkable() const;
     Rectangle GetBounds() const;
+    Rectangle GetHitBox() const;
+    bool IsWalkable() const;
 
 protected:
     Vector2 position;
     Texture2D texture;
+    Rectangle hitbox;
     bool isWalkable;
 
 };
