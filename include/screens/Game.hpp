@@ -3,6 +3,7 @@
 #include "core/CameraManager.hpp"
 #include "core/StructureManager.hpp"
 #include "core/TileManager.hpp"
+#include "core/GameTime.hpp"
 #include "entities/Player.hpp"
 #include "ui/HUD.hpp"
 #include "ui/Hotbar.hpp"
@@ -28,5 +29,6 @@ private:
     Inventory inventory;
     TileManager tileManager;
     StructureManager structureManager;
+    GameTime time;
 
 };

@@ -9,7 +9,8 @@ Game::Game() :
     camera({ (float)1280 / 2, (float)720 / 2}, { (float)1280 / 2, (float)720 / 2}),
     player(nullptr),
     hotbar(),
-    inventory() {
+    inventory(),
+    time() {
         TraceLog(LOG_INFO, "Game criado");
     }
 
@@ -93,6 +94,7 @@ void Game::Update() {
             }
         }
     }
+    time.Update(GetFrameTime());
 }
 
 void Game::Draw() {
@@ -115,6 +117,8 @@ void Game::Draw() {
     }
 
     DrawFPS(10, 10);
+    DrawText(("RealTime: " + std::to_string(time.GetGameTime())).c_str(), 10, 100, 20, BLACK);
+    DrawText((("GameTime: " + time.GetTimeString()).c_str()), 10, 130, 20, BLACK);
     hud.Draw();
     hotbar.Draw();
     inventory.Draw();
