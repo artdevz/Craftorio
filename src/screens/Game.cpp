@@ -108,7 +108,7 @@ void Game::Draw() {
         }
 
         player->Draw();
-        structureManager.Draw();
+        structureManager.Draw(player->GetPosition());
         DrawText("Pressione W A S D para movimentar", 50, 50, 16, BLACK);
         EndMode2D();
         DrawText(("Coords: x" + std::to_string((int)player->GetPosition().x) +", y" + std::to_string((int)player->GetPosition().y)).c_str(), 10, 30, 20, BLACK);

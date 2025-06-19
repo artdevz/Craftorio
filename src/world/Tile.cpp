@@ -7,7 +7,7 @@ void Tile::Update() {}
 
 void Tile::Draw() const {
     DrawTexture(texture, (int)position.x, (int)position.y, WHITE);
-    if (structure) structure->Draw();
+    //if (structure) structure->Draw(nullptr);
 }
 
 Vector2 Tile::GetPosition() const { return position; }

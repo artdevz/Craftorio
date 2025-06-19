@@ -9,7 +9,7 @@ public:
     virtual ~Structure() = default;
 
     virtual void Update();
-    virtual void Draw() const;
+    virtual void Draw(Vector2 playerPosition) const;
     virtual void Interact();
 
     Vector2 GetPosition() const;
@@ -18,6 +18,7 @@ public:
     bool IsWalkable() const;
 
 protected:
+    int baseOffset = 32; // Quantidade de Pixel que a textura tá "acima" da posição real (Hitbox)
     Vector2 position;
     Texture2D texture;
     Rectangle hitbox;

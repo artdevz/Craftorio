@@ -8,7 +8,7 @@ class StructureManager {
 public:
     void AddStructure(std::shared_ptr<Structure> structure);
     void Update();
-    void Draw() const;
+    void Draw(Vector2 playerPosition) const;
 
     const std::vector<std::shared_ptr<Structure>>& GetStructures() const;
 
