@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "core/AssetManager.hpp"
 #include "core/CameraManager.hpp"
 #include "core/StructureManager.hpp"
 #include "core/TileManager.hpp"
@@ -29,6 +30,7 @@ private:
     Inventory inventory;
     TileManager tileManager;
     StructureManager structureManager;
+    AssetManager assetManager;
     GameTime time;
 
 };

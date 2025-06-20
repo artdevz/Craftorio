@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <cstdint>
+#include "core/GameCalendar.hpp"
 
 class GameTime {
 
@@ -9,7 +10,11 @@ public:
 
     int64_t GetGameTime() const; // Game Time
 
-    std::string GetTimeString() const;
+    GameCalendar GetCalendar() const;
+
+    void FormatDateString(char* buffer, size_t bufferSize) const;
+    void FormatSeasonString(char* buffer, size_t bufferSize) const;
+    void FormatPhaseString(char* buffer, size_t bufferSize) const;
 
 private:
     float realTime = 0.0f; // Real Time

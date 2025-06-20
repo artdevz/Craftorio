@@ -1,9 +1,13 @@
 #include <raylib.h>
 #include <memory>
 #include <string>
+#include <inttypes.h>
 #include "screens/Game.hpp"
 #include "core/Input.hpp"
 #include "world/tiles/Aggregator.hpp"
+#include "enums/Season.hpp"
+
+#include "items/ShovelData.hpp"
 
 Game::Game() : 
     camera({ (float)1280 / 2, (float)720 / 2}, { (float)1280 / 2, (float)720 / 2}),
@@ -16,58 +20,40 @@ Game::Game() :
 
 Game::~Game() {
     delete player;
+    assetManager.UnloadAll();
 }
 
 void Game::Init() {
     TraceLog(LOG_INFO, "Iniciando o Game");
     player = new Player();
-    Texture2D grassTileTexture = LoadTexture("assets/images/tiles/GrassTile.png");
-    Texture2D stoneTexture = LoadTexture("assets/images/structures/Stone.png");
-    Texture2D wallTileTexture = LoadTexture("assets/images/tiles/WallTile.png");
-    Texture2D grassTexture = LoadTexture("assets/images/structures/Grass.png");
-    Texture2D smallTreeTexture = LoadTexture("assets/images/structures/SmallTree.png");
-    Texture2D bigTreeTexture = LoadTexture("assets/images/structures/BigTree.png");
 
+    assetManager.LoadTexture("grassTile", "assets/images/tiles/GrassTile.png");
+    assetManager.LoadTexture("wallTile", "assets/images/tiles/WallTile.png");
+    assetManager.LoadTexture("stone", "assets/images/structures/Stone.png");
+    assetManager.LoadTexture("grass", "assets/images/structures/Grass.png");
+    assetManager.LoadTexture("smallTree", "assets/images/structures/SmallTree.png");
+    assetManager.LoadTexture("bigTree", "assets/images/structures/BigTree.png");
+
+    auto& grassTileTexture = assetManager.GetTexture("grassTile");
     for (int y = -1024; y < 1024; y += Tile::SIZE) for (int x = -1024; x < 1024; x += Tile::SIZE) {
         auto grassTile = std::make_shared<GrassTile>(Vector2{ (float)x, (float)y }, grassTileTexture);
         tileManager.AddTile(grassTile);
     }
 
-    auto wallTile = std::make_shared<WallTile>(Vector2{ (float)1200, (float)0 }, wallTileTexture );
-    tileManager.AddTile(wallTile);
-    
-    auto rock = std::make_shared<Structure>(
-        Vector2{ (float)256, (float)256 },
-        stoneTexture,
-        (Rectangle){ 0, 0, 32, 32},
-        false
-     );
+    tileManager.AddTile(std::make_shared<WallTile>(
+        Vector2{ 1200.0f, 0.0f }, assetManager.GetTexture("wallTile")));
 
-    auto grass = std::make_shared<Structure>(
-        Vector2{ (float)256, (float)128 },
-        grassTexture,
-        (Rectangle){ 0, 0, 32, 32},
-        true
-    );
-    
-    auto smallTree = std::make_shared<Structure>(
-        Vector2{ (float)-256, (float)-256},
-        smallTreeTexture,
-        (Rectangle){ 0, 0, 32, 32},
-        false
-    );
-    
-    auto bigTree = std::make_shared<Structure>(
-        Vector2{ (float)-512, (float)-256},
-        bigTreeTexture,
-        (Rectangle){ 0, 0, 32, 32},
-        false
-    );
-    
-    structureManager.AddStructure(rock);
-    structureManager.AddStructure(grass);
-    structureManager.AddStructure(smallTree);
-    structureManager.AddStructure(bigTree);
+    structureManager.AddStructure(std::make_shared<Structure>(
+        Vector2{ 256.0f, 256.0f }, assetManager.GetTexture("stone"), Rectangle{0, 0, 32, 32}, false));
+
+    structureManager.AddStructure(std::make_shared<Structure>(
+        Vector2{ 256.0f, 128.0f }, assetManager.GetTexture("grass"), Rectangle{0, 0, 32, 32}, true));
+
+    structureManager.AddStructure(std::make_shared<Structure>(
+        Vector2{ -256.0f, -256.0f }, assetManager.GetTexture("smallTree"), Rectangle{0, 0, 32, 32}, false));
+
+    structureManager.AddStructure(std::make_shared<Structure>(
+        Vector2{ -512.0f, -256.0f }, assetManager.GetTexture("bigTree"), Rectangle{0, 0, 32, 32}, false));
     
     TraceLog(LOG_INFO, "Game Iniciado");
 }
@@ -87,8 +73,8 @@ void Game::Update() {
 
             for (const auto& tile : tileManager.GetTiles()) {
                 if (CheckCollisionPointRec(worldMouse, tile->GetBounds())) {
-                    // Item dummy;
-                    // tile->Interact(dummy);
+                    static ShovelData shovel;
+                    tile->Interact(shovel);
                     break;
                 }
             }
@@ -103,6 +89,7 @@ void Game::Draw() {
 
     if (player) {
         BeginMode2D(camera.GetCamera2D());
+
         for (const auto& tile : tileManager.GetTiles()) {
             if (CheckCollisionRecs( { tile->GetPosition().x, tile->GetPosition().y, (float)Tile::SIZE, (float)Tile::SIZE },
                 { camera.GetCamera2D().target.x - camera.GetCamera2D().offset.x, camera.GetCamera2D().target.y - camera.GetCamera2D().offset.y, 1280, 720 }
@@ -113,15 +100,39 @@ void Game::Draw() {
         structureManager.Draw(player->GetPosition());
         DrawText("Pressione W A S D para movimentar", 50, 50, 16, BLACK);
         EndMode2D();
-        DrawText(("Coords: x" + std::to_string((int)player->GetPosition().x) +", y" + std::to_string((int)player->GetPosition().y)).c_str(), 10, 30, 20, BLACK);
+
+        char coordBuffer[64];
+        snprintf(coordBuffer, sizeof(coordBuffer), "Coords: x%d, y%d", (int)player->GetPosition().x, (int)player->GetPosition().y);
+        DrawText(coordBuffer, 10, 30, 20, BLACK);
     }
 
     DrawFPS(10, 10);
-    DrawText(("RealTime: " + std::to_string(time.GetGameTime())).c_str(), 10, 100, 20, BLACK);
-    DrawText((("GameTime: " + time.GetTimeString()).c_str()), 10, 130, 20, BLACK);
+
+    char realtimeBuffer[64];
+    snprintf(realtimeBuffer, sizeof(realtimeBuffer), "RealTime: %" PRId64, time.GetGameTime());
+    DrawText(realtimeBuffer, 10, 100, 20, BLACK);
+
+    char gameTimeBuffer[128];
+    time.FormatDateString(gameTimeBuffer, sizeof(gameTimeBuffer));
+    DrawText(gameTimeBuffer, 10, 130, 20, BLACK);
+
+    Color seasonColor;
+    switch (time.GetCalendar().environment.season) {
+        case Season::SPRING: seasonColor = PINK; break;
+        case Season::SUMMER: seasonColor = GREEN; break;
+        case Season::AUTUMN: seasonColor = ORANGE; break;
+        case Season::WINTER: seasonColor = LIGHTGRAY; break;
+        default: seasonColor = WHITE; break;
+    }
+
+    char seasonBuffer[32];
+    time.FormatSeasonString(seasonBuffer, sizeof(seasonBuffer));
+    DrawText(seasonBuffer, 10, 160, 20, seasonColor);
+
     hud.Draw();
     hotbar.Draw();
     inventory.Draw();
+
     EndDrawing();
 }
 
