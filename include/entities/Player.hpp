@@ -18,6 +18,7 @@ public:
     void Draw();
 
     Vector2 GetPosition() const;
+    void SetPosition(Vector2 position);
 
 private:
     Vector2 position;

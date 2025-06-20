@@ -1,7 +1,9 @@
 #pragma once
 #include <raylib.h>
+#include "entities/Player.hpp"
+#include "core/GameTime.hpp"
 
-namespace {
-    void SavePlayerPosition(const Vector2& position);
-    Vector2 LoadPlayerPosition();
+namespace SaveManager {
+    void SaveWorld(const Player& player, const GameTime& time);
+    void LoadWorld(Player& player, GameTime& time);
 }

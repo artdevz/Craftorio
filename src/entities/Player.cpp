@@ -36,3 +36,5 @@ void Player::Draw() {
 }
 
 Vector2 Player::GetPosition() const { return this->position; }
+
+void Player::SetPosition(Vector2 position) { this->position = position; }

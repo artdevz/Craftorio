@@ -5,6 +5,8 @@ void GameTime::Update(float delta) { realTime += delta; }
 
 int64_t GameTime::GetGameTime() const { return static_cast<int64_t>(realTime * 60.0f); } // 1 segundo (RealTime) = 1 minuto (GameTime)
 
+void GameTime::SetGameTime(int64_t gameTime) { realTime = gameTime / 60.0f; }
+
 GameCalendar GameTime::GetCalendar() const {
     int64_t time = GetGameTime();
 

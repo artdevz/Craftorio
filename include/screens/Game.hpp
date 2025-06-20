@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <memory>
 #include "core/AssetManager.hpp"
 #include "core/CameraManager.hpp"
 #include "core/StructureManager.hpp"
@@ -20,11 +21,9 @@ public:
     void Update();
     void Draw();
 
-    void SetPlayer(Player* player);
-
 private:
     CameraManager camera;
-    Player* player;
+    std::unique_ptr<Player> player;
     HUD hud;
     Hotbar hotbar;
     Inventory inventory;

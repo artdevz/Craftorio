@@ -4,6 +4,7 @@
 #include <inttypes.h>
 #include "screens/Game.hpp"
 #include "core/Input.hpp"
+#include "core/SaveManager.hpp"
 #include "world/tiles/Aggregator.hpp"
 #include "enums/Season.hpp"
 
@@ -19,13 +20,16 @@ Game::Game() :
     }
 
 Game::~Game() {
-    delete player;
-    assetManager.UnloadAll();
+    if (player) {
+        SaveManager::SaveWorld(*player, time);
+    }
+    //assetManager.UnloadAll(); // Segmantation Fault
 }
 
 void Game::Init() {
     TraceLog(LOG_INFO, "Iniciando o Game");
-    player = new Player();
+    player = std::make_unique<Player>();
+    SaveManager::LoadWorld(*player, time);
 
     assetManager.LoadTexture("grassTile", "assets/images/tiles/GrassTile.png");
     assetManager.LoadTexture("wallTile", "assets/images/tiles/WallTile.png");
@@ -135,5 +139,3 @@ void Game::Draw() {
 
     EndDrawing();
 }
-
-void Game::SetPlayer(Player* player) { this->player = player; }

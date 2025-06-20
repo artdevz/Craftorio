@@ -9,6 +9,7 @@ public:
     void Update(float delta); // Delta: Tempo real entre frames
 
     int64_t GetGameTime() const; // Game Time
+    void SetGameTime(int64_t gameTime);
 
     GameCalendar GetCalendar() const;
 
