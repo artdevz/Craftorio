@@ -12,7 +12,7 @@ void Hotbar::Update() {
 }
 
 void Hotbar::Draw() {
-    float width = WindowManager::resolution.x, height = WindowManager::resolution.y;
+    float width = WindowManager::GetResolution().x, height = WindowManager::GetResolution().y;
     for (int i = 0; i < 8; i++) {
         Rectangle slotRect = { (width - 924) + i * 72, height - 80, 64, 64 };
         DrawRectangleRec(slotRect, DARKGRAY);

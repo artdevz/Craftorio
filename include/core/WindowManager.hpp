@@ -6,14 +6,17 @@ class WindowManager {
 
 public:
     static constexpr int FPS_UNLIMITED = 0;
-    static Vector2 resolution;
 
     WindowManager();
     WindowManager(int width, int height, int fpsLimit, std::string title);
     ~WindowManager();
 
-    void SetResolution(int width, int height);
+    static Vector2 GetResolution();
+    static void SetResolution(int width, int height);
     // void SetDisplay(Display display);
     void SetFpsLimit(int fpsLimit);
+
+private:
+    static Vector2 resolution;
 
 };

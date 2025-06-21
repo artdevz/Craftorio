@@ -6,7 +6,7 @@
 class GameTime {
 
 public:
-    void Update(float delta); // Delta: Tempo real entre frames
+    void Update(double delta); // Delta: Tempo real entre frames
 
     int64_t GetGameTime() const; // Game Time
     void SetGameTime(int64_t gameTime);
@@ -18,6 +18,6 @@ public:
     void FormatPhaseString(char* buffer, size_t bufferSize) const;
 
 private:
-    float realTime = 0.0f; // Real Time
+    double realTime = 0.0f; // Real Time
 
 };

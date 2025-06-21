@@ -1,14 +1,14 @@
 #include "core/GameTime.hpp"
 #include <inttypes.h>
 
-void GameTime::Update(float delta) { realTime += delta; }
+void GameTime::Update(double delta) { realTime += delta; }
 
 int64_t GameTime::GetGameTime() const { return static_cast<int64_t>(realTime * 60.0f); } // 1 segundo (RealTime) = 1 minuto (GameTime)
 
 void GameTime::SetGameTime(int64_t gameTime) { realTime = gameTime / 60.0f; }
 
 GameCalendar GameTime::GetCalendar() const {
-    int64_t time = GetGameTime();
+    int64_t time = GetGameTime() + 6 * 3600;
 
     constexpr int64_t TIME_PER_DAY = 86400;
     constexpr int64_t TIME_PER_LUNAR = TIME_PER_DAY * 8;

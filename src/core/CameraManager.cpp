@@ -7,10 +7,6 @@ CameraManager::CameraManager(Vector2 target, Vector2 offset) {
     camera.zoom = 2.0;
 }
 
-void CameraManager::Update(Vector2 target) {
-    camera.target = target;
-    target = { (float)1280 / 2, (float)720 / 2};
-    camera.offset = { (float)1280 / 2, (float)720 / 2};
-}
+void CameraManager::Update(Vector2 target) { camera.target = target; }
 
 Camera2D CameraManager::GetCamera2D() const { return camera; }

@@ -10,12 +10,13 @@
 
 #include "items/ShovelData.hpp"
 
-Game::Game() : 
-    camera({ (float)1280 / 2, (float)720 / 2}, { (float)1280 / 2, (float)720 / 2}),
+Game::Game(int width, int height) : 
+    camera({ (float)width / 2, (float)height / 2}, { (float)width / 2, (float)height / 2}),
     player(nullptr),
     hotbar(),
     inventory(),
-    time() {
+    time(),
+    gameManager(time) {
         TraceLog(LOG_INFO, "Game criado");
     }
 
@@ -64,6 +65,7 @@ void Game::Init() {
 
 void Game::Update() {
     structureManager.Update();
+    gameManager.Update();
 
     if (player) {
         player->Update(structureManager.GetStructures(), tileManager.GetTiles());
@@ -96,7 +98,7 @@ void Game::Draw() {
 
         for (const auto& tile : tileManager.GetTiles()) {
             if (CheckCollisionRecs( { tile->GetPosition().x, tile->GetPosition().y, (float)Tile::SIZE, (float)Tile::SIZE },
-                { camera.GetCamera2D().target.x - camera.GetCamera2D().offset.x, camera.GetCamera2D().target.y - camera.GetCamera2D().offset.y, 1280, 720 }
+                { camera.GetCamera2D().target.x - camera.GetCamera2D().offset.x, camera.GetCamera2D().target.y - camera.GetCamera2D().offset.y, (float)GetScreenWidth(), (float)GetScreenHeight() }
             )) tile->Draw();
         }
 
@@ -107,18 +109,19 @@ void Game::Draw() {
 
         char coordBuffer[64];
         snprintf(coordBuffer, sizeof(coordBuffer), "Coords: x%d, y%d", (int)player->GetPosition().x, (int)player->GetPosition().y);
-        DrawText(coordBuffer, 10, 30, 20, BLACK);
+        DrawText(coordBuffer, 10, 30, 20, LIGHTGRAY);
     }
 
+    gameManager.DrawOverlay();
     DrawFPS(10, 10);
 
     char realtimeBuffer[64];
     snprintf(realtimeBuffer, sizeof(realtimeBuffer), "RealTime: %" PRId64, time.GetGameTime());
-    DrawText(realtimeBuffer, 10, 100, 20, BLACK);
+    DrawText(realtimeBuffer, 10, 100, 20, LIGHTGRAY);
 
     char gameTimeBuffer[128];
     time.FormatDateString(gameTimeBuffer, sizeof(gameTimeBuffer));
-    DrawText(gameTimeBuffer, 10, 130, 20, BLACK);
+    DrawText(gameTimeBuffer, 10, 130, 20, LIGHTGRAY);
 
     Color seasonColor;
     switch (time.GetCalendar().environment.season) {
@@ -126,7 +129,7 @@ void Game::Draw() {
         case Season::SUMMER: seasonColor = GREEN; break;
         case Season::AUTUMN: seasonColor = ORANGE; break;
         case Season::WINTER: seasonColor = LIGHTGRAY; break;
-        default: seasonColor = WHITE; break;
+        default: seasonColor = LIGHTGRAY; break;
     }
 
     char seasonBuffer[32];

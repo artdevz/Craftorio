@@ -10,7 +10,7 @@ Inventory::Inventory() {}
 void Inventory::Update() { if (Input::IsInventoryTogglePressed()) inventoryState = !inventoryState; }
 
 void Inventory::Draw() {
-    float width = WindowManager::resolution.x, height = WindowManager::resolution.y;
+    float width = WindowManager::GetResolution().x, height = WindowManager::GetResolution().y;
     if (inventoryState) {
         DrawRectangle(width - 932, height - 600, 584, 400, DARKGRAY);
         DrawText("Inventory", width - 922, height - 590, 20, WHITE);

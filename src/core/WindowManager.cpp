@@ -11,11 +11,12 @@ WindowManager::WindowManager(int width, int height, int fpsLimit, std::string ti
     InitWindow(width, height, title.c_str());
     SetTargetFPS(fpsLimit <= FPS_UNLIMITED ? 2147483647 : fpsLimit); // 2147483647 = Maior Int32
     SetExitKey(KEY_Q);
+    //ToggleFullscreen();
 }
 
-WindowManager::~WindowManager() {
-    TraceLog(LOG_INFO, "Saindo da Janela");
-}
+WindowManager::~WindowManager() {}
+
+Vector2 WindowManager::GetResolution() { return resolution; }
 
 void WindowManager::SetResolution(int width, int height) {
     SetWindowSize(width, height);

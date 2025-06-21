@@ -11,12 +11,12 @@ int main() {
     SettingsData& config = Settings::Get();    
     auto window = std::make_unique<WindowManager>(config.video.width, config.video.height, config.video.fpsLimit, "Unnamed Game");
     
-    Game game;
-    game.Init();
+    auto game = std::make_unique<Game>(config.video.width, config.video.height);
+    game->Init();
 
     while (!WindowShouldClose()) {
-        game.Update();
-        game.Draw();
+        game->Update();
+        game->Draw();
     }
 
     Settings::Save();
