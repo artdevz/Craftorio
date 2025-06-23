@@ -9,9 +9,9 @@ int main() {
 
     Settings::Load();
     SettingsData& config = Settings::Get();    
-    auto window = std::make_unique<WindowManager>(config.video.width, config.video.height, config.video.fpsLimit, "Unnamed Game");
+    auto window = std::make_unique<WindowManager>(config.video.width, config.video.height, config.video.fpsLimit, "Craftorio");
     
-    auto game = std::make_unique<Game>(config.video.width, config.video.height);
+    auto game = std::make_unique<Game>();
     game->Init();
 
     while (!WindowShouldClose()) {

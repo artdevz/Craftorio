@@ -2,16 +2,17 @@
 #include <memory>
 #include <string>
 #include <inttypes.h>
+#include <raymath.h>
 #include "screens/Game.hpp"
 #include "core/Input.hpp"
 #include "core/SaveManager.hpp"
-#include "world/tiles/Aggregator.hpp"
+#include "world/Aggregator.hpp"
 #include "enums/Season.hpp"
 
 #include "items/ShovelData.hpp"
 
-Game::Game(int width, int height) : 
-    camera({ (float)width / 2, (float)height / 2}, { (float)width / 2, (float)height / 2}),
+Game::Game() : 
+    camera(),
     player(nullptr),
     hotbar(),
     inventory(),
@@ -32,48 +33,37 @@ void Game::Init() {
     player = std::make_unique<Player>();
     SaveManager::LoadWorld(*player, time);
 
-    assetManager.LoadTexture("grassTile", "assets/images/tiles/GrassTile.png");
-    assetManager.LoadTexture("wallTile", "assets/images/tiles/WallTile.png");
-    assetManager.LoadTexture("stone", "assets/images/structures/Stone.png");
-    assetManager.LoadTexture("grass", "assets/images/structures/Grass.png");
-    assetManager.LoadTexture("smallTree", "assets/images/structures/SmallTree.png");
-    assetManager.LoadTexture("bigTree", "assets/images/structures/BigTree.png");
-
-    auto& grassTileTexture = assetManager.GetTexture("grassTile");
-    for (int y = -1024; y < 1024; y += Tile::SIZE) for (int x = -1024; x < 1024; x += Tile::SIZE) {
-        auto grassTile = std::make_shared<GrassTile>(Vector2{ (float)x, (float)y }, grassTileTexture);
-        tileManager.AddTile(grassTile);
+    for (int x = -128; x < 8; x++) for (int z = -128; z < 8; z++) for (int y = 0; y > -2; y--) {
+        auto grassBlock = std::make_shared<GrassBlock>(Vector3{ (float)x, (float)y, (float)z });
+        blockManager.AddBlock(grassBlock);
     }
+    auto stoneBlock = std::make_shared<StoneBlock>(Vector3{ (float)-20, (float)1, (float)-20 });
+    blockManager.AddBlock(stoneBlock);
 
-    tileManager.AddTile(std::make_shared<WallTile>(
-        Vector2{ 1200.0f, 0.0f }, assetManager.GetTexture("wallTile")));
+    auto stoneBlock1 = std::make_shared<StoneBlock>(Vector3{ (float)-25, (float)1, (float)-20 });
+    blockManager.AddBlock(stoneBlock1);
 
-    structureManager.AddStructure(std::make_shared<Structure>(
-        Vector2{ 256.0f, 256.0f }, assetManager.GetTexture("stone"), Rectangle{0, 0, 32, 32}, false));
+    auto stoneBlock2 = std::make_shared<StoneBlock>(Vector3{ (float)-25, (float)2, (float)-20 });
+    blockManager.AddBlock(stoneBlock2);
 
-    structureManager.AddStructure(std::make_shared<Structure>(
-        Vector2{ 256.0f, 128.0f }, assetManager.GetTexture("grass"), Rectangle{0, 0, 32, 32}, true));
+    auto stoneBlock3 = std::make_shared<StoneBlock>(Vector3{ (float)-26, (float)3, (float)-20 });
+    blockManager.AddBlock(stoneBlock3);
 
-    structureManager.AddStructure(std::make_shared<Structure>(
-        Vector2{ -256.0f, -256.0f }, assetManager.GetTexture("smallTree"), Rectangle{0, 0, 32, 32}, false));
-
-    structureManager.AddStructure(std::make_shared<Structure>(
-        Vector2{ -512.0f, -256.0f }, assetManager.GetTexture("bigTree"), Rectangle{0, 0, 32, 32}, false));
-    
     TraceLog(LOG_INFO, "Game Iniciado");
 }
 
 void Game::Update() {
-    structureManager.Update();
+    blockManager.Update();
     gameManager.Update();
 
     if (player) {
-        player->Update(structureManager.GetStructures(), tileManager.GetTiles());
+        player->Update(blockManager.GetBlocks());
         camera.Update(player->GetPosition());
         hud.Update();
         hotbar.Update();
         inventory.Update();
 
+        /*
         if (Input::IsUseLeftHandPressed()) {
             Vector2 worldMouse = GetScreenToWorld2D(GetMousePosition(), camera.GetCamera2D());
 
@@ -85,60 +75,66 @@ void Game::Update() {
                 }
             }
         }
+        */
     }
     time.Update(GetFrameTime());
 }
 
 void Game::Draw() {
     BeginDrawing();
-    ClearBackground(RAYWHITE);
+    ClearBackground(BLANK);
 
     if (player) {
-        BeginMode2D(camera.GetCamera2D());
+        BeginMode3D(camera.GetCamera3D());
 
-        for (const auto& tile : tileManager.GetTiles()) {
-            if (CheckCollisionRecs( { tile->GetPosition().x, tile->GetPosition().y, (float)Tile::SIZE, (float)Tile::SIZE },
-                { camera.GetCamera2D().target.x - camera.GetCamera2D().offset.x, camera.GetCamera2D().target.y - camera.GetCamera2D().offset.y, (float)GetScreenWidth(), (float)GetScreenHeight() }
-            )) tile->Draw();
+        float maxRenderDistance = 16.0f;
+        Vector3 playerPos = player->GetPosition();
+
+        for (const auto& block : blockManager.GetBlocks()) {
+            Vector3 blockPos = block->GetPosition();
+            float dist = Vector3Distance(blockPos, playerPos);
+
+            if (dist <= maxRenderDistance) block->Draw();
         }
 
         player->Draw();
-        structureManager.Draw(player->GetPosition());
-        DrawText("Pressione W A S D para movimentar", 50, 50, 16, BLACK);
-        EndMode2D();
-
-        char coordBuffer[64];
-        snprintf(coordBuffer, sizeof(coordBuffer), "Coords: x%d, y%d", (int)player->GetPosition().x, (int)player->GetPosition().y);
-        DrawText(coordBuffer, 10, 30, 20, LIGHTGRAY);
+        EndMode3D();
     }
 
     gameManager.DrawOverlay();
-    DrawFPS(10, 10);
+    DrawText("Craftorio Pre-Alpha 1.0", 10, 10, 20, GRAY);
+    DrawFPS(10, 30);
+
+    char coordBuffer[64];
+    snprintf(coordBuffer, sizeof(coordBuffer), "Coords: x%d, y%d, y%d", (int)player->GetPosition().x, (int)player->GetPosition().y, (int)player->GetPosition().z);
+    DrawText(coordBuffer, 10, 50, 20, GRAY);
 
     char realtimeBuffer[64];
     snprintf(realtimeBuffer, sizeof(realtimeBuffer), "RealTime: %" PRId64, time.GetGameTime());
-    DrawText(realtimeBuffer, 10, 100, 20, LIGHTGRAY);
+    DrawText(realtimeBuffer, 10, 70, 20, GRAY);
 
     char gameTimeBuffer[128];
     time.FormatDateString(gameTimeBuffer, sizeof(gameTimeBuffer));
-    DrawText(gameTimeBuffer, 10, 130, 20, LIGHTGRAY);
+    DrawText(gameTimeBuffer, 10, 90, 20, GRAY);
 
     Color seasonColor;
+    
     switch (time.GetCalendar().environment.season) {
-        case Season::SPRING: seasonColor = PINK; break;
-        case Season::SUMMER: seasonColor = GREEN; break;
-        case Season::AUTUMN: seasonColor = ORANGE; break;
-        case Season::WINTER: seasonColor = LIGHTGRAY; break;
+        case Season::SPRING: seasonColor = { 250, 50, 100, 255 }; break;
+        case Season::SUMMER: seasonColor = { 20, 170, 0, 255 }; break;
+        case Season::AUTUMN: seasonColor = { 255, 165, 0, 255 }; break;
+        case Season::WINTER: seasonColor = { 160, 245, 250, 255 }; break;
         default: seasonColor = LIGHTGRAY; break;
     }
 
+
     char seasonBuffer[32];
     time.FormatSeasonString(seasonBuffer, sizeof(seasonBuffer));
-    DrawText(seasonBuffer, 10, 160, 20, seasonColor);
-
-    hud.Draw();
+    DrawText(seasonBuffer, 10, 110, 20, seasonColor);
+    
+    //hud.Draw();
     hotbar.Draw();
     inventory.Draw();
-
+    
     EndDrawing();
 }

@@ -4,8 +4,7 @@
 #include "core/AssetManager.hpp"
 #include "core/CameraManager.hpp"
 #include "core/GameManager.hpp"
-#include "core/StructureManager.hpp"
-#include "core/TileManager.hpp"
+#include "core/BlockManager.hpp"
 #include "core/GameTime.hpp"
 #include "entities/Player.hpp"
 #include "ui/HUD.hpp"
@@ -15,7 +14,7 @@
 class Game {
 
 public:
-    Game(int width, int height);
+    Game();
     ~Game();
 
     void Init();
@@ -30,8 +29,9 @@ private:
     Inventory inventory;
     GameTime time;
     GameManager gameManager;
-    TileManager tileManager;
-    StructureManager structureManager;
+    BlockManager blockManager;
+    //TileManager tileManager;
+    //StructureManager structureManager;
     AssetManager assetManager;
 
 };

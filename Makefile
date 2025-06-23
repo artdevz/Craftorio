@@ -20,7 +20,7 @@ SRCS = $(foreach dir, $(SUBDIRS), $(wildcard $(dir)/*.cpp))
 OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 # Bin
-EXEC = $(BIN_DIR)/GAME
+EXEC = $(BIN_DIR)/Craftorio
 
 # Exe
 $(EXEC): $(OBJS)

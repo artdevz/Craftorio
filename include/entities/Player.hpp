@@ -3,25 +3,29 @@
 #include <memory>
 #include <vector>
 
-class Structure; // Forward
-class Tile;
+class Block; // Forward
 
-using StructureList = std::vector<std::shared_ptr<Structure>>; // Futuramente colocar um Callback pra função canMove()
-using TileList = std::vector<std::shared_ptr<Tile>>;
+using BlockList = std::vector<std::shared_ptr<Block>>;
+
+static constexpr float PLAYER_HEIGHT = 1.8f;
 
 class Player {
 
 public:
     Player();
 
-    void Update(const StructureList& nearbyStructures, const TileList& nearbyTiles);
+    void Update(const BlockList& nearbyBlocks);
     void Draw();
 
-    Vector2 GetPosition() const;
-    void SetPosition(Vector2 position);
+    Vector3 GetPosition() const;
+    void SetPosition(Vector3 position);
+
+    bool IsOnGround() const;
 
 private:
-    Vector2 position;
+    Vector3 position;
+    bool isOnGround;
     float moveSpeed;
+    float velocityY;
 
 };

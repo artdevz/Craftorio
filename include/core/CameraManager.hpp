@@ -4,12 +4,12 @@
 class CameraManager {
 
 public:
-    CameraManager(Vector2 target, Vector2 offset);
+    CameraManager();
     
-    void Update(Vector2 target);
-    Camera2D GetCamera2D() const;
+    void Update(Vector3 playerPosition);
+    Camera3D GetCamera3D() const;
 
 private:
-    Camera2D camera;
+    Camera3D camera;
 
 };

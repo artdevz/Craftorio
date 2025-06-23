@@ -1,10 +1,9 @@
 #pragma once
-#include <functional>
 #include <vector>
 #include <memory>
 
-template<typename T>
-bool CheckCollision(const std::vector<std::shared_ptr<T>>& list, std::function<bool(const T&)> condition) {
+template<typename T, typename Func>
+bool CheckCollision(const std::vector<std::shared_ptr<T>>& list, Func condition) {
     for (const auto& item : list) {
         if (condition(*item)) return true;
     }

@@ -10,6 +10,7 @@ namespace Input {
     bool IsMoveLeftPressed() { return IsKeyDown(KEY_A); }
     bool IsMoveDownPressed() { return IsKeyDown(KEY_S); }
     bool IsMoveRightPressed() { return IsKeyDown(KEY_D); }
+    bool IsSpacePressed() { return IsKeyDown(KEY_SPACE); }
     bool IsRunHeld() { return IsKeyDown(KEY_LEFT_SHIFT); }
 
     // Hotbar

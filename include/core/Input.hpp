@@ -9,6 +9,7 @@ namespace Input {
     bool IsMoveLeftPressed();
     bool IsMoveDownPressed();
     bool IsMoveRightPressed();
+    bool IsSpacePressed();
     bool IsRunHeld();
 
     // Hotbar

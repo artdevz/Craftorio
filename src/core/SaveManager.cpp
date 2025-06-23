@@ -14,6 +14,7 @@ namespace SaveManager {
 
         data["player"]["position"]["x"] = player.GetPosition().x;
         data["player"]["position"]["y"] = player.GetPosition().y;
+        data["player"]["position"]["z"] = player.GetPosition().z;
 
         data["time"]["gameTime"] = time.GetGameTime();
 
@@ -37,7 +38,7 @@ namespace SaveManager {
 
         if (data.contains("player") && data["player"].contains("position")) {
             auto pos = data["player"]["position"];
-            player.SetPosition( { pos.value("x", 0.0f), pos.value("y", 0.0f) } );
+            player.SetPosition( { pos.value("x", 0.0f), pos.value("y", 0.0f), pos.value("z", 0.0f) } );
         }
 
         if (data.contains("time")) {
