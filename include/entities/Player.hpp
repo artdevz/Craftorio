@@ -14,7 +14,7 @@ class Player {
 public:
     Player();
 
-    void Update(const BlockList& nearbyBlocks);
+    void Update(const Camera3D& camera, const BlockList& nearbyBlocks);
     void Draw();
 
     Vector3 GetPosition() const;

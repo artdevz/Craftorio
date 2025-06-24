@@ -35,11 +35,12 @@ void Game::Init() {
     SaveManager::LoadWorld(*player, time);
 
     for (int x = -128; x < 8; x++) for (int z = -128; z < 8; z++) for (int y = 0; y > -1; y--) {
-        if (x > -4 && z > -4 && (x < 0 || z < 0)) continue;
+        //if (x > -4 && z > -4 && (x < 0 || z < 0)) continue;
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::GRASS );
     }
 
     blockManager.AddBlockAt( { (float)-30, (float)1, (float)-30 }, BlockType::LEAVES );
+    blockManager.AddBlockAt( { (float)-35, (float)2, (float)-35 }, BlockType::LEAVES );
 
     for (int x = 0; x < 8; x++) for (int z = 0; z < 8; z++) for (int y = -1; y > -2; y--) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::DIRT );
@@ -61,8 +62,8 @@ void Game::Update() {
     gameManager.Update();
 
     if (player) {
-        player->Update(blockManager.GetBlocks());
-        camera.Update(player->GetPosition());
+        player->Update(camera.GetCamera3D(), blockManager.GetBlocks());
+        camera.Update(player->GetPosition(), GetFrameTime());
         hud.Update();
         hotbar.Update();
         inventory.Update();
@@ -106,11 +107,11 @@ void Game::Draw() {
     }
 
     gameManager.DrawOverlay();
-    DrawText("Craftorio Pre-Alpha 1.0", 10, 10, 20, GRAY);
+    DrawText("Craftorio Pre-Alpha 1.1", 10, 10, 20, GRAY);
     DrawFPS(10, 30);
 
     char coordBuffer[64];
-    snprintf(coordBuffer, sizeof(coordBuffer), "Coords: x%d, y%d, y%d", (int)player->GetPosition().x, (int)player->GetPosition().y, (int)player->GetPosition().z);
+    snprintf(coordBuffer, sizeof(coordBuffer), "Coords: x%d, y%d, z%d", (int)player->GetPosition().x, (int)player->GetPosition().y, (int)player->GetPosition().z);
     DrawText(coordBuffer, 10, 50, 20, GRAY);
 
     char realtimeBuffer[64];

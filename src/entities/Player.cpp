@@ -3,11 +3,12 @@
 #include "world/Block.hpp"
 #include "utils/Collision.hpp"
 #include <cmath>
+#include <raymath.h>
 
 Player::Player() : 
     position({ 0, 0, 0 }), isOnGround(false), moveSpeed(5.0f), velocityY(0.0f) {}
 
-void Player::Update(const BlockList& nearbyBlocks) {
+void Player::Update(const Camera3D& camera, const BlockList& nearbyBlocks) {
     float deltaTime = GetFrameTime();
     float sprint = Input::IsRunHeld() ? 1.5f : 1.0f;
 
@@ -18,7 +19,7 @@ void Player::Update(const BlockList& nearbyBlocks) {
     Vector3 nextPos = position;
 
     velocityY -= gravity * deltaTime;
-    if (Input::IsSpacePressed() && isOnGround) {
+    if (Input::IsJumpPressed() && isOnGround) {
         velocityY = jumpStrength;
         isOnGround = false; 
     }
@@ -41,11 +42,18 @@ void Player::Update(const BlockList& nearbyBlocks) {
     isOnGround = blockedY;
 
     // Horizontal
+    Vector3 forward = Vector3Normalize(Vector3Subtract(camera.target, camera.position));
+    forward.y = 0;
+
+    Vector3 right = Vector3Normalize(Vector3CrossProduct(forward, { 0.0f, 1.0f, 0.0f }));
+
     Vector3 direction = {0};
-    if (Input::IsMoveUpPressed())    direction.z--;
-    if (Input::IsMoveLeftPressed())  direction.x--;
-    if (Input::IsMoveDownPressed())  direction.z++;
-    if (Input::IsMoveRightPressed()) direction.x++;
+    if (Input::IsMoveForwardPressed())    direction = Vector3Add(direction, forward);
+    if (Input::IsMoveBackwardPressed())  direction = Vector3Subtract(direction, forward);
+
+    if (Input::IsMoveLeftPressed())  direction = Vector3Subtract(direction, right);
+    if (Input::IsMoveRightPressed()) direction = Vector3Add(direction, right);
+    direction = Vector3Normalize(direction);
     
     Vector3 horizontalPos = nextPos;
     horizontalPos.x += direction.x * moveSpeed * deltaTime * sprint;

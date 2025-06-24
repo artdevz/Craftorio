@@ -7,7 +7,7 @@
 Hotbar::Hotbar() {}
 
 void Hotbar::Update() {
-    int hotbarKey = Input::IsHotbarKeyPressed();
+    int hotbarKey = Input::GetHotbarKeyPressed();
     if (hotbarKey != -1) selectedSlot = hotbarKey;
 }
 

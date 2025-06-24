@@ -5,15 +5,17 @@ namespace Input {
     void Update();
 
     // Movement
-    bool IsMoveUpPressed();
+    bool IsMoveForwardPressed();
+    bool IsMoveBackwardPressed();
+
     bool IsMoveLeftPressed();
-    bool IsMoveDownPressed();
     bool IsMoveRightPressed();
-    bool IsSpacePressed();
+
+    bool IsJumpPressed();
     bool IsRunHeld();
 
     // Hotbar
-    int IsHotbarKeyPressed();
+    int GetHotbarKeyPressed();
     
     // Interacts
     bool IsInteractPressed();
@@ -24,5 +26,8 @@ namespace Input {
     bool IsInventoryTogglePressed();
     bool IsPauseMenuPressed();
     bool IsMapTogglePressed();
+
+    // Camera
+    bool IsCameraTogglePressed();
 
 }

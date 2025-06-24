@@ -6,15 +6,17 @@ namespace Input {
     void Update() {}
 
     // Movement
-    bool IsMoveUpPressed() { return IsKeyDown(KEY_W); }
+    bool IsMoveForwardPressed() { return IsKeyDown(KEY_W); }
+    bool IsMoveBackwardPressed() { return IsKeyDown(KEY_S); }
+
     bool IsMoveLeftPressed() { return IsKeyDown(KEY_A); }
-    bool IsMoveDownPressed() { return IsKeyDown(KEY_S); }
     bool IsMoveRightPressed() { return IsKeyDown(KEY_D); }
-    bool IsSpacePressed() { return IsKeyDown(KEY_SPACE); }
+
+    bool IsJumpPressed() { return IsKeyDown(KEY_SPACE); }
     bool IsRunHeld() { return IsKeyDown(KEY_LEFT_SHIFT); }
 
     // Hotbar
-    int IsHotbarKeyPressed() { 
+    int GetHotbarKeyPressed() { 
         for (int i = 0; i < 4; i++) {
             if (IsKeyDown(KEY_ONE + i)) return i;
         }
@@ -30,5 +32,8 @@ namespace Input {
     bool IsInventoryTogglePressed() { return IsKeyPressed(KEY_I); }
     bool IsPauseMenuPressed() { return IsKeyPressed(KEY_ESCAPE); }
     bool IsMapTogglePressed() { return IsKeyPressed(KEY_M); }
+
+    // Camera
+    bool IsCameraTogglePressed() { return IsKeyPressed(KEY_V); }
 
 }
