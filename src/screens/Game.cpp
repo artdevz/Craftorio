@@ -34,8 +34,7 @@ void Game::Init() {
     player = std::make_unique<Player>();
     SaveManager::LoadWorld(*player, time);
 
-    for (int x = -128; x < 8; x++) for (int z = -128; z < 8; z++) for (int y = 0; y > -1; y--) {
-        //if (x > -4 && z > -4 && (x < 0 || z < 0)) continue;
+    for (int x = -1024; x < 1024; x++) for (int z = -1024; z < 1024; z++) for (int y = 0; y > -1; y--) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::GRASS );
     }
 
@@ -58,29 +57,16 @@ void Game::Init() {
 }
 
 void Game::Update() {
-    blockManager.Update();
     gameManager.Update();
 
     if (player) {
-        player->Update(camera.GetCamera3D(), blockManager.GetBlocks());
+        float checkRadius = 5.0f;
+        auto nearbyBlocks = blockManager.GetNearbyBlocks(player->GetPosition(), checkRadius);
+        player->Update(camera.GetCamera3D(), nearbyBlocks);
         camera.Update(player->GetPosition(), GetFrameTime());
         hud.Update();
         hotbar.Update();
         inventory.Update();
-
-        /*
-        if (Input::IsUseLeftHandPressed()) {
-            Vector2 worldMouse = GetScreenToWorld2D(GetMousePosition(), camera.GetCamera2D());
-
-            for (const auto& tile : tileManager.GetTiles()) {
-                if (CheckCollisionPointRec(worldMouse, tile->GetBounds())) {
-                    static ShovelData shovel;
-                    tile->Interact(shovel);
-                    break;
-                }
-            }
-        }
-        */
     }
     time.Update(GetFrameTime());
 }
@@ -92,6 +78,7 @@ void Game::Draw() {
     if (player) {
         BeginMode3D(camera.GetCamera3D());
 
+        /*
         float maxRenderDistance = 16.0f;
         Vector3 playerPos = player->GetPosition();
 
@@ -101,6 +88,9 @@ void Game::Draw() {
 
             if (dist <= maxRenderDistance) block->Draw();
         }
+        */
+
+        blockManager.Draw(player->GetPosition(), 16.0f);
 
         player->Draw();
         EndMode3D();

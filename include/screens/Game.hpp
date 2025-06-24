@@ -30,8 +30,6 @@ private:
     GameTime time;
     GameManager gameManager;
     BlockManager blockManager;
-    //TileManager tileManager;
-    //StructureManager structureManager;
     AssetManager assetManager;
 
 };
