@@ -1,16 +1,16 @@
 #include "world/Block.hpp"
 
-Block::Block(Vector3 position, bool walkable, Color color) :
-    position(position), walkable(walkable), color(color) {}
+Block::Block(Vector3 position, BlockType type) :
+    position(position), type(type) {}
 
 void Block::Update() {}
 
 void Block::Draw() const {
-    DrawCube(position, 1.0f, 1.0f, 1.0f, color);
+    DrawCube(position, 1.0f, 1.0f, 1.0f, GetColorForBlock(type));
     DrawCubeWires(position, 1.0f, 1.0f, 1.0f, DARKGRAY);
 }
 
-bool Block::IsWalkable() const { return walkable; }
+bool Block::IsWalkable() const { return ::IsWalkable(type); }
 
 void Block::Interact() {}
 

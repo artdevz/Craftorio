@@ -10,6 +10,7 @@
 #include "enums/Season.hpp"
 
 #include "items/ShovelData.hpp"
+#include "world/structures/Tree.hpp"
 
 Game::Game() : 
     camera(),
@@ -33,21 +34,24 @@ void Game::Init() {
     player = std::make_unique<Player>();
     SaveManager::LoadWorld(*player, time);
 
-    for (int x = -128; x < 8; x++) for (int z = -128; z < 8; z++) for (int y = 0; y > -2; y--) {
-        auto grassBlock = std::make_shared<GrassBlock>(Vector3{ (float)x, (float)y, (float)z });
-        blockManager.AddBlock(grassBlock);
+    for (int x = -128; x < 8; x++) for (int z = -128; z < 8; z++) for (int y = 0; y > -1; y--) {
+        if (x > -4 && z > -4 && (x < 0 || z < 0)) continue;
+        blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::GRASS );
     }
-    auto stoneBlock = std::make_shared<StoneBlock>(Vector3{ (float)-20, (float)1, (float)-20 });
-    blockManager.AddBlock(stoneBlock);
 
-    auto stoneBlock1 = std::make_shared<StoneBlock>(Vector3{ (float)-25, (float)1, (float)-20 });
-    blockManager.AddBlock(stoneBlock1);
+    blockManager.AddBlockAt( { (float)-30, (float)1, (float)-30 }, BlockType::LEAVES );
 
-    auto stoneBlock2 = std::make_shared<StoneBlock>(Vector3{ (float)-25, (float)2, (float)-20 });
-    blockManager.AddBlock(stoneBlock2);
+    for (int x = 0; x < 8; x++) for (int z = 0; z < 8; z++) for (int y = -1; y > -2; y--) {
+        blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::DIRT );
+    }
 
-    auto stoneBlock3 = std::make_shared<StoneBlock>(Vector3{ (float)-26, (float)3, (float)-20 });
-    blockManager.AddBlock(stoneBlock3);
+    for (int x = 0; x < 8; x++) for (int z = 0; z < 8; z++) for (int y = -2; y > -6; y--) {
+        blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::STONE );
+    }
+
+    Tree tree;
+    tree.Generate(blockManager, -15, 0, -15);
+    tree.Generate(blockManager, 4, 0, 4);
 
     TraceLog(LOG_INFO, "Game Iniciado");
 }

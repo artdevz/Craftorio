@@ -1,10 +1,11 @@
 #pragma once
 #include <raylib.h>
+#include "enums/BlockType.hpp"
 
 class Block {
 
 public:
-    Block(Vector3 position, bool walkable, Color color);
+    Block(Vector3 position, BlockType type);
     virtual ~Block() = default;
 
     virtual void Update();
@@ -18,7 +19,6 @@ public:
 
 protected:
     Vector3 position;
-    bool walkable;
-    Color color;
+    BlockType type;
 
 };

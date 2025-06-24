@@ -2,11 +2,13 @@
 #include <vector>
 #include <memory>
 #include "world/Block.hpp"
+#include "enums/BlockType.hpp"
 
 class BlockManager {
 
 public:
     void AddBlock(std::shared_ptr<Block> block);
+    void AddBlockAt(Vector3 position, BlockType type);
     void Update();
     void Draw() const;
 
