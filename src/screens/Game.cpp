@@ -74,7 +74,6 @@ void Game::Update() {
 }
 
 void Game::Draw() {
-    BeginDrawing();
     ClearBackground(BLANK);
 
     if (player) {
@@ -118,6 +117,4 @@ void Game::Draw() {
     hud->Draw();
     hotbar.Draw();
     inventory.Draw();
-    
-    EndDrawing();
 }

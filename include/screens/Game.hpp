@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include "screens/Screen.hpp"
 #include "core/AssetManager.hpp"
 #include "core/CameraManager.hpp"
 #include "core/GameManager.hpp"
@@ -11,15 +12,15 @@
 #include "ui/Hotbar.hpp"
 #include "ui/Inventory.hpp"
 
-class Game {
+class Game : public Screen {
 
 public:
     Game();
     ~Game();
 
-    void Init();
-    void Update();
-    void Draw();
+    void Init() override;
+    void Update() override;
+    void Draw() override;
 
 private:
     CameraManager camera;
