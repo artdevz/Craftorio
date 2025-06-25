@@ -15,6 +15,7 @@
 Game::Game() : 
     camera(),
     player(nullptr),
+    hud(nullptr),
     hotbar(),
     inventory(),
     time(),
@@ -32,6 +33,7 @@ Game::~Game() {
 void Game::Init() {
     TraceLog(LOG_INFO, "Iniciando o Game");
     player = std::make_unique<Player>();
+    hud = std::make_unique<HUD>(*player);
     SaveManager::LoadWorld(*player, time);
 
     for (int x = -1024; x < 1024; x++) for (int z = -1024; z < 1024; z++) for (int y = 0; y > -1; y--) {
@@ -62,9 +64,9 @@ void Game::Update() {
     if (player) {
         float checkRadius = 5.0f;
         auto nearbyBlocks = blockManager.GetNearbyBlocks(player->GetPosition(), checkRadius);
-        player->Update(camera.GetCamera3D(), nearbyBlocks);
+        player->Update(GetFrameTime(), camera.GetCamera3D(), nearbyBlocks);
         camera.Update(player->GetPosition(), GetFrameTime());
-        hud.Update();
+        hud->Update();
         hotbar.Update();
         inventory.Update();
     }
@@ -77,40 +79,26 @@ void Game::Draw() {
 
     if (player) {
         BeginMode3D(camera.GetCamera3D());
-
-        /*
-        float maxRenderDistance = 16.0f;
-        Vector3 playerPos = player->GetPosition();
-
-        for (const auto& block : blockManager.GetBlocks()) {
-            Vector3 blockPos = block->GetPosition();
-            float dist = Vector3Distance(blockPos, playerPos);
-
-            if (dist <= maxRenderDistance) block->Draw();
-        }
-        */
-
         blockManager.Draw(player->GetPosition(), 16.0f);
-
         player->Draw();
         EndMode3D();
     }
 
     gameManager.DrawOverlay();
     DrawText("Craftorio Pre-Alpha 1.1", 10, 10, 20, GRAY);
-    DrawFPS(10, 30);
+    DrawFPS(1185, 10);
 
     char coordBuffer[64];
     snprintf(coordBuffer, sizeof(coordBuffer), "Coords: x%d, y%d, z%d", (int)player->GetPosition().x, (int)player->GetPosition().y, (int)player->GetPosition().z);
-    DrawText(coordBuffer, 10, 50, 20, GRAY);
+    //DrawText(coordBuffer, 10, 50, 20, GRAY);
 
     char realtimeBuffer[64];
     snprintf(realtimeBuffer, sizeof(realtimeBuffer), "RealTime: %" PRId64, time.GetGameTime());
-    DrawText(realtimeBuffer, 10, 70, 20, GRAY);
+    //DrawText(realtimeBuffer, 10, 70, 20, GRAY);
 
     char gameTimeBuffer[128];
     time.FormatDateString(gameTimeBuffer, sizeof(gameTimeBuffer));
-    DrawText(gameTimeBuffer, 10, 90, 20, GRAY);
+    //DrawText(gameTimeBuffer, 10, 90, 20, GRAY);
 
     Color seasonColor;
     
@@ -125,9 +113,9 @@ void Game::Draw() {
 
     char seasonBuffer[32];
     time.FormatSeasonString(seasonBuffer, sizeof(seasonBuffer));
-    DrawText(seasonBuffer, 10, 110, 20, seasonColor);
+    //DrawText(seasonBuffer, 10, 110, 20, seasonColor);
     
-    //hud.Draw();
+    hud->Draw();
     hotbar.Draw();
     inventory.Draw();
     

@@ -4,13 +4,12 @@
 class Entity {
 
 public:
-    Entity();
+    virtual ~Entity() = default;
 
-    void Init();
-    void Update();
-    void Draw();
+    virtual void Update(float deltaTime) = 0;
+    virtual void Draw() = 0;
 
-private:
-    Vector2 position;
+    virtual Vector3 GetPosition() const = 0;
+    virtual void SetPosition(Vector3 position) = 0;
 
 };

@@ -6,13 +6,19 @@
 #include <raymath.h>
 
 Player::Player() : 
-    position({ 0, 0, 0 }), isOnGround(false), moveSpeed(5.0f), velocityY(0.0f) {}
+    position({ 0, 0, 0 }),
+    isOnGround(false),
+    moveSpeed(5.0f),
+    velocityY(0.0f),
+    health(100.0f),
+    maxHealth(100.0f) {}
 
-void Player::Update(const Camera3D& camera, const BlockList& nearbyBlocks) {
-    float deltaTime = GetFrameTime();
+void Player::Update(float deltaTime) {}
+
+void Player::Update(float deltaTime, const Camera3D& camera, const BlockList& nearbyBlocks) {
     float sprint = Input::IsRunHeld() ? 1.5f : 1.0f;
 
-    constexpr float gravity = 25.0f;
+    constexpr float gravity = 0.0f; // 25.0f;
     constexpr float jumpStrength = 9.5f;
     constexpr float boxYOffset = 0.00001f;
     
@@ -87,7 +93,19 @@ void Player::Draw() {
 }
 
 Vector3 Player::GetPosition() const { return position; }
-
 void Player::SetPosition(Vector3 position) { this->position = position; }
 
 bool Player::IsOnGround() const { return isOnGround; }
+
+float Player::GetHealth() const { return health; }
+float Player::GetMaxHealth() const { return maxHealth; }
+
+void Player::TakeDamage(float amount) {
+    health -= amount;
+    if (health < 0) health = 0;
+}
+
+void Player::Heal(float amount) {
+    health += amount;
+    if (health > maxHealth) health = maxHealth;
+}

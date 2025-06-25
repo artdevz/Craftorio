@@ -18,12 +18,7 @@ void CameraManager::Update(Vector3 playerPosition, float deltaTime) {
     Vector2 mouseDelta = GetMouseDelta();
     float sensibility = 5.0f;
     yaw -= mouseDelta.x * 0.003f * sensibility;
-    pitch -= mouseDelta.y * 0.003f * sensibility;
-
-    DrawText(TextFormat("Yaw: %.2f", yaw), 10, 140, 20, WHITE);
-    DrawText(TextFormat("Pitch: %.2f", pitch), 10, 170, 20, WHITE);
-    Vector3 dir = Vector3Normalize(Vector3Subtract(camera.target, camera.position));
-    DrawText(TextFormat("Dir X: %.2f, Y: %.2f, Z: %.2f", dir.x, dir.y, dir.z), 10, 200, 20, WHITE);    
+    pitch -= mouseDelta.y * 0.003f * sensibility; 
 
     pitch = Clamp(pitch, -PI / 2.2f, PI / 2.2f);
 

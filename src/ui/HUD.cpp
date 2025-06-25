@@ -1,23 +1,28 @@
-#include <raylib.h>
 #include "ui/HUD.hpp"
+#include <raylib.h>
+#include <string>
 
-HUD::HUD() :
-    health(100.0f), maxHealth(200.0f) {}
+HUD::HUD(Player& player) :
+    player(player) {}
 
 void HUD::Update() {
     if (IsKeyPressed(KEY_J)) {
-        health -= 10.0f;
-        TraceLog(LOG_DEBUG, "Tomou dano!");
+        player.TakeDamage(10.0f);
     }
-    if (health < 0) health = 0;
     if (IsKeyPressed(KEY_K)) {
-        health += 10.0f;
-        TraceLog(LOG_DEBUG, "Regenerou!");
+        player.Heal(10.0f);
     }
-    if (health > 200) health = 200;
 }
 
 void HUD::Draw() {
-    DrawRectangle(50, 50, 200, 30, RED);
-    DrawRectangle(50, 50, 200 * (health / maxHealth), 30, GREEN);
+    float health = player.GetHealth();
+    float maxHealth = player.GetMaxHealth();
+
+    DrawRectangle(10, 35, 60, 60, WHITE);
+    DrawRectangle(80, 40, 180, 30, BLANK);
+    DrawRectangleLinesEx({80, 40, 180, 30}, 2, DARKGRAY);
+    DrawRectangle(80, 40, 180 * (health / maxHealth), 30, RED);
+
+    std::string hpText = "HP " + std::to_string((int)health) + "/" + std::to_string((int)maxHealth);
+    DrawText(hpText.c_str(), 125, 48, 16, WHITE);
 }

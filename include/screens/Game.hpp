@@ -24,7 +24,7 @@ public:
 private:
     CameraManager camera;
     std::unique_ptr<Player> player;
-    HUD hud;
+    std::unique_ptr<HUD> hud;
     Hotbar hotbar;
     Inventory inventory;
     GameTime time;

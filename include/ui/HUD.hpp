@@ -1,14 +1,15 @@
 #pragma once
+#include "entities/Player.hpp"
 
 class HUD {
     
 public:
-    HUD();
+    HUD(Player& player);
 
     void Update();
-    void Draw();
-
-    float health;
-    float maxHealth;
+    void Draw();  
+    
+private:
+    Player& player;
 
 };
