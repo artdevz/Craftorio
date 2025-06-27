@@ -36,7 +36,7 @@ void Game::Init() {
     hud = std::make_unique<HUD>(*player);
     SaveManager::LoadWorld(*player, time);
 
-    for (int x = -1024; x < 1024; x++) for (int z = -1024; z < 1024; z++) for (int y = 0; y > -1; y--) {
+    for (int x = 0; x < 1024; x++) for (int z = 0; z < 12; z++) for (int y = 0; y > -1; y--) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::GRASS );
     }
 
@@ -52,7 +52,6 @@ void Game::Init() {
     }
 
     Tree tree;
-    tree.Generate(blockManager, -15, 0, -15);
     tree.Generate(blockManager, 4, 0, 4);
 
     TraceLog(LOG_INFO, "Game Iniciado");
@@ -74,30 +73,91 @@ void Game::Update() {
 }
 
 void Game::Draw() {
-    ClearBackground(BLANK);
+    float hourMinute = time.GetCalendar().date.hour + (time.GetCalendar().date.minute / 60.0f);
+    
+    Color sky = (hourMinute >= 6.0f && hourMinute <= 18.0f)? BLUE : BLACK;
+    ClearBackground(sky);
+    
+    float dayProgress = (hourMinute - 6.0f) / 12.0f;
 
-    if (player) {
-        BeginMode3D(camera.GetCamera3D());
-        blockManager.Draw(player->GetPosition(), 16.0f);
-        player->Draw();
-        EndMode3D();
+    float inclination = DEG2RAD * 30.0f;    // Latitude
+    float declination;                      // Declinação Sazonal
+
+    switch (time.GetCalendar().environment.season) {
+        case Season::SUMMER: declination = inclination; break;
+        case Season::WINTER: declination = -inclination; break;
+        default:declination = 0.0f; break; // SPRING & AUTUMN
     }
+    
+    // float azimuth = ((dayProgress - 0.25f) * 2.0f * PI) - (PI / 2.0f);
+    float azimuth = Lerp(3.0f * PI / 2.0f, PI / 2.0f, dayProgress);
+    float elevationAngle = sinf(dayProgress * PI) * (PI / 4);
 
-    gameManager.DrawOverlay();
+    Vector3 origin = player->GetPosition();
+    origin.y += 1.8f;
+
+    float radius = 300.0f; // TPS
+
+    Vector3 sunPosition = {
+        origin.x + sinf(azimuth) * cosf(elevationAngle + declination) * radius,  // Leste-Oeste
+        origin.y + sinf(elevationAngle + declination) * radius,                  // Declinação (Altura)
+        origin.z + cosf(azimuth) * cosf(elevationAngle + declination) * radius   // Norte-Sul
+    };
+
+    Vector3 sunLightDirection = Vector3Normalize(Vector3Subtract(origin, sunPosition));
+
+    Vector2 sunScreenPosition = GetWorldToScreen(sunPosition, camera.GetCamera3D());
+    DrawCircleV(sunScreenPosition, 64.0f, YELLOW);
+    
+    BeginMode3D(camera.GetCamera3D());    
+    blockManager.Draw(player->GetPosition(), 16.0f);
+    player->Draw();
+
+    // DEBUG
+    origin.y -= 1.8f;
+    DrawLine3D(origin, { origin.x, origin.y, origin.z + 5.0f }, DARKBLUE);  // +Z (Norte)
+    DrawLine3D(origin, { origin.x, origin.y, origin.z - 5.0f }, GRAY);      // -Z (Sul)
+    DrawLine3D(origin, { origin.x + 5.0f, origin.y, origin.z }, RED);       // +X (Oeste)
+    DrawLine3D(origin, { origin.x - 5.0f, origin.y, origin.z }, MAGENTA);   // -X (Leste)
+    DrawLine3D(origin, { origin.x, origin.y + 5.0f, origin.z }, DARKGREEN); // -X (Zênite)
+    DrawLine3D(origin, { origin.x, origin.y - 5.0f, origin.z }, DARKBROWN); // -X (Nadir)
+
+    Vector3 forward = Vector3Normalize(Vector3Subtract(camera.GetCamera3D().target, camera.GetCamera3D().position));
+    Vector3 right = Vector3Normalize(Vector3CrossProduct(forward, camera.GetCamera3D().up));
+    Vector3 up = camera.GetCamera3D().up;
+    Vector3 playerEyePos = { player->GetPosition().x, player->GetPosition().y + 1.8f, player->GetPosition().z };
+
+    DrawLine3D(playerEyePos, Vector3Add(playerEyePos, Vector3Scale(sunLightDirection, 20.0f)), GOLD);
+    DrawLine3D(playerEyePos, Vector3Add(playerEyePos, Vector3Scale(forward, 20.0f)), RED);
+    DrawLine3D(playerEyePos, Vector3Add(playerEyePos, Vector3Scale(right, 20.0f)), DARKBLUE);
+    DrawLine3D(playerEyePos, Vector3Add(playerEyePos, Vector3Scale(up, 20.0f)), DARKGREEN);
+    DrawSphere(playerEyePos, 0.2f, WHITE);
+    //
+
+    EndMode3D();
+
+    DrawText("Norte  (+Z)", 10, 500, 16, DARKBLUE);
+    DrawText("Sul    (-Z)", 10, 520, 16, GRAY);
+    DrawText("Oeste  (+X)", 10, 540, 16, RED);
+    DrawText("Leste  (-X)", 10, 560, 16, MAGENTA);
+    DrawText("Zênite (+Y)", 10, 580, 16, DARKGREEN);
+    DrawText("Nadir  (-Y)", 10, 600, 16, DARKBROWN);
+
+    //gameManager.DrawOverlay();
     DrawText("Craftorio Pre-Alpha 1.1", 10, 10, 20, GRAY);
     DrawFPS(1185, 10);
 
     char coordBuffer[64];
     snprintf(coordBuffer, sizeof(coordBuffer), "Coords: x%d, y%d, z%d", (int)player->GetPosition().x, (int)player->GetPosition().y, (int)player->GetPosition().z);
-    //DrawText(coordBuffer, 10, 50, 20, GRAY);
+    DrawText(coordBuffer, 10, 100, 20, GRAY);
 
     char realtimeBuffer[64];
     snprintf(realtimeBuffer, sizeof(realtimeBuffer), "RealTime: %" PRId64, time.GetGameTime());
-    //DrawText(realtimeBuffer, 10, 70, 20, GRAY);
+    DrawText(realtimeBuffer, 10, 130, 20, GRAY);
 
     char gameTimeBuffer[128];
     time.FormatDateString(gameTimeBuffer, sizeof(gameTimeBuffer));
-    //DrawText(gameTimeBuffer, 10, 90, 20, GRAY);
+    DrawText(gameTimeBuffer, 10, 160, 20, GRAY);
 
     Color seasonColor;
     
@@ -112,7 +172,7 @@ void Game::Draw() {
 
     char seasonBuffer[32];
     time.FormatSeasonString(seasonBuffer, sizeof(seasonBuffer));
-    //DrawText(seasonBuffer, 10, 110, 20, seasonColor);
+    DrawText(seasonBuffer, 10, 190, 20, seasonColor);
     
     hud->Draw();
     hotbar.Draw();

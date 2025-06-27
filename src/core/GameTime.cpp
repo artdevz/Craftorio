@@ -1,7 +1,7 @@
 #include "core/GameTime.hpp"
 #include <inttypes.h>
 
-void GameTime::Update(double delta) { realTime += delta; }
+void GameTime::Update(double delta) { realTime += delta * 15; }
 
 int64_t GameTime::GetGameTime() const { return static_cast<int64_t>(realTime * 60.0f); } // 1 segundo (RealTime) = 1 minuto (GameTime)
 
