@@ -1,7 +1,7 @@
 #include "core/GameTime.hpp"
 #include <inttypes.h>
 
-void GameTime::Update(double delta) { realTime += delta * 15; }
+void GameTime::Update(double delta) { realTime += delta; }
 
 int64_t GameTime::GetGameTime() const { return static_cast<int64_t>(realTime * 60.0f); } // 1 segundo (RealTime) = 1 minuto (GameTime)
 
@@ -22,7 +22,7 @@ GameCalendar GameTime::GetCalendar() const {
     int64_t minute = (time / 60) % 60;
     
     Season season = static_cast<Season>((time / TIME_PER_SEASON) % 4);
-    LunarPhase phase = static_cast<LunarPhase>((time / TIME_PER_DAY) % 8);
+    LunarPhase phase = static_cast<LunarPhase>(((time - 6*3600) / TIME_PER_DAY) % 8);
 
     GameDate date = { solar+1, lunar+1, day+1, hour, minute };
     GameSeasonalState env = { season, phase };
@@ -43,4 +43,8 @@ void GameTime::FormatSeasonString(char* buffer, size_t bufferSize) const {
     snprintf(buffer, bufferSize,"%s", ToString(env.season));
 }
 
-void GameTime::FormatPhaseString(char* buffer, size_t bufferSize) const {}
+void GameTime::FormatPhaseString(char* buffer, size_t bufferSize) const {
+    GameSeasonalState env = GetCalendar().environment;
+
+    snprintf(buffer, bufferSize,"%s", ToString(env.phase));
+}

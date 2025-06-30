@@ -73,12 +73,12 @@ void Game::Update() {
 }
 
 void Game::Draw() {
-    float hourMinute = time.GetCalendar().date.hour + (time.GetCalendar().date.minute / 60.0f);
+    float currentHourMinute = time.GetCalendar().date.hour + (time.GetCalendar().date.minute / 60.0f);
     
-    Color sky = (hourMinute >= 6.0f && hourMinute <= 18.0f)? BLUE : BLACK;
+    Color sky = (currentHourMinute >= 6.0f && currentHourMinute <= 18.0f)? BLUE : BLACK;
     ClearBackground(sky);
     
-    float dayProgress = (hourMinute - 6.0f) / 12.0f;
+    float dayProgress = (currentHourMinute - 6.0f) / 12.0f;
 
     float inclination = DEG2RAD * 30.0f;    // Latitude
     float declination;                      // Declinação Sazonal
@@ -89,27 +89,25 @@ void Game::Draw() {
         default:declination = 0.0f; break; // SPRING & AUTUMN
     }
     
-    // float azimuth = ((dayProgress - 0.25f) * 2.0f * PI) - (PI / 2.0f);
-    float azimuth = Lerp(3.0f * PI / 2.0f, PI / 2.0f, dayProgress);
-    float elevationAngle = sinf(dayProgress * PI) * (PI / 4);
-
     Vector3 origin = player->GetPosition();
     origin.y += 1.8f;
-
-    float radius = 300.0f; // TPS
+    
+    float sunRadius = 300.0f; // TPS
+    float sunAzimuth = Lerp(3.0f * PI / 2.0f, PI / 2.0f, dayProgress);
+    float sunElevation = sinf(dayProgress * PI) * (PI / 4) + declination;
 
     Vector3 sunPosition = {
-        origin.x + sinf(azimuth) * cosf(elevationAngle + declination) * radius,  // Leste-Oeste
-        origin.y + sinf(elevationAngle + declination) * radius,                  // Declinação (Altura)
-        origin.z + cosf(azimuth) * cosf(elevationAngle + declination) * radius   // Norte-Sul
+        origin.x + sinf(sunAzimuth) * cosf(sunElevation) * sunRadius,   // Leste-Oeste
+        origin.y + sinf(sunElevation) * sunRadius,                      // Declinação (Altura)
+        origin.z + cosf(sunAzimuth) * cosf(sunElevation) * sunRadius    // Norte-Sul
     };
 
     Vector3 sunLightDirection = Vector3Normalize(Vector3Subtract(origin, sunPosition));
-
-    Vector2 sunScreenPosition = GetWorldToScreen(sunPosition, camera.GetCamera3D());
-    DrawCircleV(sunScreenPosition, 64.0f, YELLOW);
+    Vector3 moonLightDirection = Vector3Normalize(Vector3Subtract(origin, {-sunPosition.x, -sunPosition.y, -sunPosition.z} ));
     
     BeginMode3D(camera.GetCamera3D());    
+    DrawSphereEx(sunPosition, 24.0f, 16, 16, YELLOW);
+    DrawSphereEx({-sunPosition.x, -sunPosition.y, -sunPosition.z}, 24.0f, 16, 16, WHITE);
     blockManager.Draw(player->GetPosition(), 16.0f);
     player->Draw();
 
@@ -128,6 +126,7 @@ void Game::Draw() {
     Vector3 playerEyePos = { player->GetPosition().x, player->GetPosition().y + 1.8f, player->GetPosition().z };
 
     DrawLine3D(playerEyePos, Vector3Add(playerEyePos, Vector3Scale(sunLightDirection, 20.0f)), GOLD);
+    DrawLine3D(playerEyePos, Vector3Add(playerEyePos, Vector3Scale(moonLightDirection, 20.0f)), LIGHTGRAY);
     DrawLine3D(playerEyePos, Vector3Add(playerEyePos, Vector3Scale(forward, 20.0f)), RED);
     DrawLine3D(playerEyePos, Vector3Add(playerEyePos, Vector3Scale(right, 20.0f)), DARKBLUE);
     DrawLine3D(playerEyePos, Vector3Add(playerEyePos, Vector3Scale(up, 20.0f)), DARKGREEN);
@@ -173,6 +172,10 @@ void Game::Draw() {
     char seasonBuffer[32];
     time.FormatSeasonString(seasonBuffer, sizeof(seasonBuffer));
     DrawText(seasonBuffer, 10, 190, 20, seasonColor);
+
+    char moonPhaseBuffer[32];
+    time.FormatPhaseString(moonPhaseBuffer, sizeof(moonPhaseBuffer));
+    DrawText(moonPhaseBuffer, 10, 220, 20, WHITE);
     
     hud->Draw();
     hotbar.Draw();
