@@ -1,7 +1,10 @@
 #include "entities/Zombie.hpp"
+#include "world/Block.hpp"
+#include "utils/Collision.hpp"
+#include <cmath>
 
 Zombie::Zombie() :
-    position({ 10, 1, 10 }),
+    position({ 10, 10, 10 }),
     isOnGround(false),
     moveSpeed(5.0f),
     velocityY(0.0f),
@@ -15,7 +18,28 @@ void Zombie::Update(float deltaTime, const BlockList& nearbyBlocks) {
     float jumpStrength = 9.5f;
     float boxYOffset = 0.00001f;
 
-    // TO-DO
+    Vector3 nextPos = position;
+
+    velocityY -= gravity * deltaTime;
+    
+    nextPos.y += velocityY * deltaTime;
+
+    BoundingBox boxY = {
+        { nextPos.x - 0.5f, nextPos.y,                 nextPos.z - 0.5f },
+        { nextPos.x + 0.5f, nextPos.y + 1.8f, nextPos.z + 0.5f }
+    };
+
+    bool blockedY = CheckCollision<Block>(nearbyBlocks, [&](const Block& block) {
+        return !block.IsWalkable() && CheckCollisionBoxes(boxY, block.GetBoundingBox());
+    });
+
+    if (blockedY) {
+        nextPos.y = floor(position.y) + 0.5f;
+        velocityY = 0;
+    }
+    isOnGround = blockedY;
+
+    position = nextPos;
 }
 
 void Zombie::Draw() {

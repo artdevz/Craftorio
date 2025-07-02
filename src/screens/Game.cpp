@@ -68,6 +68,7 @@ void Game::Update() {
         float checkRadius = 5.0f;
         auto nearbyBlocks = blockManager.GetNearbyBlocks(player->GetPosition(), checkRadius);
         player->Update(GetFrameTime(), camera.GetCamera3D(), nearbyBlocks);
+        zombie->Update(GetFrameTime(), nearbyBlocks);
         camera.Update(player->GetPosition(), GetFrameTime());
         hud->Update();
         hotbar.Update();
