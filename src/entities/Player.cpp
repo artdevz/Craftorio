@@ -83,7 +83,16 @@ void Player::Update(float deltaTime, const Camera3D& camera, const BlockList& ne
 }
 
 void Player::Draw() {
-    DrawCube((Vector3){position.x, position.y + 0.9f, position.z}, 1.0f, PLAYER_HEIGHT, 1.0f, BLUE);
+    // DrawCube((Vector3){position.x, position.y + 0.9f, position.z}, 1.0f, PLAYER_HEIGHT, 1.0f, BLUE); // Player 1x2x1
+    DrawCube(Vector3{position.x + 0.2f, position.y + 0.31f, position.z}, 0.3f, 0.8f, 0.2f, DARKBLUE);
+    DrawCube(Vector3{position.x - 0.2f, position.y + 0.31f, position.z}, 0.3f, 0.8f, 0.2f, DARKBLUE);
+    DrawCube(Vector3{position.x + 0.2f, position.y, position.z + 0.2f}, 0.3f, 0.3f, 0.4f, DARKBROWN);
+    DrawCube(Vector3{position.x - 0.2f, position.y, position.z + 0.2f}, 0.3f, 0.3f, 0.4f, DARKBROWN);
+    DrawCube(Vector3{position.x, position.y + 1.0f, position.z}, 0.7f, 0.5f, 0.2f, BLUE);
+    DrawCube(Vector3{position.x, position.y + 1.5f, position.z}, 0.7f, 0.7f, 0.7f, YELLOW);
+    DrawCube(Vector3{position.x, position.y + 3.0f, position.z}, 0.1f, 0.1f, 0.1f, BLACK);
+    DrawCube(Vector3{position.x, position.y + 3.5f, position.z}, 0.05f, 0.05f, 0.05f, BLACK);
+    
     BoundingBox verticalBox = {
         { position.x - 0.5f, position.y,                 position.z - 0.5f },
         { position.x + 0.5f, position.y + PLAYER_HEIGHT, position.z + 0.5f }

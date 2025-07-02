@@ -13,6 +13,8 @@
 #include "ui/Inventory.hpp"
 #include "core/Settings.hpp"
 
+#include "entities/Zombie.hpp"
+
 class Game : public Screen {
 
 public:
@@ -26,6 +28,7 @@ public:
 private:
     CameraManager camera;
     std::unique_ptr<Player> player;
+    std::unique_ptr<Zombie> zombie;
     std::unique_ptr<HUD> hud;
     Hotbar hotbar;
     Inventory inventory;

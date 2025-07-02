@@ -15,6 +15,7 @@
 Game::Game(const SettingsData& settings, const std::string& worldName) : 
     camera(),
     player(nullptr),
+    zombie(nullptr),
     hud(nullptr),
     hotbar(),
     inventory(),
@@ -35,6 +36,7 @@ Game::~Game() {
 void Game::Init() {
     TraceLog(LOG_INFO, "Iniciando o Game");
     player = std::make_unique<Player>();
+    zombie = std::make_unique<Zombie>();
     hud = std::make_unique<HUD>(*player);
     SaveManager::LoadWorld(worldName, *player, time);
 
@@ -113,6 +115,7 @@ void Game::Draw() {
     // Colocar pra RenderDistance
     blockManager.Draw(player->GetPosition(), (float) settings.video.renderDistance);
     player->Draw();
+    zombie->Draw();
 
     // DEBUG
     origin.y -= 1.8f;
