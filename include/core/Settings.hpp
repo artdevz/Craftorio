@@ -23,6 +23,12 @@ struct VideoSettings {
     int width = 1280, height = 720;
     int fpsLimit = 144;
     bool fpsUnlimited = false;
+    bool fullscreen = false;
+    bool vSync = false;
+    int graphics = 0;
+    int renderDistance = 48;
+    bool shadows = false;
+    bool antiAliasing = false;
 };
 
 struct SettingsData {

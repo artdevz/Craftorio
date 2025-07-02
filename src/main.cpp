@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include "screens/Game.hpp"
 #include "screens/MainMenu.hpp"
+#include "screens/WorldSelect.hpp"
 #include "core/WindowManager.hpp"
 #include "core/Settings.hpp"
 
@@ -10,10 +11,12 @@ int main() {
 
     Settings::Load();
     SettingsData& config = Settings::Get();    
-    auto window = std::make_unique<WindowManager>(config.video.width, config.video.height, config.video.fpsLimit, "Craftorio");
+    auto window = std::make_unique<WindowManager>(config.video, "Craftorio");
     
     std::unique_ptr<Screen> currentScreen = std::make_unique<MainMenu>();
     currentScreen->Init();
+
+    std::string selectedWorld;
 
     while (!WindowShouldClose() && !currentScreen->ShouldClose()) {
         BeginDrawing();
@@ -23,7 +26,15 @@ int main() {
 
         if (auto menu = dynamic_cast<MainMenu*>(currentScreen.get())) {
             if (menu->ShouldStartGame()) {
-                currentScreen = std::make_unique<Game>();
+                currentScreen = std::make_unique<WorldSelect>();
+                currentScreen->Init();
+            }
+        }
+
+        if (auto select = dynamic_cast<WorldSelect*>(currentScreen.get())) {
+            if (select->ShouldStartGame()) {
+                selectedWorld = select->GetSelectedWorld();
+                currentScreen = std::make_unique<Game>(config, selectedWorld);
                 currentScreen->Init();
             }
         }

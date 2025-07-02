@@ -36,6 +36,12 @@ void Settings::Load() {
         v.fpsLimit      = j["video"].value("fpsLimit", 144);
         v.width         = j["video"].value("width", 1280);
         v.height        = j["video"].value("height", 720);
+        v.fullscreen    = j["video"].value("fullscreen", false);
+        v.vSync         = j["video"].value("vSync", false);
+        v.graphics      = j["video"].value("graphics", 0);
+        v.renderDistance= j["video"].value("renderDistance", 48);
+        v.shadows       = j["video"].value("shadows", false);
+        v.antiAliasing  = j["video"].value("antiAliasing", false);
     }
 
 }
@@ -65,7 +71,13 @@ void Settings::Save() {
         {"display", v.display},
         {"fpsLimit", v.fpsLimit},
         {"width", v.width},
-        {"height", v.height}
+        {"height", v.height},
+        {"fullscreen", v.fullscreen},
+        {"vSync", v.vSync},
+        {"graphics", v.graphics},
+        {"renderDistance", v.renderDistance},
+        {"shadows", v.shadows},
+        {"antiAliasing", v.antiAliasing}
     };
 
     std::ofstream file(SETTINGS_FILE);

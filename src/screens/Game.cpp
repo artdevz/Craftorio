@@ -12,20 +12,22 @@
 #include "items/ShovelData.hpp"
 #include "world/structures/Tree.hpp"
 
-Game::Game() : 
+Game::Game(const SettingsData& settings, const std::string& worldName) : 
     camera(),
     player(nullptr),
     hud(nullptr),
     hotbar(),
     inventory(),
     time(),
-    gameManager(time) {
+    gameManager(time),
+    settings(settings),
+    worldName(worldName) {
         TraceLog(LOG_INFO, "Game criado");
     }
 
 Game::~Game() {
     if (player) {
-        SaveManager::SaveWorld(*player, time);
+        SaveManager::SaveWorld(worldName, *player, time);
     }
     //assetManager.UnloadAll(); // Segmantation Fault
 }
@@ -34,7 +36,7 @@ void Game::Init() {
     TraceLog(LOG_INFO, "Iniciando o Game");
     player = std::make_unique<Player>();
     hud = std::make_unique<HUD>(*player);
-    SaveManager::LoadWorld(*player, time);
+    SaveManager::LoadWorld(worldName, *player, time);
 
     for (int x = 0; x < 1024; x++) for (int z = 0; z < 12; z++) for (int y = 0; y > -1; y--) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::GRASS );
@@ -108,7 +110,8 @@ void Game::Draw() {
     BeginMode3D(camera.GetCamera3D());    
     DrawSphereEx(sunPosition, 24.0f, 16, 16, YELLOW);
     DrawSphereEx({-sunPosition.x, -sunPosition.y, -sunPosition.z}, 24.0f, 16, 16, WHITE);
-    blockManager.Draw(player->GetPosition(), 16.0f);
+    // Colocar pra RenderDistance
+    blockManager.Draw(player->GetPosition(), (float) settings.video.renderDistance);
     player->Draw();
 
     // DEBUG

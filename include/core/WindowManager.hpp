@@ -1,14 +1,14 @@
 #pragma once
 #include <string>
 #include <raylib.h>
+#include <core/Settings.hpp>
 
 class WindowManager {
 
 public:
     static constexpr int FPS_UNLIMITED = 0;
 
-    WindowManager();
-    WindowManager(int width, int height, int fpsLimit, std::string title);
+    WindowManager(const VideoSettings& settings, std::string title);
     ~WindowManager();
 
     static Vector2 GetResolution();

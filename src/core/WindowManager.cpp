@@ -3,15 +3,12 @@
 
 Vector2 WindowManager::resolution = { 0, 0 };
 
-WindowManager::WindowManager() : 
-    WindowManager(1280, 720, 60, "Unnamed Game") {}
-
-WindowManager::WindowManager(int width, int height, int fpsLimit, std::string title) {
-    this->resolution = { (float)width, (float)height };
-    InitWindow(width, height, title.c_str());
-    SetTargetFPS(fpsLimit <= FPS_UNLIMITED ? 2147483647 : fpsLimit); // 2147483647 = Maior Int32
+WindowManager::WindowManager(const VideoSettings& settings, std::string title) {
+    this->resolution = { (float)settings.width, (float)settings.height };
+    InitWindow(resolution.x, resolution.y, title.c_str());
+    SetTargetFPS(settings.fpsLimit <= FPS_UNLIMITED ? 2147483647 : settings.fpsLimit); // 2147483647 = Maior Int32
     SetExitKey(KEY_Q);
-    //ToggleFullscreen();
+    if (settings.fullscreen) ToggleFullscreen();
 }
 
 WindowManager::~WindowManager() {}

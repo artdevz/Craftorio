@@ -11,11 +11,12 @@
 #include "ui/HUD.hpp"
 #include "ui/Hotbar.hpp"
 #include "ui/Inventory.hpp"
+#include "core/Settings.hpp"
 
 class Game : public Screen {
 
 public:
-    Game();
+    Game(const SettingsData& settings, const std::string& worldName);
     ~Game();
 
     void Init() override;
@@ -32,5 +33,7 @@ private:
     GameManager gameManager;
     BlockManager blockManager;
     AssetManager assetManager;
+    const SettingsData& settings;
+    std::string worldName;
 
 };
