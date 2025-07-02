@@ -28,4 +28,5 @@ private:
 
     bool CreateNewWorld(const std::string& newWorldName);
     void LoadWorlds();
+    bool DeleteWorld(const std::string& world);
 };

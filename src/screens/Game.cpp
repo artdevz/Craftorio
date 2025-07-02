@@ -145,7 +145,7 @@ void Game::Draw() {
     DrawText("Zênite (+Y)", 10, 580, 16, DARKGREEN);
     DrawText("Nadir  (-Y)", 10, 600, 16, DARKBROWN);
 
-    //gameManager.DrawOverlay();
+    gameManager.DrawOverlay();
     DrawText("Craftorio Pre-Alpha 1.1", 10, 10, 20, GRAY);
     DrawFPS(1185, 10);
 

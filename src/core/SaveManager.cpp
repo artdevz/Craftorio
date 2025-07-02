@@ -59,6 +59,20 @@ namespace SaveManager {
         return worlds;
     }
 
+    bool DeleteWorld(const std::string& name) {
+        TraceLog(LOG_INFO, "Deletando mundo...");
+        std::string path = SAVE_ROOT + name + "/";
+        if (!fs::exists(path)) {
+            TraceLog(LOG_INFO, "Erro: Mundo a ser deletado não existe");
+            return false;
+        }
+
+        fs::remove_all(path);
+
+        TraceLog(LOG_INFO, "Mundo deletado");
+        return true;
+    }
+
     void SavePlayer(const std::string& worldName, const Player& player) {
         TraceLog(LOG_INFO, "Salvando jogador...");
         std::string path = SAVE_ROOT + worldName + "/player.json";

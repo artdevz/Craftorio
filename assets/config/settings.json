@@ -23,7 +23,7 @@
         "fullscreen": false,
         "graphics": 0,
         "height": 720,
-        "renderDistance": 350,
+        "renderDistance": 16,
         "shadows": false,
         "vSync": false,
         "width": 1280

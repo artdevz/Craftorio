@@ -37,6 +37,11 @@ void WorldSelect::Update() {
         if (IsKeyPressed(KEY_UP)) selectedIndex = (selectedIndex - 1 + (int)worlds.size()) % (int)worlds.size();
 
         if (IsKeyPressed(KEY_ENTER) && !worlds.empty()) startGame = true;
+        if (IsKeyPressed(KEY_BACKSPACE)) {
+            if (DeleteWorld(worlds[selectedIndex].name)) {
+                worlds.erase(worlds.begin() + selectedIndex);
+            }
+        }
 
         if (IsKeyPressed(KEY_N)) {
             creatingNewWorld = true;
@@ -101,4 +106,14 @@ void WorldSelect::LoadWorlds() {
     }
 
     selectedIndex = 0;
+}
+
+bool WorldSelect::DeleteWorld(const std::string& world) {
+    if (world.empty()) return false;
+    worlds.clear();
+    
+    for (const auto& entry : std::filesystem::directory_iterator("saves")) {
+        if (entry.is_directory()) worlds.push_back({ entry.path().filename().string(), entry.path().string() });
+    }
+    return SaveManager::DeleteWorld(world);
 }

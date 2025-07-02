@@ -18,7 +18,7 @@ void Player::Update(float deltaTime) {}
 void Player::Update(float deltaTime, const Camera3D& camera, const BlockList& nearbyBlocks) {
     float sprint = Input::IsRunHeld() ? 1.5f : 1.0f;
 
-    constexpr float gravity = 0.0f; // 25.0f;
+    constexpr float gravity = 25.0f; // 25.0f;
     constexpr float jumpStrength = 9.5f;
     constexpr float boxYOffset = 0.00001f;
     

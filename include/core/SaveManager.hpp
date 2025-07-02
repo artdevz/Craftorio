@@ -8,6 +8,7 @@
 namespace SaveManager {
     bool CreateWorld(const std::string& name, int64_t seed);
     std::vector<std::string> ListWorlds();
+    bool DeleteWorld(const std::string& name);
 
     void SavePlayer(const std::string& worldName, const Player& player);
     void LoadPlayer(const std::string& worldName, Player& player);
