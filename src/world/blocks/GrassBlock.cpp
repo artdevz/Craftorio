@@ -1,7 +1,7 @@
 #include "world/blocks/GrassBlock.hpp"
 
 GrassBlock::GrassBlock(Vector3 position) :
-    Block(position, BlockType::GRASS), durability(10) {}
+    Block(position, BlockType::GRASS), durability(15) {}
 
 void GrassBlock::Update() {}
 
