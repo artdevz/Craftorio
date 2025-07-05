@@ -38,7 +38,7 @@ void Player::Update(float deltaTime, const Camera3D& camera, const BlockList& ne
     };
 
     bool blockedY = CheckCollision<Block>(nearbyBlocks, [&](const Block& block) {
-        return !block.IsWalkable() && CheckCollisionBoxes(boxY, block.GetBoundingBox());
+        return block.IsSolid() && CheckCollisionBoxes(boxY, block.GetBoundingBox());
     });
 
     if (blockedY) {
@@ -71,7 +71,7 @@ void Player::Update(float deltaTime, const Camera3D& camera, const BlockList& ne
     };
 
     bool blockedXZ = CheckCollision<Block>(nearbyBlocks, [&](const Block& block) {
-        return !block.IsWalkable() && CheckCollisionBoxes(boxXZ, block.GetBoundingBox());
+        return block.IsSolid() && CheckCollisionBoxes(boxXZ, block.GetBoundingBox());
     }); 
 
     if (!blockedXZ) {

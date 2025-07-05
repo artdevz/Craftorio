@@ -30,7 +30,7 @@ void Zombie::Update(float deltaTime, const BlockList& nearbyBlocks) {
     };
 
     bool blockedY = CheckCollision<Block>(nearbyBlocks, [&](const Block& block) {
-        return !block.IsWalkable() && CheckCollisionBoxes(boxY, block.GetBoundingBox());
+        return block.IsSolid() && CheckCollisionBoxes(boxY, block.GetBoundingBox());
     });
 
     if (blockedY) {

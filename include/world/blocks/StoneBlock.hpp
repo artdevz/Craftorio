@@ -6,9 +6,12 @@ class StoneBlock : public Block {
 public:
     StoneBlock(Vector3 position);
 
+    void Update() override;
+    void Draw() const override;
+    bool IsSolid() const override;
     void Interact() override;
 
 private:
-    int durability = 50;
+    int durability;
 
 };

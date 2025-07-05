@@ -4,5 +4,7 @@
  * Infelizmente, não há curinga no C++, então tive que fazer isso aqui...
  **/
 
-#include "GrassBlock.hpp"
-#include "StoneBlock.hpp"
+#include "world/blocks/GrassBlock.hpp"
+#include "world/blocks/StoneBlock.hpp"
+#include "world/blocks/WoodBlock.hpp"
+#include "world/blocks/LeafBlock.hpp"

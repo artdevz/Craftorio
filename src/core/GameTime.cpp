@@ -11,13 +11,13 @@ GameCalendar GameTime::GetCalendar() const {
     int64_t time = GetGameTime() + 6 * 3600;
 
     constexpr int64_t TIME_PER_DAY = 86400;
-    constexpr int64_t TIME_PER_LUNAR = TIME_PER_DAY * 8;
-    constexpr int64_t TIME_PER_SEASON = TIME_PER_LUNAR * 2;
+    constexpr int64_t TIME_PER_LUNAR = TIME_PER_DAY * 12;
+    constexpr int64_t TIME_PER_SEASON = TIME_PER_LUNAR * 3;
     constexpr int64_t TIME_PER_SOLAR = TIME_PER_SEASON * 4;
 
     int64_t solar = time / TIME_PER_SOLAR; 
-    int64_t lunar = (time / TIME_PER_LUNAR) % 8;
-    int64_t day = (time / TIME_PER_DAY) % 8;
+    int64_t lunar = (time / TIME_PER_LUNAR) % 12;
+    int64_t day = (time / TIME_PER_DAY) % 12;
     int64_t hour = (time / 3600) % 24;
     int64_t minute = (time / 60) % 60;
     

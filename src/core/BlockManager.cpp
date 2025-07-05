@@ -1,4 +1,5 @@
 #include "core/BlockManager.hpp"
+#include "core/BlockFactory.hpp"
 #include <cmath>
 
 void BlockManager::AddBlock(std::shared_ptr<Block> block) { blocks.push_back(block); }
@@ -20,8 +21,8 @@ void BlockManager::AddBlockAt(Vector3 position, BlockType type) {
         it = chunks.find(chunkCoords);
     }
 
-    auto block = std::make_shared<Block>(position, type);
-    it->second.AddBlock(block);
+    auto block = CreateBlock(position, type);
+    if (block) it->second.AddBlock(block);
 }
 
 void BlockManager::LoadChunkAt(int chunkX, int chunkZ) {
