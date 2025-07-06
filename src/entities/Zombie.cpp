@@ -42,7 +42,7 @@ void Zombie::Update(float deltaTime, const BlockList& nearbyBlocks) {
     position = nextPos;
 }
 
-void Zombie::Draw() {
+void Zombie::Draw() const {
     DrawCube(Vector3{position.x, position.y + 0.9f, position.z}, 1.0f, 1.8f, 1.0f, RED);
 }
 

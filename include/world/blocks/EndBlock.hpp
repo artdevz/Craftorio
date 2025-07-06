@@ -9,7 +9,7 @@ public:
     void Update() override;
     void Draw() const override;
     bool IsSolid() const override;
-    void Interact(float deltaTime) override;
+    void Interact(float deltaTime, std::shared_ptr<Item> item) override;
 
 private:
     int durability;

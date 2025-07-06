@@ -57,7 +57,7 @@ void BlockManager::Draw(const Vector3& playerPosition, float maxRenderDistance) 
     }
 }
 
-void BlockManager::Interact(float deltaTime, const Vector3& origin, const Vector3& direction, float maxDistance) {
+void BlockManager::Interact(float deltaTime, const Vector3& origin, const Vector3& direction, float maxDistance, std::shared_ptr<Item> item) {
     const float step = 0.1f;
     for (float t = 0.0f; t <= maxDistance; t += step) {
         Vector3 point = Vector3Add(origin, Vector3Scale(direction, t));
@@ -69,7 +69,7 @@ void BlockManager::Interact(float deltaTime, const Vector3& origin, const Vector
             for (const auto& block : it->second.blocks) {
                 Vector3 posistion = block->GetPosition();
                 if ( (int)posistion.x == blockPosition.x && (int)posistion.y == blockPosition.y && (int)posistion.z == blockPosition.z ) {
-                    block->Interact(deltaTime);
+                    block->Interact(deltaTime, item);
                     if (block->GetType() == BlockType::AIR) it->second.RemoveBlockAt(blockPosition);
                     return;
                 }

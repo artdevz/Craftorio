@@ -14,7 +14,7 @@ public:
 
     void Update(float deltaTime) override;
     void Update(float deltaTime, const BlockList& nearbyBlocks);
-    void Draw() override;
+    void Draw() const override;
 
     Vector3 GetPosition() const override;
     void SetPosition(Vector3 position) override;

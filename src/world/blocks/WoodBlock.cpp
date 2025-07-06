@@ -1,4 +1,5 @@
 #include "world/blocks/WoodBlock.hpp"
+#include "items/ItemAgreggator.hpp"
 
 WoodBlock::WoodBlock(Vector3 position, WoodType type) :
     Block(position, BlockType::WOOD), durability(60 * 10), woodType(type) {}
@@ -18,12 +19,19 @@ void WoodBlock::Draw() const {
 
 bool WoodBlock::IsSolid() const { return true; }
 
-void WoodBlock::Interact(float deltaTime) {
+void WoodBlock::Interact(float deltaTime, std::shared_ptr<Item> item) {
     interactionAccumulator += deltaTime;
+
+    float efficiency = 1.0f;
+
+    if (item && item->GetItemType() == ItemType::TOOL) {
+        Tool* tool = dynamic_cast<Tool*>(item.get());
+        if (tool) efficiency = tool->GetEfficiency();
+    }
 
     while (interactionAccumulator >= (1.0f / 60.0f)) {
         interactionAccumulator -= (1.0f / 60.0f);
-        durability -= 1.0f;
+        durability -= efficiency;
     }
     if (durability <= 0) type = BlockType::AIR;
 }

@@ -12,7 +12,7 @@ void GrassBlock::Draw() const {
 
 bool GrassBlock::IsSolid() const { return true; }
 
-void GrassBlock::Interact(float deltaTime) {
+void GrassBlock::Interact(float deltaTime, std::shared_ptr<Item> item) {
     interactionAccumulator += deltaTime;
 
     while (interactionAccumulator >= (1.0f / 60.0f)) {

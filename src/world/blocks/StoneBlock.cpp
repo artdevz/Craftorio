@@ -12,7 +12,7 @@ void StoneBlock::Draw() const {
 
 bool StoneBlock::IsSolid() const { return true; }
 
-void StoneBlock::Interact(float deltaTime) {
+void StoneBlock::Interact(float deltaTime, std::shared_ptr<Item> item) {
     interactionAccumulator += deltaTime;
 
     while (interactionAccumulator >= (1.0f / 60.0f)) {

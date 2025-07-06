@@ -26,24 +26,6 @@ void CameraManager::Update(Vector3 playerPosition, float deltaTime) {
     yaw = fmodf(yaw, 2.0f * PI);
     if (yaw < 0.0f) yaw += 2.0f * PI;
 
-    char buf[64];
-    sprintf(buf, "Yaw: %.2f Pitch: %.2f", yaw, pitch);
-    DrawText(buf, 10, 250, 20, WHITE);
-
-    const char* direction = "Desconhecido";
-    float deg = yaw * RAD2DEG;
-
-    if (deg >= 337.5f || deg < 22.5f)         direction = "Norte";
-    else if (deg >= 22.5f  && deg < 67.5f)    direction = "Noroeste";
-    else if (deg >= 67.5f  && deg < 112.5f)   direction = "Oeste";
-    else if (deg >= 112.5f && deg < 157.5f)   direction = "Sudoeste";
-    else if (deg >= 157.5f && deg < 202.5f)   direction = "Sul";
-    else if (deg >= 202.5f && deg < 247.5f)   direction = "Sudeste";
-    else if (deg >= 247.5f && deg < 292.5f)   direction = "Leste";
-    else if (deg >= 292.5f && deg < 337.5f)   direction = "Nordeste";
-
-    DrawText(TextFormat("Direção: %s", direction), 10, 280, 20, WHITE);
-
     if (isFirstPerson) {
         SetMousePosition(GetScreenWidth() / 2, GetScreenHeight() / 2);
         UpdateFPS(playerPosition);

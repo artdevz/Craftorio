@@ -6,6 +6,7 @@
 #include "core/CameraManager.hpp"
 #include "core/GameManager.hpp"
 #include "core/BlockManager.hpp"
+#include "core/ItemManager.hpp"
 #include "core/GameTime.hpp"
 #include "entities/Player.hpp"
 #include "ui/HUD.hpp"
@@ -35,6 +36,7 @@ private:
     GameTime time;
     GameManager gameManager;
     BlockManager blockManager;
+    ItemManager itemManager;
     AssetManager assetManager;
     const SettingsData& settings;
     std::string worldName;

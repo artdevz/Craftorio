@@ -1,11 +1,10 @@
 #pragma once
-#include "items/Item.hpp"
+#include "items/tools/Tool.hpp"
 
-class ShovelData : public Item {
-
+class Axe : public Tool {
+    
 public:
-    ShovelData();
-    ~ShovelData() override;
+    Axe(ToolMaterial material, unsigned int id);
 
     void Update() override;
     void Draw() const override;

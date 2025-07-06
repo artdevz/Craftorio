@@ -11,6 +11,6 @@ void EndBlock::Draw() const {
 
 bool EndBlock::IsSolid() const { return true; }
 
-void EndBlock::Interact(float deltaTime) {
+void EndBlock::Interact(float deltaTime, std::shared_ptr<Item> item) {
     TraceLog(LOG_DEBUG, "Impossível");
 }

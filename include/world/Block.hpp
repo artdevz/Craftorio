@@ -1,6 +1,8 @@
 #pragma once
 #include <raylib.h>
 #include "enums/BlockType.hpp"
+#include "items/Item.hpp"
+#include <memory>
 
 class Block {
 
@@ -12,7 +14,7 @@ public:
     virtual void Update() = 0;
     virtual void Draw() const = 0;
     virtual bool IsSolid() const = 0;
-    virtual void Interact(float deltaTime) = 0;
+    virtual void Interact(float deltaTime, std::shared_ptr<Item> item) = 0;
 
     Vector3 GetPosition() const { return position; };
     Vector3 GetOrigin() const { return {position.x + 0.5f, position.y + 0.5f, position.z + 0.5f}; }

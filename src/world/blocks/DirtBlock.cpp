@@ -12,7 +12,7 @@ void DirtBlock::Draw() const {
 
 bool DirtBlock::IsSolid() const { return true; }
 
-void DirtBlock::Interact(float deltaTime) {
+void DirtBlock::Interact(float deltaTime, std::shared_ptr<Item> item) {
     interactionAccumulator += deltaTime;
 
     while (interactionAccumulator >= (1.0f / 60.0f)) {

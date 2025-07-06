@@ -18,7 +18,7 @@ void LeafBlock::Draw() const {
 
 bool LeafBlock::IsSolid() const { return false; }
 
-void LeafBlock::Interact(float deltaTime) {
+void LeafBlock::Interact(float deltaTime, std::shared_ptr<Item> item) {
     interactionAccumulator += deltaTime;
 
     while (interactionAccumulator >= (1.0f / 60.0f)) {

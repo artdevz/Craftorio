@@ -82,7 +82,7 @@ void Player::Update(float deltaTime, const Camera3D& camera, const BlockList& ne
     position = nextPos;    
 }
 
-void Player::Draw() {
+void Player::Draw() const {
     // DrawCube((Vector3){position.x, position.y + 0.9f, position.z}, 1.0f, PLAYER_HEIGHT, 1.0f, BLUE); // Player 1x2x1
     DrawCube(Vector3{position.x + 0.2f, position.y + 0.31f, position.z}, 0.3f, 0.8f, 0.2f, DARKBLUE);
     DrawCube(Vector3{position.x - 0.2f, position.y + 0.31f, position.z}, 0.3f, 0.8f, 0.2f, DARKBLUE);

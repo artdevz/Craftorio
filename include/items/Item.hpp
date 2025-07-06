@@ -1,4 +1,5 @@
 #pragma once
+#include "enums/ItemType.hpp"
 #include <string>
 
 class Item {
@@ -12,13 +13,14 @@ public:
     virtual void Draw() const = 0;
     virtual void Interact() = 0;
 
-    bool IsStackable() const;
-    unsigned int GetId() const;
-    std::string GetName() const;
+    bool IsStackable() const noexcept;
+    unsigned int GetId() const noexcept;
+    const std::string& GetName() const noexcept;
+    virtual ItemType GetItemType() const = 0;
 
 protected:
-    bool stackable;
-    unsigned int id;
+    bool stackable = false;
+    unsigned int id = 0;
     std::string name;
     
 };
