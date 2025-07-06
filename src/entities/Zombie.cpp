@@ -4,7 +4,7 @@
 #include <cmath>
 
 Zombie::Zombie() :
-    position({ 10, 10, 10 }),
+    position({ 7, 1, 7 }),
     isOnGround(false),
     moveSpeed(5.0f),
     velocityY(0.0f),
@@ -15,7 +15,7 @@ void Zombie::Update(float deltaTime) {}
 
 void Zombie::Update(float deltaTime, const BlockList& nearbyBlocks) {
     float gravity = 25.0f;
-    float jumpStrength = 9.5f;
+    float jumpStrength = 10.0f;
     float boxYOffset = 0.00001f;
 
     Vector3 nextPos = position;
@@ -25,8 +25,8 @@ void Zombie::Update(float deltaTime, const BlockList& nearbyBlocks) {
     nextPos.y += velocityY * deltaTime;
 
     BoundingBox boxY = {
-        { nextPos.x - 0.5f, nextPos.y,                 nextPos.z - 0.5f },
-        { nextPos.x + 0.5f, nextPos.y + 1.8f, nextPos.z + 0.5f }
+        { nextPos.x - 0.3f, nextPos.y, nextPos.z - 0.3f },
+        { nextPos.x + 0.3f, nextPos.y + 1.8f, nextPos.z + 0.3f }
     };
 
     bool blockedY = CheckCollision<Block>(nearbyBlocks, [&](const Block& block) {
@@ -34,7 +34,7 @@ void Zombie::Update(float deltaTime, const BlockList& nearbyBlocks) {
     });
 
     if (blockedY) {
-        nextPos.y = floor(position.y) + 0.5f;
+        nextPos.y = floor(position.y);
         velocityY = 0;
     }
     isOnGround = blockedY;

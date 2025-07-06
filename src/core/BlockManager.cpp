@@ -1,5 +1,6 @@
 #include "core/BlockManager.hpp"
 #include "core/BlockFactory.hpp"
+#include "utils/Vector3i.hpp"
 #include <cmath>
 
 void BlockManager::AddBlock(std::shared_ptr<Block> block) { blocks.push_back(block); }
@@ -52,6 +53,27 @@ void BlockManager::Draw(const Vector3& playerPosition, float maxRenderDistance) 
 
         if (std::abs(dx) <= renderRadiusChunks && std::abs(dz) <= renderRadiusChunks) {
             chunk.Draw(playerPosition, maxRenderDistance);
+        }
+    }
+}
+
+void BlockManager::Interact(float deltaTime, const Vector3& origin, const Vector3& direction, float maxDistance) {
+    const float step = 0.1f;
+    for (float t = 0.0f; t <= maxDistance; t += step) {
+        Vector3 point = Vector3Add(origin, Vector3Scale(direction, t));
+        Vector3i blockPosition = { (int)floorf(point.x), (int)floorf(point.y), (int)floorf(point.z) };
+
+        Vector2i chunkCoords = GetChunkCoords( { (float)blockPosition.x, (float)blockPosition.y, (float)blockPosition.z } );
+        auto it = chunks.find(chunkCoords);
+        if (it != chunks.end()) {
+            for (const auto& block : it->second.blocks) {
+                Vector3 posistion = block->GetPosition();
+                if ( (int)posistion.x == blockPosition.x && (int)posistion.y == blockPosition.y && (int)posistion.z == blockPosition.z ) {
+                    block->Interact(deltaTime);
+                    if (block->GetType() == BlockType::AIR) it->second.RemoveBlockAt(blockPosition);
+                    return;
+                }
+            }
         }
     }
 }

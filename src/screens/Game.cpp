@@ -40,18 +40,15 @@ void Game::Init() {
     hud = std::make_unique<HUD>(*player);
     SaveManager::LoadWorld(worldName, *player, time);
 
-    for (int x = 0; x < 1024; x++) for (int z = 0; z < 12; z++) for (int y = 0; y > -1; y--) {
+    for (int x = 0; x < 8; x++) for (int z = 0; z < 8; z++) for (int y = -1; y > -2; y--) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::GRASS );
     }
 
-    blockManager.AddBlockAt( { (float)-30, (float)1, (float)-30 }, BlockType::LEAVES );
-    blockManager.AddBlockAt( { (float)-35, (float)2, (float)-35 }, BlockType::LEAVES );
-
-    for (int x = 0; x < 8; x++) for (int z = 0; z < 8; z++) for (int y = -1; y > -2; y--) {
+    for (int x = 0; x < 8; x++) for (int z = 0; z < 8; z++) for (int y = -2; y > -3; y--) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::DIRT );
     }
 
-    for (int x = 0; x < 8; x++) for (int z = 0; z < 8; z++) for (int y = -2; y > -6; y--) {
+    for (int x = 0; x < 8; x++) for (int z = 0; z < 8; z++) for (int y = -3; y > -7; y--) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::STONE );
     }
 
@@ -73,6 +70,12 @@ void Game::Update() {
         hud->Update();
         hotbar.Update();
         inventory.Update();
+        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+            Vector3 origin = player->GetPosition();
+            origin.y += 1.8f;
+            Vector3 direction = camera.GetForward();
+            blockManager.Interact(GetFrameTime(), origin, direction, 5.0f);
+        }
     }
     time.Update(GetFrameTime());
 }
@@ -113,7 +116,6 @@ void Game::Draw() {
     BeginMode3D(camera.GetCamera3D());    
     DrawSphereEx(sunPosition, 24.0f, 16, 16, YELLOW);
     DrawSphereEx({-sunPosition.x, -sunPosition.y, -sunPosition.z}, 24.0f, 16, 16, WHITE);
-    // Colocar pra RenderDistance
     blockManager.Draw(player->GetPosition(), (float) settings.video.renderDistance);
     player->Draw();
     zombie->Draw();
@@ -150,11 +152,11 @@ void Game::Draw() {
     DrawText("Nadir  (-Y)", 10, 600, 16, DARKBROWN);
 
     gameManager.DrawOverlay();
-    DrawText("Craftorio Pre-Alpha 1.1", 10, 10, 20, GRAY);
+    DrawText("Craftorio Pre-Alpha 1.2", 10, 10, 20, GRAY);
     DrawFPS(1185, 10);
 
     char coordBuffer[64];
-    snprintf(coordBuffer, sizeof(coordBuffer), "Coords: x%d, y%d, z%d", (int)player->GetPosition().x, (int)player->GetPosition().y, (int)player->GetPosition().z);
+    snprintf(coordBuffer, sizeof(coordBuffer), "Coords: x%f, y%f, z%f", player->GetPosition().x, player->GetPosition().y, player->GetPosition().z);
     DrawText(coordBuffer, 10, 100, 20, GRAY);
 
     char realtimeBuffer[64];
@@ -186,5 +188,9 @@ void Game::Draw() {
     
     hud->Draw();
     hotbar.Draw();
+    if (camera.IsFirstPerson()) {
+        DrawLine(GetScreenWidth()/2 - 10, GetScreenHeight()/2, GetScreenWidth()/2 + 10, GetScreenHeight()/2, BLACK);
+        DrawLine(GetScreenWidth()/2, GetScreenHeight()/2 - 10, GetScreenWidth()/2, GetScreenHeight()/2 + 10, BLACK);
+    }
     inventory.Draw();
 }

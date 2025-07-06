@@ -8,6 +8,7 @@ class Block; // Forward
 
 using BlockList = std::vector<std::shared_ptr<Block>>;
 
+static constexpr float PLAYER_HALF_WIDTH = 0.3f;
 static constexpr float PLAYER_HEIGHT = 1.8f;
 
 class Player : public Entity {

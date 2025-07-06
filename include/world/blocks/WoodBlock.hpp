@@ -11,7 +11,7 @@ public:
     void Update() override;
     void Draw() const override;
     bool IsSolid() const override;
-    void Interact() override;
+    void Interact(float deltaTime) override;
 
 private:
     int durability;

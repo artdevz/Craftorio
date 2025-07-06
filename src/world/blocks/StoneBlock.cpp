@@ -1,18 +1,23 @@
 #include "world/blocks/StoneBlock.hpp"
 
 StoneBlock::StoneBlock(Vector3 position) :
-    Block(position, BlockType::STONE), durability(50) {}
+    Block(position, BlockType::STONE), durability(60 * 30) {}
 
 void StoneBlock::Update() {}
 
 void StoneBlock::Draw() const {
-    DrawCube(position, 1.0f, 1.0f, 1.0f, GetColorForBlock(type));
+    DrawCube(GetOrigin(), 1.0f, 1.0f, 1.0f, GetColorForBlock(type));
+    DrawCubeWires(GetOrigin(), 1.0f, 1.0f, 1.0f, DARKGRAY);
 }
 
 bool StoneBlock::IsSolid() const { return true; }
 
-void StoneBlock::Interact() {
-    TraceLog(LOG_DEBUG, "StoneBlock: Interagiu");
-    durability--;
+void StoneBlock::Interact(float deltaTime) {
+    interactionAccumulator += deltaTime;
+
+    while (interactionAccumulator >= (1.0f / 60.0f)) {
+        interactionAccumulator -= (1.0f / 60.0f);
+        durability -= 1.0f;
+    }
     if (durability <= 0) type = BlockType::AIR;
 }

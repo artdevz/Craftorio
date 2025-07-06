@@ -17,7 +17,7 @@ namespace Input {
 
     // Hotbar
     int GetHotbarKeyPressed() { 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 6; i++) {
             if (IsKeyDown(KEY_ONE + i)) return i;
         }
         return -1;

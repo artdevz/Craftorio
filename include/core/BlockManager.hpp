@@ -15,6 +15,7 @@ public:
     void LoadChunkAt(int chunkX, int chunkZ);
     void Update();
     void Draw(const Vector3& playerPosition, float maxRenderDistance) const;
+    void Interact(float deltaTime, const Vector3& origin, const Vector3& direction, float maxDistance);
 
     const std::vector<std::shared_ptr<Block>>& GetBlocks() const;
     std::vector<std::shared_ptr<Block>> GetNearbyBlocks(const Vector3& playerPosition, float radius);

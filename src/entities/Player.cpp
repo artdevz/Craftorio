@@ -18,8 +18,8 @@ void Player::Update(float deltaTime) {}
 void Player::Update(float deltaTime, const Camera3D& camera, const BlockList& nearbyBlocks) {
     float sprint = Input::IsRunHeld() ? 1.5f : 1.0f;
 
-    constexpr float gravity = 25.0f; // 25.0f;
-    constexpr float jumpStrength = 9.5f;
+    constexpr float gravity = 24.0f;
+    constexpr float jumpStrength = 10.0f;
     constexpr float boxYOffset = 0.00001f;
     
     Vector3 nextPos = position;
@@ -33,8 +33,8 @@ void Player::Update(float deltaTime, const Camera3D& camera, const BlockList& ne
     nextPos.y += velocityY * deltaTime;
 
     BoundingBox boxY = {
-        { nextPos.x - 0.5f, nextPos.y,                 nextPos.z - 0.5f },
-        { nextPos.x + 0.5f, nextPos.y + PLAYER_HEIGHT, nextPos.z + 0.5f }
+        { nextPos.x - PLAYER_HALF_WIDTH, nextPos.y, nextPos.z - PLAYER_HALF_WIDTH },
+        { nextPos.x + PLAYER_HALF_WIDTH, nextPos.y + PLAYER_HEIGHT, nextPos.z + PLAYER_HALF_WIDTH }
     };
 
     bool blockedY = CheckCollision<Block>(nearbyBlocks, [&](const Block& block) {
@@ -42,7 +42,7 @@ void Player::Update(float deltaTime, const Camera3D& camera, const BlockList& ne
     });
 
     if (blockedY) {
-        nextPos.y = floor(position.y) + 0.5f;
+        nextPos.y = floor(position.y);
         velocityY = 0;
     }
     isOnGround = blockedY;
@@ -66,8 +66,8 @@ void Player::Update(float deltaTime, const Camera3D& camera, const BlockList& ne
     horizontalPos.z += direction.z * moveSpeed * deltaTime * sprint;
     
     BoundingBox boxXZ = {
-        { horizontalPos.x - 0.5f, nextPos.y + boxYOffset,    horizontalPos.z - 0.5f },
-        { horizontalPos.x + 0.5f, nextPos.y + PLAYER_HEIGHT, horizontalPos.z + 0.5f }
+        { horizontalPos.x - PLAYER_HALF_WIDTH, nextPos.y + boxYOffset,    horizontalPos.z - PLAYER_HALF_WIDTH },
+        { horizontalPos.x + PLAYER_HALF_WIDTH, nextPos.y + PLAYER_HEIGHT, horizontalPos.z + PLAYER_HALF_WIDTH }
     };
 
     bool blockedXZ = CheckCollision<Block>(nearbyBlocks, [&](const Block& block) {
@@ -94,8 +94,8 @@ void Player::Draw() {
     DrawCube(Vector3{position.x, position.y + 3.5f, position.z}, 0.05f, 0.05f, 0.05f, BLACK);
     
     BoundingBox verticalBox = {
-        { position.x - 0.5f, position.y,                 position.z - 0.5f },
-        { position.x + 0.5f, position.y + PLAYER_HEIGHT, position.z + 0.5f }
+        { position.x - 0.4f, position.y,                 position.z - 0.4f },
+        { position.x + 0.4f, position.y + PLAYER_HEIGHT, position.z + 0.4f }
     };
     DrawBoundingBox(verticalBox, RED);
     // TraceLog(LOG_DEBUG, "Desenhando player");

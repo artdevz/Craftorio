@@ -76,3 +76,13 @@ void CameraManager::UpdateTPS(Vector3 playerPosition) {
 }
 
 Camera3D CameraManager::GetCamera3D() const { return camera; }
+
+bool CameraManager::IsFirstPerson() const { return isFirstPerson; }
+
+Vector3 CameraManager::GetForward() const {
+    return Vector3Normalize({
+        cosf(pitch) * sinf(yaw),
+        sinf(pitch),
+        cosf(pitch) * cosf(yaw)
+    });
+}
