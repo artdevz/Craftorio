@@ -3,6 +3,7 @@
 
 enum class BlockType {
     AIR,
+    END,
     GRASS,
     DIRT,
     STONE,
@@ -12,6 +13,7 @@ enum class BlockType {
 
 inline Color GetColorForBlock(BlockType type) {
     switch (type) {
+        case BlockType::END: return BLACK;
         case BlockType::GRASS: return GREEN;
         case BlockType::DIRT: return BROWN;
         case BlockType::STONE: return GRAY;

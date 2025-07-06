@@ -40,17 +40,19 @@ void Game::Init() {
     hud = std::make_unique<HUD>(*player);
     SaveManager::LoadWorld(worldName, *player, time);
 
-    for (int x = 0; x < 8; x++) for (int z = 0; z < 8; z++) for (int y = -1; y > -2; y--) {
+    for (int x = 0; x < 16; x++) for (int z = 0; z < 16; z++) for (int y = -1; y > -2; y--) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::GRASS );
     }
 
-    for (int x = 0; x < 8; x++) for (int z = 0; z < 8; z++) for (int y = -2; y > -3; y--) {
+    for (int x = 0; x < 16; x++) for (int z = 0; z < 16; z++) for (int y = -2; y > -3; y--) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::DIRT );
     }
 
-    for (int x = 0; x < 8; x++) for (int z = 0; z < 8; z++) for (int y = -3; y > -7; y--) {
+    for (int x = 0; x < 16; x++) for (int z = 0; z < 16; z++) for (int y = -3; y > -8; y--) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::STONE );
     }
+
+    for (int x = -32; x < 32; x++) for (int z = -32; z < 32; z++) blockManager.AddBlockAt( { (float)x, -1024.0f, (float)z }, BlockType::END );
 
     Tree tree;
     tree.Generate(blockManager, 4, 0, 4);
@@ -110,12 +112,18 @@ void Game::Draw() {
         origin.z + cosf(sunAzimuth) * cosf(sunElevation) * sunRadius    // Norte-Sul
     };
 
+    Vector3 moonPosition = { 
+        origin.x + -sinf(sunAzimuth) * cosf(sunElevation) * sunRadius,   
+        origin.y + -sinf(sunElevation) * sunRadius,                      
+        origin.z + -cosf(sunAzimuth) * cosf(sunElevation) * sunRadius    
+    };
+
     Vector3 sunLightDirection = Vector3Normalize(Vector3Subtract(origin, sunPosition));
-    Vector3 moonLightDirection = Vector3Normalize(Vector3Subtract(origin, {-sunPosition.x, -sunPosition.y, -sunPosition.z} ));
+    Vector3 moonLightDirection = Vector3Normalize(Vector3Subtract(origin, moonPosition));
     
     BeginMode3D(camera.GetCamera3D());    
     DrawSphereEx(sunPosition, 24.0f, 16, 16, YELLOW);
-    DrawSphereEx({-sunPosition.x, -sunPosition.y, -sunPosition.z}, 24.0f, 16, 16, WHITE);
+    DrawSphereEx(moonPosition, 24.0f, 16, 16, WHITE);
     blockManager.Draw(player->GetPosition(), (float) settings.video.renderDistance);
     player->Draw();
     zombie->Draw();

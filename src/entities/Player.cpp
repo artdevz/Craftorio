@@ -20,7 +20,7 @@ void Player::Update(float deltaTime, const Camera3D& camera, const BlockList& ne
 
     constexpr float gravity = 24.0f;
     constexpr float jumpStrength = 10.0f;
-    constexpr float boxYOffset = 0.00001f;
+    constexpr float boxYOffset = 0.001f;
     
     Vector3 nextPos = position;
 

@@ -5,6 +5,7 @@
 
 inline std::shared_ptr<Block> CreateBlock(Vector3 position, BlockType type) {
     switch (type) {
+        case BlockType::END: return std::make_shared<EndBlock>(position);
         case BlockType::GRASS: return std::make_shared<GrassBlock>(position);        
         case BlockType::STONE: return std::make_shared<StoneBlock>(position);
         case BlockType::DIRT: return std::make_shared<DirtBlock>(position, DirtType::DRY);
