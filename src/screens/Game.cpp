@@ -52,13 +52,15 @@ void Game::Init() {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::STONE );
     }
 
+    blockManager.AddBlockAt( {5.0f, 0.0f, 5.0f}, BlockType::GRASS );
+
     for (int x = -32; x < 32; x++) for (int z = -32; z < 32; z++) blockManager.AddBlockAt( { (float)x, -1024.0f, (float)z }, BlockType::END );
 
     Tree tree;
     tree.Generate(blockManager, 12, 0, 12);
 
     auto testItem = std::make_unique<Axe>(ToolMaterial::IRON, 1);
-    itemManager.AddItem(std::make_shared<ItemEntity>(std::move(testItem), Vector3{10, 0, 10}));
+    itemManager.AddItem(std::make_shared<ItemEntity>(std::move(testItem), Vector3{1, 1, 1}));
 
     TraceLog(LOG_INFO, "Game Iniciado");
 }
@@ -72,7 +74,7 @@ void Game::Update() {
         player->Update(GetFrameTime(), camera.GetCamera3D(), nearbyBlocks);
         zombie->Update(GetFrameTime(), nearbyBlocks);
         camera.Update(player->GetPosition(), GetFrameTime());
-        itemManager.Update(GetFrameTime(), player->GetPosition());
+        itemManager.Update(GetFrameTime(), player->GetPosition(), nearbyBlocks);
         hud->Update();
         hotbar.Update();
         inventory.Update();

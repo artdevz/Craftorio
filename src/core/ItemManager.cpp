@@ -2,8 +2,8 @@
 #include <raymath.h>
 #include <algorithm>
 
-void ItemManager::Update(float deltaTime, const Vector3& playerPosition) {
-    for (auto& item : items) item->Update(deltaTime);
+void ItemManager::Update(float deltaTime, const Vector3& playerPosition, const BlockList& nearbyBlocks) {
+    for (auto& item : items) item->Update(deltaTime, nearbyBlocks);
     
     items.erase(std::remove_if(items.begin(), items.end(),
         [](const std::shared_ptr<ItemEntity>& item) { return item->IsExpired(); }
@@ -12,14 +12,17 @@ void ItemManager::Update(float deltaTime, const Vector3& playerPosition) {
     if (IsKeyPressed(KEY_E)) {
         for (auto it = items.begin(); it != items.end(); it++) {
             float distance = Vector3Distance((*it)->GetPosition(), playerPosition);
-            if (distance <= 1.2f && (*it)->CanBePickedUp()) {                
+            if (distance <= 1.5f && (*it)->CanBePickedUp()) {                
                 auto collectedItem = (*it)->TakeItem();
                 bool added = false;
                 if (hotbar && hotbar->AddItem(collectedItem)) {
                     TraceLog(LOG_DEBUG, "Item adicionado à Hotbar");
                     added = true;
                 }
-                if (added) (*it)->Update(9999);
+                if (added) {
+                    (*it)->Update(9999, nearbyBlocks);
+                    TraceLog(LOG_TRACE, "Sumiu");
+                }
                 break;
             }
         }

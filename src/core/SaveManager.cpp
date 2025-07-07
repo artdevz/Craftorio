@@ -81,8 +81,8 @@ namespace SaveManager {
         data["position"]["x"] = player.GetPosition().x;
         data["position"]["y"] = player.GetPosition().y;
         data["position"]["z"] = player.GetPosition().z;
-        data["hp"] = player.GetHealth();
-        data["mp"] = 50;
+        data["hp"] = player.GetHP();
+        data["mp"] = player.GetMP();
 
         // TO-DO: Inventory, Hotbar ...
         std::ofstream(path) << data.dump(4);

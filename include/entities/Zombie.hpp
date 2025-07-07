@@ -1,5 +1,5 @@
 #pragma once
-#include "entities/Entity.hpp"
+#include "entities/LivingEntity.hpp"
 #include <memory>
 #include <vector>
 
@@ -7,7 +7,7 @@ class Block;
 
 using BlockList = std::vector<std::shared_ptr<Block>>;
 
-class Zombie : public Entity {
+class Zombie : public LivingEntity {
 
 public:
     Zombie();

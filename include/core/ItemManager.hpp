@@ -9,7 +9,7 @@
 class ItemManager {
 
 public:
-    void Update(float deltaTime, const Vector3& playerPosition);
+    void Update(float deltaTime, const Vector3& playerPosition, const BlockList& nearbyBlocks);
     void Draw() const;
     
     void AddItem(std::shared_ptr<ItemEntity> item);

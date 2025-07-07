@@ -2,42 +2,27 @@
 #include <raylib.h>
 #include <memory>
 #include <vector>
-#include "entities/Entity.hpp"
+#include "entities/LivingEntity.hpp"
 
-class Block; // Forward
-
+class Block;
 using BlockList = std::vector<std::shared_ptr<Block>>;
 
 static constexpr float PLAYER_HALF_WIDTH = 0.3f;
 static constexpr float PLAYER_HEIGHT = 1.8f;
 
-class Player : public Entity {
+class Player : public LivingEntity {
 
 public:
     Player();
+    ~Player() override = default;
 
     void Update(float deltaTime) override;
     void Update(float deltaTime, const Camera3D& camera, const BlockList& nearbyBlocks);
     void Draw() const override;
 
-    Vector3 GetPosition() const override;
-    void SetPosition(Vector3 position) override;
-
-    bool IsOnGround() const;
-
-    float GetHealth() const;
-    float GetMaxHealth() const;
-
-    void TakeDamage(float amount);
-    void Heal(float amount);
+    float GetMoveSpeed() const;
 
 private:
-    Vector3 position;
-    bool isOnGround;
     float moveSpeed;
-    float velocityY;
-
-    float health;
-    float maxHealth;
 
 };

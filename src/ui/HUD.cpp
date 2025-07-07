@@ -15,8 +15,8 @@ void HUD::Update() {
 }
 
 void HUD::Draw() {
-    float health = player.GetHealth();
-    float maxHealth = player.GetMaxHealth();
+    float health = player.GetHP();
+    float maxHealth = player.GetMaxHP();
 
     DrawRectangle(10, 35, 60, 60, WHITE);
     DrawRectangle(80, 40, 180, 30, BLANK);

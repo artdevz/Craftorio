@@ -1,18 +1,20 @@
 #pragma once
-#include "entities/Entity.hpp"
+#include "entities/PhysicsEntity.hpp"
 #include "items/Item.hpp"
 #include <memory>
 
-class ItemEntity : public Entity {
+class Block;
+using BlockList = std::vector<std::shared_ptr<Block>>;
+
+class ItemEntity : public PhysicsEntity {
 
 public:
     ItemEntity(std::unique_ptr<Item> item, const Vector3& position);
+    ~ItemEntity() override = default;
 
-    void Update(float deltaTime) override;
+    // void Update(float deltaTime) override;
+    void Update(float deltaTime, const BlockList& nearbyBlocks);
     void Draw() const override;
-    
-    Vector3 GetPosition() const override;
-    void SetPosition(Vector3 position) override;
 
     bool CanBePickedUp() const;
     bool IsExpired() const;
@@ -21,7 +23,6 @@ public:
 
 private:
     std::shared_ptr<Item> item;
-    Vector3 position;
     float pickupCooldown = 0.5f;
     float lifespan = 300.0f;
 

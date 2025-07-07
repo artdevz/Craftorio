@@ -3,13 +3,10 @@
 #include "utils/Collision.hpp"
 #include <cmath>
 
-Zombie::Zombie() :
-    position({ 7, 1, 7 }),
-    isOnGround(false),
-    moveSpeed(5.0f),
-    velocityY(0.0f),
-    maxHP(200.0f),
-    hp(200.0f) {}
+Zombie::Zombie() : 
+    LivingEntity(200.0f) {
+        position = { 8, 1, 10 };
+    }
 
 void Zombie::Update(float deltaTime) {}
 

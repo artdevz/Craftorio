@@ -11,5 +11,4 @@ public:
 
     virtual Vector3 GetPosition() const = 0;
     virtual void SetPosition(Vector3 position) = 0;
-
 };
