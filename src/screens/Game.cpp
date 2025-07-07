@@ -40,7 +40,7 @@ void Game::Init() {
     hud = std::make_unique<HUD>(*player);
     SaveManager::LoadWorld(worldName, *player, time);
 
-    for (int x = 0; x < 16; x++) for (int z = 0; z < 16; z++) for (int y = -1; y > -2; y--) {
+    for (int x = 0; x < 160; x++) for (int z = 0; z < 16; z++) for (int y = -1; y > -2; y--) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::GRASS );
     }
 

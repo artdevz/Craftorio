@@ -15,10 +15,22 @@ CameraManager::CameraManager() :
 }
 
 void CameraManager::Update(Vector3 playerPosition, float deltaTime) { 
+    float sensibility = 5.0f;
+
+    // Talvez usar deltaTime pra que seja mais suave em fps baixo
+    if (IsKeyDown(KEY_Z)) {
+        if (camera.fovy > 5.0f) camera.fovy--;
+        sensibility = 0.5f;
+    }
+    // else camera.fovy++; // Muito louco!
+    else if (camera.fovy < 70.0f) {
+        camera.fovy+=2.0f;
+        sensibility = 5.0f;
+    }
+    
     if (Input::IsCameraTogglePressed()) isFirstPerson = !isFirstPerson;
 
     Vector2 mouseDelta = GetMouseDelta();
-    float sensibility = 5.0f;
     yaw -= mouseDelta.x * 0.003f * sensibility;
     pitch -= mouseDelta.y * 0.003f * sensibility;
 
