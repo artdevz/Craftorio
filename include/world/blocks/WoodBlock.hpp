@@ -12,6 +12,7 @@ public:
     void Draw() const override;
     bool IsSolid() const override;
     void Interact(float deltaTime, std::shared_ptr<Item> item) override;
+    std::optional<std::unique_ptr<Item>> GetDrop() const override;
 
 private:
     int durability;

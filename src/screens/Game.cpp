@@ -81,14 +81,14 @@ void Game::Update() {
             origin.y += 1.8f;
             Vector3 direction = camera.GetForward();
             std::shared_ptr<Item> activeItem = hotbar.GetLeftHandItem();
-            blockManager.Interact(GetFrameTime(), origin, direction, 5.0f, activeItem);
+            blockManager.Interact(GetFrameTime(), origin, direction, 5.0f, activeItem, &itemManager);
         }
         if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
             Vector3 origin = player->GetPosition();
             origin.y += 1.8f;
             Vector3 direction = camera.GetForward();
             std::shared_ptr<Item> activeItem = hotbar.GetRightHandItem();
-            blockManager.Interact(GetFrameTime(), origin, direction, 5.0f, activeItem);
+            blockManager.Interact(GetFrameTime(), origin, direction, 5.0f, activeItem, &itemManager);
         }
     }
     time.Update(GetFrameTime());

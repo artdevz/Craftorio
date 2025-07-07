@@ -3,6 +3,7 @@
 #include "enums/BlockType.hpp"
 #include "items/Item.hpp"
 #include <memory>
+#include <optional>
 
 class Block {
 
@@ -15,6 +16,7 @@ public:
     virtual void Draw() const = 0;
     virtual bool IsSolid() const = 0;
     virtual void Interact(float deltaTime, std::shared_ptr<Item> item) = 0;
+    virtual std::optional<std::unique_ptr<Item>> GetDrop() const { return std::nullopt; }
 
     Vector3 GetPosition() const { return position; };
     Vector3 GetOrigin() const { return {position.x + 0.5f, position.y + 0.5f, position.z + 0.5f}; }

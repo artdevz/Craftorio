@@ -15,7 +15,7 @@ public:
 
     bool IsStackable() const noexcept;
     unsigned int GetId() const noexcept;
-    const std::string& GetName() const noexcept;
+    virtual const std::string& GetName() const noexcept;
     virtual ItemType GetItemType() const = 0;
 
 protected:

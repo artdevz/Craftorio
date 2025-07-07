@@ -35,3 +35,8 @@ void WoodBlock::Interact(float deltaTime, std::shared_ptr<Item> item) {
     }
     if (durability <= 0) type = BlockType::AIR;
 }
+
+std::optional<std::unique_ptr<Item>> WoodBlock::GetDrop() const {
+    if (type == BlockType::AIR) return std::make_unique<WoodItem>(woodType, 1);
+    return std::nullopt;
+}
