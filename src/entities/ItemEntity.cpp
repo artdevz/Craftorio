@@ -5,6 +5,7 @@
 ItemEntity::ItemEntity(std::unique_ptr<Item> it, const Vector3& position) :
     item(std::move(it)) {
         this->position = position;
+        SetBoundingBox( { { -0.3f, 0.01f, -0.3f }, { 0.3f, 0.6f, 0.3f } } );
     }
 
 // void ItemEntity::Update(float deltaTime) {}

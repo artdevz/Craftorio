@@ -6,6 +6,7 @@
 
 #include "core/Input.hpp"
 #include "core/WindowManager.hpp"
+#include "core/UIManager.hpp"
 
 Hotbar::Hotbar() {}
 
@@ -29,7 +30,8 @@ void Hotbar::Draw() {
         if (i > 5) DrawText(("R" + std::to_string(i - 5)).c_str(), slotRect.x + 10, slotRect.y + 10, 14, BLACK);
     
         if (slots[i]) {
-            DrawRectangle((int)(slotRect.x + 20), (int)(slotRect.y + 20), 24, 24, GRAY);
+            // DrawRectangle((int)(slotRect.x + 20), (int)(slotRect.y + 20), 24, 24, GRAY);
+            UIManager::DrawItem(slots[i].get(), slotRect.x+20, slotRect.y+20, 24);
         }
     }
 }

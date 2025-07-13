@@ -37,12 +37,7 @@ void PhysicsEntity::ResolveCollisions(const std::vector<std::shared_ptr<Block>>&
     
     // Y
     nextPosition.y += velocity.y * deltaTime;
-
-    // TO-DO: Colocar pra detectar o HitBox do Player, Zombie, Item...
-    BoundingBox boxY = {
-        { nextPosition.x - boundingBoxWidth, nextPosition.y, nextPosition.z - boundingBoxWidth },
-        { nextPosition.x + boundingBoxWidth, nextPosition.y + boundingBoxHeight, nextPosition.z + boundingBoxWidth }
-    };
+    BoundingBox boxY = GetWorldBoundingBox(nextPosition);
 
     bool collidedY = CheckCollision<Block>(nearbyBlocks, [&](const Block& block) {
         return block.IsSolid() && CheckCollisionBoxes(boxY, block.GetBoundingBox());
@@ -60,10 +55,7 @@ void PhysicsEntity::ResolveCollisions(const std::vector<std::shared_ptr<Block>>&
     nextPositionXZ.x += velocity.x * deltaTime;
     nextPositionXZ.z += velocity.z * deltaTime;
 
-    BoundingBox boxXZ = {
-        { nextPositionXZ.x - boundingBoxWidth, position.y + 0.0001f,            position.z - boundingBoxWidth },
-        { nextPositionXZ.x + boundingBoxWidth, position.y + boundingBoxHeight,  position.z + boundingBoxWidth }
-    };
+    BoundingBox boxXZ = GetWorldBoundingBox(nextPositionXZ);
 
     bool collidedXZ = CheckCollision<Block>(nearbyBlocks, [&](const Block& block) {
         return block.IsSolid() && CheckCollisionBoxes(boxXZ, block.GetBoundingBox());
@@ -77,3 +69,11 @@ void PhysicsEntity::ResolveCollisions(const std::vector<std::shared_ptr<Block>>&
 
 Vector3 PhysicsEntity::GetPosition() const { return position; }
 void PhysicsEntity::SetPosition(Vector3 position) { this->position = position; }
+
+BoundingBox PhysicsEntity::GetWorldBoundingBox(Vector3 atPosition) const {
+    return {
+        Vector3Add(atPosition, localBoundingBox.min),
+        Vector3Add(atPosition, localBoundingBox.max)
+    };
+}
+void PhysicsEntity::SetBoundingBox(const BoundingBox& boundingBox) { this->localBoundingBox = boundingBox; }

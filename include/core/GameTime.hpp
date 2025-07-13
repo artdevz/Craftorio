@@ -16,6 +16,7 @@ public:
     GameCalendar GetCalendar() const;
 
     void FormatDateString(char* buffer, size_t bufferSize) const;
+    void FormatTimeString(char* buffer, size_t bufferSize) const;
     void FormatSeasonString(char* buffer, size_t bufferSize) const;
     void FormatPhaseString(char* buffer, size_t bufferSize) const;
 

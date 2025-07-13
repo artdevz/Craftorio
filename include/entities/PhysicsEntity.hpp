@@ -20,14 +20,16 @@ public:
     Vector3 GetPosition() const override;
     void SetPosition(Vector3 position) override;
 
+    BoundingBox GetWorldBoundingBox(Vector3 atPosition) const;
+    void SetBoundingBox(const BoundingBox& boundingBox);
+
 protected:
     Vector3 position;
     Vector3 velocity;
     Vector3 acceleration;
     bool onGround = false;
 
-    float boundingBoxWidth = 0.4f;
-    float boundingBoxHeight = 1.8f;
+    BoundingBox localBoundingBox;
 
     void ApplyGravity(float deltaTime);
     void ResolveCollisions(const std::vector<std::shared_ptr<Block>>& blocks, float deltaTime);

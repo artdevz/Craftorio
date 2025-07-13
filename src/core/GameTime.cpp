@@ -30,12 +30,22 @@ GameCalendar GameTime::GetCalendar() const {
     return { date, env };
 }
 
+void GameTime::FormatTimeString(char* buffer, size_t bufferSize) const {
+    GameDate date = GetCalendar().date;
+
+    snprintf(buffer, bufferSize,
+        "%02" PRId64 ":%02" PRId64,
+        date.hour, date.minute
+    );
+}
+
 void GameTime::FormatDateString(char* buffer, size_t bufferSize) const {
     GameDate date = GetCalendar().date;
-    
-    snprintf(buffer, bufferSize, 
-        "Solar %" PRId64 ", Lunar %" PRId64 ", Day %02" PRId64 " - %02" PRId64 ":%02" PRId64,
-        date.solar, date.lunar, date.day, date.hour, date.minute);
+
+    snprintf(buffer, bufferSize,
+        "Solar %" PRId64 " / Lunar %" PRId64,
+        date.solar, date.lunar
+    );
 }
 
 void GameTime::FormatSeasonString(char* buffer, size_t bufferSize) const {

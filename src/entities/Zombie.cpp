@@ -8,6 +8,7 @@
 Zombie::Zombie() : 
     LivingEntity(200.0f) {
         position = { 8, 1, 10 };
+        SetBoundingBox({ { -0.3f, 0.01f, -0.3f }, { 0.3f, 1.8f, 0.3f } });
     }
 
 void Zombie::Update(float deltaTime) {}

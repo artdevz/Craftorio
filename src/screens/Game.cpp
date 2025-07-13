@@ -74,7 +74,7 @@ void Game::Update() {
     gameManager.Update();
 
     if (player) {
-        float checkRadius = 5.0f;
+        float checkRadius = 50.0f;
         auto nearbyBlocks = blockManager.GetNearbyBlocks(player->GetPosition(), checkRadius);
         player->Update(GetFrameTime(), camera.GetCamera3D(), nearbyBlocks);
         zombie->Update(GetFrameTime(), nearbyBlocks);
@@ -148,31 +148,18 @@ void Game::Draw() {
 
     EndMode3D();
 
-    DrawText("Norte  (+Z)", 10, 500, 16, DARKBLUE);
-    DrawText("Sul    (-Z)", 10, 520, 16, GRAY);
-    DrawText("Oeste  (+X)", 10, 540, 16, RED);
-    DrawText("Leste  (-X)", 10, 560, 16, MAGENTA);
-    DrawText("Zênite (+Y)", 10, 580, 16, DARKGREEN);
-    DrawText("Nadir  (-Y)", 10, 600, 16, DARKBROWN);
-
     gameManager.DrawOverlay();
-    DrawText("Craftorio Pre-Alpha 1.3", 10, 10, 20, GRAY);
-    DrawFPS(1185, 10);
+    DrawFPS(10, 700);
 
     char coordBuffer[64];
-    snprintf(coordBuffer, sizeof(coordBuffer), "Coords: x%d, y%d, z%d", (int)player->GetPosition().x, (int)player->GetPosition().y, (int)player->GetPosition().z);
-    DrawText(coordBuffer, 10, 100, 20, GRAY);
+    snprintf(coordBuffer, sizeof(coordBuffer), "x%d, y%d, z%d", (int)player->GetPosition().x, (int)player->GetPosition().y, (int)player->GetPosition().z);
+    DrawText(coordBuffer, 1150, 140, 16, WHITE);
 
-    char realtimeBuffer[64];
-    snprintf(realtimeBuffer, sizeof(realtimeBuffer), "RealTime: %" PRId64, time.GetGameTime());
-    DrawText(realtimeBuffer, 10, 130, 20, GRAY);
+    char gameTimeBuffer[32];
+    time.FormatTimeString(gameTimeBuffer, sizeof(gameTimeBuffer));
+    DrawText(gameTimeBuffer, 1160, 160, 16, WHITE);
 
-    char gameTimeBuffer[128];
-    time.FormatDateString(gameTimeBuffer, sizeof(gameTimeBuffer));
-    DrawText(gameTimeBuffer, 10, 160, 20, GRAY);
-
-    Color seasonColor;
-    
+    Color seasonColor;    
     switch (time.GetCalendar().environment.season) {
         case Season::SPRING: seasonColor = { 250, 50, 100, 255 }; break;
         case Season::SUMMER: seasonColor = { 20, 170, 0, 255 }; break;
@@ -180,16 +167,19 @@ void Game::Draw() {
         case Season::WINTER: seasonColor = { 160, 245, 250, 255 }; break;
         default: seasonColor = LIGHTGRAY; break;
     }
-
-
-    char seasonBuffer[32];
-    time.FormatSeasonString(seasonBuffer, sizeof(seasonBuffer));
-    DrawText(seasonBuffer, 10, 190, 20, seasonColor);
-
+    DrawCircle(1150, 168, 8, seasonColor);
+    
+    char gameDateBuffer[32];
+    time.FormatDateString(gameDateBuffer, sizeof(gameDateBuffer));
+    DrawText(gameDateBuffer, 1150, 180, 16, WHITE);
+    
+    // DEBUG
     char moonPhaseBuffer[32];
     time.FormatPhaseString(moonPhaseBuffer, sizeof(moonPhaseBuffer));
-    DrawText(moonPhaseBuffer, 10, 220, 20, WHITE);
+    DrawText(moonPhaseBuffer, 10, 220, 16, WHITE);
     
+    // DrawCircle(1200, 80, 72, WHITE);
+    DrawRectangle(1150, 10, 120, 120, WHITE);
     hud->Draw();
     hotbar.Draw();
     if (camera.IsFirstPerson()) {

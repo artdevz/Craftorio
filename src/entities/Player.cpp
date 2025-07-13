@@ -9,7 +9,9 @@
 #include "world/Block.hpp"
 
 Player::Player() : 
-    LivingEntity(100.0f), moveSpeed(5.0f) {}
+    LivingEntity(100.0f), moveSpeed(5.0f) {
+        SetBoundingBox({ { -0.3f, 0.01f, -0.3f }, { 0.3f, 1.8f, 0.3f } });
+    }
 
 void Player::Update(float deltaTime) {}
 
@@ -27,10 +29,10 @@ void Player::Update(float deltaTime, const Camera3D& camera, const BlockList& ne
     Vector3 right = Vector3Normalize(Vector3CrossProduct(forward, { 0.0f, 1.0f, 0.0f }));
 
     Vector3 direction = {0};
-    if (Input::IsMoveForwardPressed())    direction = Vector3Add(direction, forward);
-    if (Input::IsMoveBackwardPressed())  direction = Vector3Subtract(direction, forward);
-    if (Input::IsMoveLeftPressed())  direction = Vector3Subtract(direction, right);
-    if (Input::IsMoveRightPressed()) direction = Vector3Add(direction, right);
+    if (Input::IsMoveForwardPressed())  direction = Vector3Add(direction, forward);
+    if (Input::IsMoveBackwardPressed()) direction = Vector3Subtract(direction, forward);
+    if (Input::IsMoveLeftPressed())     direction = Vector3Subtract(direction, right);
+    if (Input::IsMoveRightPressed())    direction = Vector3Add(direction, right);
     direction = Vector3Normalize(direction);
     
     velocity.x = direction.x * moveSpeed * sprint;
