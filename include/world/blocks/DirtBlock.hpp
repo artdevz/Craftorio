@@ -1,7 +1,9 @@
 #pragma once
-#include "world/Block.hpp"
-#include "enums/DirtType.hpp"
+
 #include <raylib.h>
+
+#include "enums/DirtType.hpp"
+#include "world/Block.hpp"
 
 class DirtBlock : public Block {
 

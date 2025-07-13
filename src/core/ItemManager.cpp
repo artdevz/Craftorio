@@ -1,6 +1,8 @@
 #include "core/ItemManager.hpp"
-#include <raymath.h>
+
 #include <algorithm>
+
+#include <raymath.h>
 
 void ItemManager::Update(float deltaTime, const Vector3& playerPosition, const BlockList& nearbyBlocks) {
     for (auto& item : items) item->Update(deltaTime, nearbyBlocks);

@@ -1,7 +1,15 @@
 #pragma once
-#include <unordered_map>
+
 #include <string>
+#include <unordered_map>
+
 #include <raylib.h>
+
+/**
+ * @brief Gerencia texturas, sons e músicas do jogo
+ * 
+ * Centraliza o carregamento, descarregamento de recursos
+ */
 
 class AssetManager {
 

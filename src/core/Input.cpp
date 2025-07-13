@@ -1,5 +1,6 @@
-#include <raylib.h>
 #include "core/Input.hpp"
+
+#include <raylib.h>
 
 namespace Input {
     

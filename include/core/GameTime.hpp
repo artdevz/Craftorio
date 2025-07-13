@@ -1,6 +1,8 @@
 #pragma once
+
 #include <string>
 #include <cstdint>
+
 #include "core/GameCalendar.hpp"
 
 class GameTime {

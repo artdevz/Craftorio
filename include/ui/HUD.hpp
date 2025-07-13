@@ -1,4 +1,5 @@
 #pragma once
+
 #include "entities/Player.hpp"
 
 class HUD {

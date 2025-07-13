@@ -1,7 +1,9 @@
 #include "core/BlockManager.hpp"
+
+#include <cmath>
+
 #include "core/BlockFactory.hpp"
 #include "utils/Vector3i.hpp"
-#include <cmath>
 
 void BlockManager::AddBlock(std::shared_ptr<Block> block) { blocks.push_back(block); }
 

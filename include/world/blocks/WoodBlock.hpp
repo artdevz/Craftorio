@@ -1,7 +1,9 @@
 #pragma once
-#include "world/Block.hpp"
-#include "enums/WoodType.hpp"
+
 #include <raylib.h>
+
+#include "enums/WoodType.hpp"
+#include "world/Block.hpp"
 
 class WoodBlock : public Block {
 

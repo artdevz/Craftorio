@@ -1,7 +1,9 @@
 #pragma once
+
 #include <cstdint>
-#include "enums/Season.hpp"
+
 #include "enums/LunarPhase.hpp"
+#include "enums/Season.hpp"
 
 struct GameDate {
     int64_t solar;      // Ano do Game (64 Dias)

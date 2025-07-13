@@ -1,9 +1,12 @@
 #pragma once
-#include <raylib.h>
-#include "enums/BlockType.hpp"
-#include "items/Item.hpp"
+
 #include <memory>
 #include <optional>
+
+#include <raylib.h>
+
+#include "enums/BlockType.hpp"
+#include "items/Item.hpp"
 
 class Block {
 

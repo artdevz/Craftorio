@@ -1,4 +1,5 @@
 #pragma once
+
 #include "world/Block.hpp"
 
 class StoneBlock : public Block {

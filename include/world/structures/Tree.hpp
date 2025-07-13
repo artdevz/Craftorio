@@ -1,6 +1,8 @@
 #pragma once
-#include "world/Structure.hpp"
+
 #include <cmath>
+
+#include "world/Structure.hpp"
 
 class Tree : public Structure {
 

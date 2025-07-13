@@ -1,6 +1,9 @@
-#include <raylib.h>
-#include <string>
 #include "ui/Hotbar.hpp"
+
+#include <string>
+
+#include <raylib.h>
+
 #include "core/Input.hpp"
 #include "core/WindowManager.hpp"
 

@@ -1,7 +1,9 @@
 #pragma once
-#include "world/Block.hpp"
-#include "enums/LeafType.hpp"
+
 #include "raylib.h"
+
+#include "enums/LeafType.hpp"
+#include "world/Block.hpp"
 
 class LeafBlock : public Block {
 

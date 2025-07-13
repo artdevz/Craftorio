@@ -1,5 +1,7 @@
 #pragma once
+
 #include <memory>
+
 #include "world/Block.hpp"
 #include "world/Aggregator.hpp"
 

@@ -1,4 +1,3 @@
-#include <raylib.h>
 #include "core/WindowManager.hpp"
 
 Vector2 WindowManager::resolution = { 0, 0 };

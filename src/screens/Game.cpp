@@ -1,14 +1,19 @@
-#include <raylib.h>
+#include "screens/Game.hpp"
+
 #include <memory>
 #include <string>
 #include <inttypes.h>
+
+#include <raylib.h>
 #include <raymath.h>
-#include "screens/Game.hpp"
+
 #include "core/Input.hpp"
 #include "core/SaveManager.hpp"
-#include "world/Aggregator.hpp"
-#include "items/ItemAgreggator.hpp"
+
 #include "enums/Season.hpp"
+#include "items/ItemAgreggator.hpp"
+
+#include "world/Aggregator.hpp"
 #include "world/structures/Tree.hpp"
 
 Game::Game(const SettingsData& settings, const std::string& worldName) : 

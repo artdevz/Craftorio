@@ -1,7 +1,9 @@
 #pragma once
-#include "entities/LivingEntity.hpp"
+
 #include <memory>
 #include <vector>
+
+#include "entities/LivingEntity.hpp"
 
 class Block;
 

@@ -1,6 +1,8 @@
 #pragma once
+
 #include <array>
 #include <memory>
+
 #include "items/Item.hpp"
 
 class Hotbar {

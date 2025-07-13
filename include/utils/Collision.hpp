@@ -1,6 +1,7 @@
 #pragma once
-#include <vector>
+
 #include <memory>
+#include <vector>
 
 template<typename T, typename Func>
 bool CheckCollision(const std::vector<std::shared_ptr<T>>& list, Func condition) {

@@ -1,4 +1,5 @@
 #include "core/GameManager.hpp"
+
 #include <raylib.h>
 
 GameManager::GameManager(GameTime& gameTime) :

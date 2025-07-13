@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 #include <unordered_map>
 
@@ -21,7 +22,7 @@ struct ControlsSettings {
 struct VideoSettings {
     int display = 0;
     int width = 1280, height = 720;
-    int fpsLimit = 144;
+    int fpsLimit = 144;                 // Quando fpsLimit <= 0: Ilimitado
     bool fpsUnlimited = false;
     bool fullscreen = false;
     bool vSync = false;
@@ -37,6 +38,12 @@ struct SettingsData {
     std::string language = "en";
     VideoSettings video;
 };
+
+/**
+ * @brief Manipula o carregamento e salvamento das configurações do jogo
+ * 
+ * Usa `SettingsData` como base e permite acesso global às configurações
+ */
 
 class Settings {
     

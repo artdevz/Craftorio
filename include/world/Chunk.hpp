@@ -1,11 +1,14 @@
 #pragma once
-#include <vector>
+
+#include <algorithm>
 #include <memory>
+#include <vector>
+
 #include <raylib.h>
 #include <raymath.h>
-#include <algorithm>
-#include "world/Block.hpp"
+
 #include "utils/Vector3i.hpp"
+#include "world/Block.hpp"
 
 struct Chunk {
     static constexpr int SIZE = 16;

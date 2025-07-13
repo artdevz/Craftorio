@@ -1,7 +1,14 @@
 #pragma once
-#include <string>
+
 #include <raylib.h>
-#include <core/Settings.hpp>
+
+#include "core/Settings.hpp"
+
+/**
+ * @brief Gerencia a janela do jogo
+ * 
+ * Resolução, FullScreen, Taxa de Atualização e Título
+ */
 
 class WindowManager {
 

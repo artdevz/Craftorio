@@ -1,8 +1,10 @@
 #include "core/SaveManager.hpp"
-#include "../libs/json.hpp"
-#include <fstream>
+
 #include <filesystem>
+#include <fstream>
 #include <vector>
+
+#include "../libs/json.hpp"
 
 using json = nlohmann::json;
 namespace fs = std::filesystem;

@@ -1,5 +1,6 @@
 #pragma once
-#include "../Item.hpp"
+
+#include "items/Item.hpp"
 #include "items/tools/ToolMaterial.hpp"
 
 class Tool : public Item {

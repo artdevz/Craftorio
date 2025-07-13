@@ -1,7 +1,9 @@
 #pragma once
-#include "items/Item.hpp"
-#include "enums/WoodType.hpp"
+
 #include <string>
+
+#include "enums/WoodType.hpp"
+#include "items/Item.hpp"
 
 class WoodItem : public Item {
 

@@ -1,9 +1,12 @@
 #pragma once
-#include "Entity.hpp"
-#include "world/Block.hpp"
-#include <vector>
+
 #include <memory>
+#include <vector>
+
 #include <raylib.h>
+
+#include "entities/Entity.hpp"
+#include "world/Block.hpp"
 
 class PhysicsEntity : public Entity {
 

@@ -1,4 +1,5 @@
 #include "core/GameTime.hpp"
+
 #include <inttypes.h>
 
 void GameTime::Update(double delta) { realTime += delta; }

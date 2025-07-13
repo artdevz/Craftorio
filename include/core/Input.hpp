@@ -1,5 +1,11 @@
 #pragma once
 
+/**
+ * @brief Interface de Entrada de comandos
+ * 
+ * Centraliza a detecção de comandos do jogador
+ */
+
 namespace Input {
 
     void Update();

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "core/GameTime.hpp"
 
 class GameManager {

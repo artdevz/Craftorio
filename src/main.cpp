@@ -1,10 +1,13 @@
 #include <memory>
+
 #include <raylib.h>
+
+#include "core/WindowManager.hpp"
+#include "core/Settings.hpp"
+
 #include "screens/Game.hpp"
 #include "screens/MainMenu.hpp"
 #include "screens/WorldSelect.hpp"
-#include "core/WindowManager.hpp"
-#include "core/Settings.hpp"
 
 int main() {
     SetTraceLogLevel(LOG_DEBUG);

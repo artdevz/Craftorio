@@ -1,13 +1,22 @@
 #pragma once
+
+#include <memory>
 #include <unordered_map>
 #include <vector>
-#include <memory>
-#include "world/Block.hpp"
-#include "enums/BlockType.hpp"
-#include "world/Chunk.hpp"
-#include "utils/Vector2i.hpp"
-#include "items/Item.hpp"
+
 #include "core/ItemManager.hpp"
+#include "enums/BlockType.hpp"
+#include "items/Item.hpp"
+#include "utils/Vector2i.hpp"
+
+#include "world/Block.hpp"
+#include "world/Chunk.hpp"
+
+/**
+ * @brief Gerencia blocos e chunks do jogo
+ * 
+ * Centraliza o carregamento, descarregamento de blocos e chunks
+ */
 
 class BlockManager {
 

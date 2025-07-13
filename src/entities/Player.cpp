@@ -1,9 +1,12 @@
 #include "entities/Player.hpp"
-#include "core/Input.hpp"
-#include "world/Block.hpp"
-#include "utils/Collision.hpp"
+
 #include <cmath>
+
 #include <raymath.h>
+
+#include "core/Input.hpp"
+#include "utils/Collision.hpp"
+#include "world/Block.hpp"
 
 Player::Player() : 
     LivingEntity(100.0f), moveSpeed(5.0f) {}

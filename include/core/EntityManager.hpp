@@ -1,10 +1,18 @@
 #pragma once
+
+#include <memory>
+#include <vector>
+
 #include "entities/Entity.hpp"
 #include "world/Block.hpp"
-#include <vector>
-#include <memory>
 
 using BlockList = std::vector<std::shared_ptr<Block>>;
+
+/**
+ * @brief Gerencia entidades do jogo
+ * 
+ * Centraliza o carregamento, descarregamento e desenho das entidades
+ */
 
 class EntityManager {
 

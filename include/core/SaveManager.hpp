@@ -1,9 +1,18 @@
 #pragma once
-#include <raylib.h>
-#include "entities/Player.hpp"
-#include "core/GameTime.hpp"
-#include <vector>
+
 #include <string>
+#include <vector>
+
+#include <raylib.h>
+
+#include "core/GameTime.hpp"
+#include "entities/Player.hpp"
+
+/**
+ * @brief Gerencia o save do jogo
+ * 
+ * Centraliza o salvamento e carregamento de saves do jogador
+ */
 
 namespace SaveManager {
     bool CreateWorld(const std::string& name, int64_t seed);

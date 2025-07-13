@@ -1,10 +1,19 @@
 #pragma once
+
+#include <memory>
+#include <vector>
+
+#include <raylib.h>
+
 #include "entities/ItemEntity.hpp"
 #include "ui/Hotbar.hpp"
 #include "ui/Inventory.hpp"
-#include <memory>
-#include <vector>
-#include <raylib.h>
+
+/**
+ * @brief Gerencia itens do jogo, sendo dropados ou guardados
+ * 
+ * Centraliza o carregamento, descarregamento e o desenho de todos os itens
+ */
 
 class ItemManager {
 

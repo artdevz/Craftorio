@@ -1,4 +1,5 @@
 #include "screens/MainMenu.hpp"
+
 #include <raylib.h>
 
 MainMenu::MainMenu() {}

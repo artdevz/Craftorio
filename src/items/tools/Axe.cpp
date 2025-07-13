@@ -1,4 +1,5 @@
 #include "items/tools/Axe.hpp"
+
 #include <iostream>
 
 Axe::Axe(ToolMaterial material, unsigned int id) :

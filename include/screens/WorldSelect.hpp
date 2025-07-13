@@ -1,7 +1,9 @@
 #pragma once
-#include "screens/Screen.hpp"
+
 #include <string>
 #include <vector>
+
+#include "screens/Screen.hpp"
 
 struct WorldEntry {
     std::string name;

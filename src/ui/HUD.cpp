@@ -1,5 +1,7 @@
 #include "ui/HUD.hpp"
+
 #include <raylib.h>
+
 #include <string>
 
 HUD::HUD(Player& player) :

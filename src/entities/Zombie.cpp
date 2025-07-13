@@ -1,7 +1,9 @@
 #include "entities/Zombie.hpp"
-#include "world/Block.hpp"
-#include "utils/Collision.hpp"
+
 #include <cmath>
+
+#include "utils/Collision.hpp"
+#include "world/Block.hpp"
 
 Zombie::Zombie() : 
     LivingEntity(200.0f) {

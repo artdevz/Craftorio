@@ -1,6 +1,8 @@
 #include "entities/PhysicsEntity.hpp"
-#include "utils/Collision.hpp"
+
 #include <raymath.h>
+
+#include "utils/Collision.hpp"
 
 PhysicsEntity::PhysicsEntity() :
     position({0.0f,0.0f,0.0f}),

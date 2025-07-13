@@ -1,7 +1,9 @@
 #pragma once
+
+#include <memory>
+
 #include "entities/PhysicsEntity.hpp"
 #include "items/Item.hpp"
-#include <memory>
 
 class Block;
 using BlockList = std::vector<std::shared_ptr<Block>>;

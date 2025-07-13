@@ -1,20 +1,24 @@
 #pragma once
-#include <vector>
+
 #include <memory>
-#include "screens/Screen.hpp"
+#include <vector>
+
 #include "core/AssetManager.hpp"
+#include "core/BlockManager.hpp"
 #include "core/CameraManager.hpp"
 #include "core/GameManager.hpp"
-#include "core/BlockManager.hpp"
-#include "core/ItemManager.hpp"
 #include "core/GameTime.hpp"
-#include "entities/Player.hpp"
-#include "ui/HUD.hpp"
-#include "ui/Hotbar.hpp"
-#include "ui/Inventory.hpp"
+#include "core/ItemManager.hpp"
 #include "core/Settings.hpp"
 
+#include "screens/Screen.hpp"
+
+#include "entities/Player.hpp"
 #include "entities/Zombie.hpp"
+
+#include "ui/Hotbar.hpp"
+#include "ui/HUD.hpp"
+#include "ui/Inventory.hpp"
 
 class Game : public Screen {
 

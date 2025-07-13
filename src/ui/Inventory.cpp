@@ -1,5 +1,7 @@
-#include <raylib.h>
 #include "ui/Inventory.hpp"
+
+#include <raylib.h>
+
 #include "core/Input.hpp"
 #include "core/WindowManager.hpp"
 

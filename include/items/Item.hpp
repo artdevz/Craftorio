@@ -1,6 +1,8 @@
 #pragma once
-#include "enums/ItemType.hpp"
+
 #include <string>
+
+#include "enums/ItemType.hpp"
 
 class Item {
 

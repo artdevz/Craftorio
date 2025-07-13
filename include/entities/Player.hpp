@@ -1,7 +1,10 @@
 #pragma once
-#include <raylib.h>
+
 #include <memory>
 #include <vector>
+
+#include <raylib.h>
+
 #include "entities/LivingEntity.hpp"
 
 class Block;

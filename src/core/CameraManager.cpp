@@ -1,8 +1,10 @@
 #include "core/CameraManager.hpp"
-#include "core/Input.hpp"
-#include <raymath.h>
 
 #include <cstdio>
+
+#include <raymath.h>
+
+#include "core/Input.hpp"
 
 CameraManager::CameraManager() : 
     isFirstPerson(true), yaw(0.0f), pitch(0.0f), distanceToPlayer(10.0f) {
