@@ -1,7 +1,7 @@
 #include "entities/LivingEntity.hpp"
 
 LivingEntity::LivingEntity(float maxHP) : 
-    PhysicsEntity(), health(maxHP), maxHP(maxHP) {}
+    PhysicsEntity(), maxHP(maxHP), health(maxHP) {}
 
 void LivingEntity::TakeDamage(float amount) {
     health -= amount;

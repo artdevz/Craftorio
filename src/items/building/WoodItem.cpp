@@ -19,9 +19,13 @@ void WoodItem::Draw() const {}
 void WoodItem::Interact() {}
 
 const std::string& WoodItem::GetName() const noexcept {
+    static const std::string oak = "Oak Wood";
+    static const std::string spruce = "Spruce Wood";
+    static const std::string defaultWood = "Wood";
+
     switch(woodType) {
-        case WoodType::OAK: return "Oak Wood";
-        case WoodType::SPRUCE: return "Spruce Wood";
-        default: return "Wood";
+        case WoodType::OAK: return oak;
+        case WoodType::SPRUCE: return spruce;
+        default: return defaultWood;
     }
 }

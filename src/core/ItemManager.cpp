@@ -14,11 +14,15 @@ void ItemManager::Update(float deltaTime, const Vector3& playerPosition, const B
     if (IsKeyPressed(KEY_E)) {
         for (auto it = items.begin(); it != items.end(); it++) {
             float distance = Vector3Distance((*it)->GetPosition(), playerPosition);
-            if (distance <= 1.5f && (*it)->CanBePickedUp()) {                
+            if (distance <= 2.5f && (*it)->CanBePickedUp()) {                
                 auto collectedItem = (*it)->TakeItem();
                 bool added = false;
                 if (hotbar && hotbar->AddItem(collectedItem)) {
                     TraceLog(LOG_DEBUG, "Item adicionado à Hotbar");
+                    added = true;
+                }
+                if (!added && inventory && inventory->AddItem(collectedItem)) {
+                    TraceLog(LOG_DEBUG, "Item adicionado ao Inventário");
                     added = true;
                 }
                 if (added) {

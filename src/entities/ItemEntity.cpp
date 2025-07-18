@@ -62,6 +62,6 @@ bool ItemEntity::IsExpired() const {
 }
 
 std::shared_ptr<Item> ItemEntity::TakeItem() {
-    TraceLog(LOG_DEBUG, "Pegou o Item");
+    TraceLog(LOG_DEBUG, "Pegando item");
     return item;
 }

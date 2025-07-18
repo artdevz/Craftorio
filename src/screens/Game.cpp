@@ -41,6 +41,7 @@ void Game::Init() {
     TraceLog(LOG_INFO, "Iniciando o Game");
     player = std::make_unique<Player>();
     itemManager.SetHotbar(&hotbar);
+    itemManager.SetInventory(&inventory);
     zombie = std::make_unique<Zombie>();
     hud = std::make_unique<HUD>(*player);
     SaveManager::LoadWorld(worldName, *player, time);
@@ -62,7 +63,7 @@ void Game::Init() {
     for (int x = -32; x < 32; x++) for (int z = -32; z < 32; z++) blockManager.AddBlockAt( { (float)x, -1024.0f, (float)z }, BlockType::END );
 
     Tree tree;
-    tree.Generate(blockManager, 12, 0, 12);
+    for (int i = 12; i < 144; i += 6) for (int j = 0; j <= 12; j += 6) tree.Generate(blockManager, i, 0, j);
 
     auto testItem = std::make_unique<Axe>(ToolMaterial::IRON, 1);
     itemManager.AddItem(std::make_shared<ItemEntity>(std::move(testItem), Vector3{1, 1, 1}));
@@ -73,31 +74,25 @@ void Game::Init() {
 void Game::Update() {
     gameManager.Update();
 
-    if (player) {
-        float checkRadius = 50.0f;
-        auto nearbyBlocks = blockManager.GetNearbyBlocks(player->GetPosition(), checkRadius);
-        player->Update(GetFrameTime(), camera.GetCamera3D(), nearbyBlocks);
-        zombie->Update(GetFrameTime(), nearbyBlocks);
-        camera.Update(player->GetPosition(), GetFrameTime());
-        itemManager.Update(GetFrameTime(), player->GetPosition(), nearbyBlocks);
-        hud->Update();
-        hotbar.Update();
-        inventory.Update();
-        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-            Vector3 origin = player->GetPosition();
-            origin.y += 1.8f;
-            Vector3 direction = camera.GetForward();
-            std::shared_ptr<Item> activeItem = hotbar.GetLeftHandItem();
-            blockManager.Interact(GetFrameTime(), origin, direction, 5.0f, activeItem, &itemManager);
-        }
-        if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
-            Vector3 origin = player->GetPosition();
-            origin.y += 1.8f;
-            Vector3 direction = camera.GetForward();
-            std::shared_ptr<Item> activeItem = hotbar.GetRightHandItem();
-            blockManager.Interact(GetFrameTime(), origin, direction, 5.0f, activeItem, &itemManager);
-        }
+    float checkRadius = 50.0f;
+    auto nearbyBlocks = blockManager.GetNearbyBlocks(player->GetPosition(), checkRadius);
+    player->Update(GetFrameTime(), camera.GetCamera3D(), nearbyBlocks);
+    zombie->Update(GetFrameTime(), nearbyBlocks);
+    camera.Update(player->GetPosition(), GetFrameTime());
+    itemManager.Update(GetFrameTime(), player->GetPosition(), nearbyBlocks);
+
+    hud->Update();
+    hotbar.Update();
+    inventory.Update();
+
+    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) || IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
+        Vector3 origin = player->GetPosition();
+        origin.y += 1.8f;
+        Vector3 direction = camera.GetForward();
+        std::shared_ptr<Item> activeItem = IsMouseButtonDown(MOUSE_LEFT_BUTTON)? hotbar.GetLeftHandItem() : hotbar.GetRightHandItem();
+        blockManager.Interact(GetFrameTime(), origin, direction, 5.0f, activeItem, &itemManager);
     }
+
     time.Update(GetFrameTime());
 }
 

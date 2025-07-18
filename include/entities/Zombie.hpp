@@ -18,22 +18,7 @@ public:
     void Update(float deltaTime, const BlockList& nearbyBlocks);
     void Draw() const override;
 
-    Vector3 GetPosition() const override;
-    void SetPosition(Vector3 position) override;
-
-    float GetMaxHP() const;
-    float GetHP() const;
-
-    void TakeDamage(float amount);
-    void Heal(float amount);
-
 private:
-    Vector3 position;
-    bool isOnGround;
     float moveSpeed;
-    float velocityY;
-
-    float maxHP;
-    float hp;
 
 };

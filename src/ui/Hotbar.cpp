@@ -5,8 +5,8 @@
 #include <raylib.h>
 
 #include "core/Input.hpp"
-#include "core/WindowManager.hpp"
 #include "core/UIManager.hpp"
+#include "core/WindowManager.hpp"
 
 Hotbar::Hotbar() {}
 
@@ -21,18 +21,19 @@ void Hotbar::Draw() {
     for (int i = 0; i < 12; i++) {
         Rectangle slotRect = { (width - 1068) + i * 72, height - 80, 64, 64 };
         
-        Color background = (i == selectedSlot || i == (selectedSlot + 6))? LIGHTGRAY : DARKGRAY;
+        Color background = (i == selectedSlot || i == (selectedSlot + 6))? Color{ 200, 200, 200, 80 } : Color{ 80, 80, 80, 80 };
         DrawRectangleRec(slotRect, background);
 
         DrawRectangleLinesEx(slotRect, 2, BLACK);
         
-        if (i < 6) DrawText(("L" + std::to_string(i + 1)).c_str(), slotRect.x + 10, slotRect.y + 10, 14, BLACK);
-        if (i > 5) DrawText(("R" + std::to_string(i - 5)).c_str(), slotRect.x + 10, slotRect.y + 10, 14, BLACK);
+        if (i < 6) DrawText(("L" + std::to_string(i + 1)).c_str(), slotRect.x + 10, slotRect.y + 10, 14, WHITE);
+        if (i > 5) DrawText(("R" + std::to_string(i - 5)).c_str(), slotRect.x + 10, slotRect.y + 10, 14, WHITE);
     
-        if (slots[i]) {
-            // DrawRectangle((int)(slotRect.x + 20), (int)(slotRect.y + 20), 24, 24, GRAY);
-            UIManager::DrawItem(slots[i].get(), slotRect.x+20, slotRect.y+20, 24);
-        }
+        UIManager::DrawItem(slots[i].get(), slotRect.x+20, slotRect.y+20, 24);
+        if (selectedSlot == i) {
+            if(slots[i]) DrawText(slots[i].get()->GetName().c_str(), slotRect.x, slotRect.y - 15, 16, BLACK);
+            if(slots[i+6]) DrawText(slots[i+6].get()->GetName().c_str(), slotRect.x+6*72, slotRect.y - 15, 16, BLACK);
+        } 
     }
 }
 
@@ -45,11 +46,6 @@ bool Hotbar::AddItem(std::shared_ptr<Item> item) {
     }
     return false;
 }
-
-// std::pair<std::shared_ptr<Item>, std::shared_ptr<Item>> Hotbar::GetSelectedItems() const {
-//     if (selectedSlot >= 0 && selectedSlot < 6) return { slots[selectedSlot], slots[selectedSlot+6] };
-//     return {nullptr, nullptr};
-// }
 
 std::shared_ptr<Item> Hotbar::GetLeftHandItem() const { return (selectedSlot >= 0 && selectedSlot < 6)? slots[selectedSlot] : nullptr; }
 
