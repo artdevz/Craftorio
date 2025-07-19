@@ -10,11 +10,11 @@ void WoodBlock::Update() {}
 void WoodBlock::Draw() const {
     Color color;
     switch (woodType) {
-        case WoodType::OAK: color = DARKBROWN; break;
-        case WoodType::SPRUCE: color = BLACK; break;
+        case WoodType::OAK: color = GetColorForWood(WoodType::OAK); break;
+        case WoodType::SPRUCE: color = GetColorForWood(WoodType::SPRUCE); break;
         default: color = GRAY; break;
     }
-    DrawCube(GetOrigin(), 1.0f, 1.0f, 1.0f, GetColorForBlock(type));
+    DrawCube(GetOrigin(), 1.0f, 1.0f, 1.0f, color);
     if (hovered) DrawCubeWires(GetOrigin(), 1.0f, 1.0f, 1.0f, DARKGRAY);
 }
 

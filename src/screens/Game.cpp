@@ -15,6 +15,7 @@
 
 #include "world/Aggregator.hpp"
 #include "world/structures/Tree.hpp"
+#include "world/structures/SpruceTree.hpp"
 
 Game::Game(const SettingsData& settings, const std::string& worldName) : 
     camera(),
@@ -46,7 +47,7 @@ void Game::Init() {
     hud = std::make_unique<HUD>(*player);
     SaveManager::LoadWorld(worldName, *player, time);
 
-    for (int x = 0; x < 160; x++) for (int z = 0; z < 16; z++) for (int y = -1; y > -2; y--) {
+    for (int x = 0; x < 160; x++) for (int z = 0; z < 50; z++) for (int y = -1; y > -2; y--) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::GRASS );
     }
 
@@ -65,6 +66,8 @@ void Game::Init() {
     Tree tree;
     // for (int i = 12; i < 144; i += 6) for (int j = 0; j <= 12; j += 6) tree.Generate(blockManager, i, 0, j);
     tree.Generate(blockManager, 10, 0, 10);
+    SpruceTree spruceTree;
+    spruceTree.Generate(blockManager, 30, 0, 10);
 
     auto testItem = std::make_unique<Axe>(ToolMaterial::IRON, 1);
     itemManager.AddItem(std::make_shared<ItemEntity>(std::move(testItem), Vector3{1, 1, 1}));

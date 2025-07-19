@@ -8,11 +8,11 @@ void LeafBlock::Update() {}
 void LeafBlock::Draw() const {
     Color color;
     switch (leafType) {
-        case LeafType::OAK: color = DARKGREEN; break;
-        case LeafType::SPRUCE: color = DARKGREEN; break;
+        case LeafType::OAK: color = GetColorForLeaf(LeafType::OAK); break;
+        case LeafType::SPRUCE: color = GetColorForLeaf(LeafType::SPRUCE); break;
         default: color = GRAY; break;
     }
-    DrawCube(GetOrigin(), 1.0f, 1.0f, 1.0f, GetColorForBlock(type));
+    DrawCube(GetOrigin(), 1.0f, 1.0f, 1.0f, color);
     if (hovered) DrawCubeWires(GetOrigin(), 1.0f, 1.0f, 1.0f, DARKGRAY);
 }
 

@@ -1,5 +1,8 @@
 #include "entities/ItemEntity.hpp"
 
+#include "enums/LeafType.hpp"
+#include "enums/WoodType.hpp"
+
 #include "items/ItemAgreggator.hpp"
 
 ItemEntity::ItemEntity(std::unique_ptr<Item> it, const Vector3& position) :
@@ -28,8 +31,8 @@ void ItemEntity::Draw() const {
             auto wood = dynamic_cast<WoodItem*>(item.get());
             if (wood) {
                 switch(wood->GetWoodType()) {
-                    case WoodType::OAK: color = DARKBROWN; break;
-                    case WoodType::SPRUCE: color = BLACK; break;
+                    case WoodType::OAK: color = GetColorForWood(WoodType::OAK); break;
+                    case WoodType::SPRUCE: color = GetColorForWood(WoodType::SPRUCE); break;
                     default: color = GRAY; break;
                 }
             }

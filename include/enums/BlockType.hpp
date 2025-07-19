@@ -9,7 +9,9 @@ enum class BlockType {
     DIRT,
     STONE,
     WOOD,
-    LEAVES
+    SPRUCE_WOOD,
+    LEAVES,
+    SPRUCE_LEAVES
 };
 
 inline Color GetColorForBlock(BlockType type) {
@@ -19,7 +21,9 @@ inline Color GetColorForBlock(BlockType type) {
         case BlockType::DIRT: return BROWN;
         case BlockType::STONE: return GRAY;
         case BlockType::WOOD: return DARKBROWN;
+        case BlockType::SPRUCE_WOOD: return Color{100, 40, 50, 255};
         case BlockType::LEAVES: return Color{0, 117, 44, 210};
+        case BlockType::SPRUCE_LEAVES: return Color{0, 85, 30, 210};
         case BlockType::AIR: 
         default: return BLANK;
     }
@@ -28,6 +32,7 @@ inline Color GetColorForBlock(BlockType type) {
 inline bool IsWalkable(BlockType type) {
     switch (type) {
         case BlockType::LEAVES:
+        case BlockType::SPRUCE_LEAVES:
         case BlockType::AIR:
             return true;
         default: return false;

@@ -14,8 +14,8 @@ void UIManager::DrawItem(const Item* item, float x, float y, float size) {
             auto wood = dynamic_cast<const WoodItem*>(item);
             if (wood) {
                 switch(wood->GetWoodType()) {
-                    case WoodType::OAK: color = DARKBROWN; break;
-                    case WoodType::SPRUCE: color = BLACK; break;
+                    case WoodType::OAK: color = GetColorForWood(WoodType::OAK); break;
+                    case WoodType::SPRUCE: color = GetColorForWood(WoodType::SPRUCE); break;
                     default: color = GRAY; break;
                 }
             }

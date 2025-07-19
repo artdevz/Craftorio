@@ -12,7 +12,9 @@ inline std::shared_ptr<Block> CreateBlock(Vector3 position, BlockType type) {
         case BlockType::STONE: return std::make_shared<StoneBlock>(position);
         case BlockType::DIRT: return std::make_shared<DirtBlock>(position, DirtType::DRY);
         case BlockType::WOOD: return std::make_shared<WoodBlock>(position, WoodType::OAK);
+        case BlockType::SPRUCE_WOOD: return std::make_shared<WoodBlock>(position, WoodType::SPRUCE);
         case BlockType::LEAVES: return std::make_shared<LeafBlock>(position, LeafType::OAK);
+        case BlockType::SPRUCE_LEAVES: return std::make_shared<LeafBlock>(position, LeafType::SPRUCE);
         default: return nullptr;
         }
 }
