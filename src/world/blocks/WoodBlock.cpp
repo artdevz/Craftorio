@@ -15,7 +15,7 @@ void WoodBlock::Draw() const {
         default: color = GRAY; break;
     }
     DrawCube(GetOrigin(), 1.0f, 1.0f, 1.0f, GetColorForBlock(type));
-    DrawCubeWires(GetOrigin(), 1.0f, 1.0f, 1.0f, DARKGRAY);
+    if (hovered) DrawCubeWires(GetOrigin(), 1.0f, 1.0f, 1.0f, DARKGRAY);
 }
 
 bool WoodBlock::IsSolid() const { return true; }

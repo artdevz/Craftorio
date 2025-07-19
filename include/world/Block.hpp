@@ -12,7 +12,7 @@ class Block {
 
 public:
     Block(Vector3 position, BlockType type) :
-        position(position), type(type) {};
+        position(position), type(type), hovered(false) {};
     virtual ~Block() = default;
 
     virtual void Update() = 0;
@@ -38,6 +38,7 @@ protected:
     BlockType type;
     bool solid;
 
+    bool hovered;
     float interactionAccumulator = 0.0f;
 
 };

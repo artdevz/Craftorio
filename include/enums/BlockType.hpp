@@ -19,7 +19,7 @@ inline Color GetColorForBlock(BlockType type) {
         case BlockType::DIRT: return BROWN;
         case BlockType::STONE: return GRAY;
         case BlockType::WOOD: return DARKBROWN;
-        case BlockType::LEAVES: return DARKGREEN;
+        case BlockType::LEAVES: return Color{0, 117, 44, 210};
         case BlockType::AIR: 
         default: return BLANK;
     }

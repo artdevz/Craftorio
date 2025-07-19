@@ -63,7 +63,8 @@ void Game::Init() {
     for (int x = -32; x < 32; x++) for (int z = -32; z < 32; z++) blockManager.AddBlockAt( { (float)x, -1024.0f, (float)z }, BlockType::END );
 
     Tree tree;
-    for (int i = 12; i < 144; i += 6) for (int j = 0; j <= 12; j += 6) tree.Generate(blockManager, i, 0, j);
+    // for (int i = 12; i < 144; i += 6) for (int j = 0; j <= 12; j += 6) tree.Generate(blockManager, i, 0, j);
+    tree.Generate(blockManager, 10, 0, 10);
 
     auto testItem = std::make_unique<Axe>(ToolMaterial::IRON, 1);
     itemManager.AddItem(std::make_shared<ItemEntity>(std::move(testItem), Vector3{1, 1, 1}));

@@ -7,7 +7,7 @@ void StoneBlock::Update() {}
 
 void StoneBlock::Draw() const {
     DrawCube(GetOrigin(), 1.0f, 1.0f, 1.0f, GetColorForBlock(type));
-    DrawCubeWires(GetOrigin(), 1.0f, 1.0f, 1.0f, DARKGRAY);
+    if (hovered) DrawCubeWires(GetOrigin(), 1.0f, 1.0f, 1.0f, DARKGRAY);
 }
 
 bool StoneBlock::IsSolid() const { return true; }

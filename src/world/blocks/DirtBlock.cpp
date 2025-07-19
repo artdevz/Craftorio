@@ -7,7 +7,7 @@ void DirtBlock::Update() {}
 
 void DirtBlock::Draw() const {
     DrawCube(GetOrigin(), 1.0f, 1.0f, 1.0f, GetColorForBlock(type));
-    DrawCubeWires(GetOrigin(), 1.0f, 1.0f, 1.0f, DARKGRAY);
+    if (hovered) DrawCubeWires(GetOrigin(), 1.0f, 1.0f, 1.0f, DARKGRAY);
 }
 
 bool DirtBlock::IsSolid() const { return true; }
