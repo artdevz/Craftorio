@@ -60,6 +60,7 @@ void Game::Init() {
     }
 
     blockManager.AddBlockAt( {5.0f, 0.0f, 5.0f}, BlockType::GRASS );
+    blockManager.AddBlockAt( {2.0f, 0.0f, 2.0f}, BlockType::DIRT );
 
     for (int x = -32; x < 32; x++) for (int z = -32; z < 32; z++) blockManager.AddBlockAt( { (float)x, -1024.0f, (float)z }, BlockType::END );
 
@@ -70,7 +71,7 @@ void Game::Init() {
     spruceTree.Generate(blockManager, 30, 0, 10);
 
     auto testItem = std::make_unique<Axe>(ToolMaterial::IRON, 1);
-    itemManager.AddItem(std::make_shared<ItemEntity>(std::move(testItem), Vector3{1, 1, 1}));
+    itemManager.AddItem(std::make_shared<ItemEntity>(std::move(testItem), Vector3{1.85f, 2, 1.85f}));
 
     TraceLog(LOG_INFO, "Game Iniciado");
 }

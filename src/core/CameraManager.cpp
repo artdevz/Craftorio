@@ -67,7 +67,7 @@ void CameraManager::UpdateTPS(Vector3 playerPosition) {
     };
 
     camera.position = Vector3Add(playerPosition, offset);
-    camera.target = playerPosition;
+    camera.target = {playerPosition.x, playerPosition.y + 1.8f, playerPosition.z};
     camera.up = { 0.0f, 1.0f, 0.0f };
 }
 

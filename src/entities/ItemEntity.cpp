@@ -8,7 +8,7 @@
 ItemEntity::ItemEntity(std::unique_ptr<Item> it, const Vector3& position) :
     item(std::move(it)) {
         this->position = position;
-        SetBoundingBox( { { -0.3f, 0.01f, -0.3f }, { 0.3f, 0.6f, 0.3f } } );
+        SetBoundingBox( { { -0.14f, 0.0f, -0.14f }, { 0.14f, 0.3f, 0.14f } } );
     }
 
 // void ItemEntity::Update(float deltaTime) {}
@@ -52,8 +52,13 @@ void ItemEntity::Draw() const {
             break;
     }
 
-    DrawCube({position.x + 0.5f, position.y + 0.15f, position.z + 0.5f}, 0.3f, 0.3f, 0.3f, color);
-    DrawCubeWires({position.x + 0.5f, position.y + 0.15f, position.z + 0.5f}, 0.3f, 0.3f, 0.3f, GRAY);
+    DrawCube({position.x + 0.0f, position.y + 0.15f, position.z + 0.0f}, 0.3f, 0.3f, 0.3f, color);
+    //TraceLog(LOG_DEBUG, "Position %f, %f, %f", position.x, position.y, position.z);
+    DrawCubeWires({position.x + 0.0f, position.y + 0.15f, position.z + 0.0f}, 0.3f, 0.3f, 0.3f, GRAY);
+    //BoundingBox test = GetWorldBoundingBox(GetPosition());
+    //TraceLog(LOG_DEBUG, "BoundingMin: %f, %f, %f", test.min.x, test.min.y, test.min.z);
+    //TraceLog(LOG_DEBUG, "BoundingMax: %f, %f, %f", test.max.x, test.max.y, test.max.z);
+    DrawBoundingBox(GetWorldBoundingBox(GetPosition()), RED);
 }
     
 bool ItemEntity::CanBePickedUp() const { 

@@ -75,7 +75,7 @@ void BlockManager::Interact(float deltaTime, const Vector3& origin, const Vector
                     if (block->GetType() == BlockType::AIR) {
                         if (itemManager) {
                             auto drop = block->GetDrop();
-                            if (drop.has_value()) itemManager->AddItem(std::make_shared<ItemEntity>(std::move(*drop), posistion));
+                            if (drop.has_value()) itemManager->AddItem(std::make_shared<ItemEntity>(std::move(*drop), Vector3{posistion.x+0.5f, posistion.y+0.5f, posistion.z+0.5f}));
                         }
                         it->second.RemoveBlockAt(blockPosition);
                     }
