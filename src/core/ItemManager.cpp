@@ -35,7 +35,16 @@ void ItemManager::Update(float deltaTime, const Vector3& playerPosition, const B
     }
 }
 
-void ItemManager::Draw() const { for (const auto& item : items) item->Draw(); }
+void ItemManager::Draw(const Vector3& playerPosition, float maxRenderDistance) const { 
+    for (const auto& item : items) {
+        float dx = item->GetPosition().x - playerPosition.x;
+        float dy = item->GetPosition().y - playerPosition.y;
+        float dz = item->GetPosition().z - playerPosition.z;
+        float dist = dx*dx + dy*dy + dz*dz;
+        float maxDist = maxRenderDistance*16.0f; // SIZE do Chunk
+        if (dist <= maxDist * maxDist) item->Draw(); 
+    }
+}
 
 void ItemManager::AddItem(std::shared_ptr<ItemEntity> item) { items.push_back(item); }
 

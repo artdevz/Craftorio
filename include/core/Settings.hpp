@@ -27,7 +27,7 @@ struct VideoSettings {
     bool fullscreen = false;
     bool vSync = false;
     int graphics = 0;
-    int renderDistance = 48;
+    int renderDistance = 8;
     bool shadows = false;
     bool antiAliasing = false;
 };

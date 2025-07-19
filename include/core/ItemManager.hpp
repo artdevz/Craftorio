@@ -19,7 +19,7 @@ class ItemManager {
 
 public:
     void Update(float deltaTime, const Vector3& playerPosition, const BlockList& nearbyBlocks);
-    void Draw() const;
+    void Draw(const Vector3& playerPosition, float maxRenderDistance) const;
     
     void AddItem(std::shared_ptr<ItemEntity> item);
 

@@ -47,7 +47,7 @@ void Game::Init() {
     hud = std::make_unique<HUD>(*player);
     SaveManager::LoadWorld(worldName, *player, time);
 
-    for (int x = 0; x < 160; x++) for (int z = 0; z < 50; z++) for (int y = -1; y > -2; y--) {
+    for (int x = 0; x < 600; x++) for (int z = 0; z < 50; z++) for (int y = -1; y > -2; y--) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::GRASS );
     }
 
@@ -56,6 +56,10 @@ void Game::Init() {
     }
 
     for (int x = 0; x < 16; x++) for (int z = 0; z < 16; z++) for (int y = -3; y > -8; y--) {
+        blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::STONE );
+    }
+
+    for (int x = 35; x < 40; x++) for (int z = 35; z < 40; z++) for (int y = -1024; y < 1024; y++) {
         blockManager.AddBlockAt( { (float)x, (float)y, (float)z }, BlockType::STONE );
     }
 
@@ -142,7 +146,7 @@ void Game::Draw() {
     DrawSphereEx(sunPosition, 24.0f, 16, 16, YELLOW);
     DrawSphereEx(moonPosition, 24.0f, 16, 16, WHITE);
     blockManager.Draw(player->GetPosition(), (float) settings.video.renderDistance);
-    itemManager.Draw();
+    itemManager.Draw(player->GetPosition(), settings.video.renderDistance);
     player->Draw();
     zombie->Draw();
 

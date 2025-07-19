@@ -47,13 +47,13 @@ void BlockManager::Draw(const Vector3& playerPosition, float maxRenderDistance) 
     // for (const auto& block : blocks) block->Draw(); 
 
     Vector2i playerChunk = GetChunkCoords(playerPosition);
-    constexpr int renderRadiusChunks = 3;
+    // constexpr int renderRadiusChunks = 10;
 
     for (const auto& [coords, chunk] : chunks) {
         int dx = coords.x - playerChunk.x;
         int dz = coords.z - playerChunk.z;
 
-        if (std::abs(dx) <= renderRadiusChunks && std::abs(dz) <= renderRadiusChunks) {
+        if (std::abs(dx) <= (int)maxRenderDistance && std::abs(dz) <= (int)maxRenderDistance) {
             chunk.Draw(playerPosition, maxRenderDistance);
         }
     }

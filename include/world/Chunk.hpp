@@ -38,7 +38,7 @@ struct Chunk {
 
     void Draw(const Vector3& playerPosition, float maxRenderDistance) const {
         for (const auto& block : blocks) {
-            if (Vector3Distance(block->GetPosition(), playerPosition) <= maxRenderDistance) block->Draw();
+            if (Vector3Distance(block->GetPosition(), playerPosition) <= maxRenderDistance*SIZE) block->Draw();
         }
     }
 };
